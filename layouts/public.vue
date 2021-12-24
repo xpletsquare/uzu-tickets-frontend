@@ -1,16 +1,15 @@
 <template>
-  <main>
-    Home Page
-  </main>
+  <div>
+    <simple-navbar></simple-navbar>
+    <nuxt />
+  </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  @Component({
-    layout: 'public'
-  })
-  export default class IndexPage extends Vue {
+  @Component
+  export default class  extends Vue {
     
   }
 </script>

@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 // Api Logic goes here
 
 export const getAuthHeaders = () => {
-  const userInSession = sessionStorage.getItem('auth') || ''
+  const userInSession = localStorage.getItem('auth') || ''
   const parsed = userInSession ? JSON.parse(userInSession) : ''
 
   if (!parsed || !parsed.token) {

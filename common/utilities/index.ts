@@ -61,7 +61,7 @@ export const formatDate = (dateString: string) => {
   return format(new Date(dateString), 'MMM dd, yyyy')
 }
 
-export const formatCurrency = (value: string) => {
+export const formatCurrency = (value: string) => { 
   if (!value) {
     return 'Not Available';
   }

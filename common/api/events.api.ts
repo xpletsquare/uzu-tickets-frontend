@@ -10,7 +10,7 @@ export const EventsApi = {
   },
 
   createEventTicket(details: AnyObject) {
-    return events.post('/tickets', details);
+    return events.post('/tickets', details, getAuthHeaders());
   },
 
   listEvents() {

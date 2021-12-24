@@ -38,6 +38,25 @@ export default {
 
     // Simple usage
     '@nuxtjs/vuetify',
+
+    [
+      '@nuxtjs/fontawesome',
+      {
+        component: 'fa',
+        icons: {
+          solid: [
+            'faSearch',
+            'faChevronRight',
+            'faExclamation',
+            'faCalendarCheck',
+            'faMapMarkerAlt',
+            'faMoneyBillWave',
+            'faBars',
+          ],
+          brands: ['faTwitter', 'faLinkedin', 'faInstagram', 'faFacebookF'],
+        },
+      },
+    ],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

@@ -1,16 +1,15 @@
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 :root {
-  --light-green : #31D760;
-  --white : #fff;
-  --dark-green : #002C0C;
-  --pale-green : #E8FFEF;
-  --ash : #F4F4F4;
-  --dark-grey : #6F6F6F;
-  
+  --light-green: #31d760;
+  --white: #fff;
+  --dark-green: #002c0c;
+  --pale-green: #e8ffef;
+  --ash: #f4f4f4;
+  --dark-grey: #6f6f6f;
 }

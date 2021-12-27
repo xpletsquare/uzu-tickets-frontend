@@ -189,7 +189,7 @@ main {
     color: #ffffff;
     font-size: 15px;
     font-weight: 600;
-    width: 138px;
+    // width: 138px;
     margin: 0 auto;
   }
 }

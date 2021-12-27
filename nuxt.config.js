@@ -74,13 +74,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-    loaders: {
-      less: {
-        lessOptions: {
-          javascriptEnabled: true,
-        },
-      },
-    },
+  build: {},
+
+  server: {
+    port: 25001,
   },
 }

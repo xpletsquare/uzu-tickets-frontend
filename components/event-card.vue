@@ -1,5 +1,5 @@
 <template>
-  <div class="event">
+  <div class="event cursor-pointer" @click="openEventPage">
     <div class="event-image">
       <img :src="imageUrl" alt="event" />
 
@@ -43,7 +43,11 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class FeaturedEvent extends Vue {
-  @Prop({ type: String, required: true }) readonly imageUrl!: String
+  @Prop({ type: String, required: true }) readonly imageUrl!: string
+
+  openEventPage(){
+    this.$router.push('/events/id')
+  }
 }
 </script>
 
@@ -55,10 +59,12 @@ export default class FeaturedEvent extends Vue {
     width: 100%;
     height: 181px;
     position: relative;
+    // overflow: hidden;
 
     img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -107,9 +113,9 @@ export default class FeaturedEvent extends Vue {
 
   .event-details {
     padding: 30px 18px;
-    border-bottom: 0.2px solid #707070;
-    border-right: 0.2px solid #707070;
-    border-left: 0.2px solid #707070;
+    border: 0.5px solid lightgray;
+    border-radius: 2px;
+    overflow: hidden;
 
     .name {
       font-weight: bold;

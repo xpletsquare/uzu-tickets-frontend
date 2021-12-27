@@ -84,17 +84,34 @@
     justify-content: center;
     align-items: center;
 
-    @media screen and (max-width: 1200px){
-       min-width: 100%;
-      }
-
-
     div{
       width: 70%;
       margin-left: auto;
       margin-right: auto;
-      
     }
+
+     @media screen and (max-width: 1200px){
+       min-width: 100%;
+
+        div{
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+      }
+
+       @media screen and (max-width: 900px){
+       min-width: 100%;
+
+        div{
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+      }
+
   }
 
   .right{

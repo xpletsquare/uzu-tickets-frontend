@@ -78,17 +78,36 @@
     width: 40%;
     display: flex;
     justify-content: center;
-
-    @media screen and (max-width: 1200px){
-       min-width: 100%;
-      }
-
+    align-items: center;
 
     div{
       width: 70%;
-      margin: auto;
-      
+      margin-left: auto;
+      margin-right: auto;
     }
+
+     @media screen and (max-width: 1200px){
+       min-width: 100%;
+
+        div{
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+      }
+
+       @media screen and (max-width: 900px){
+       min-width: 100%;
+
+        div{
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+      }
+
   }
 
   .right{

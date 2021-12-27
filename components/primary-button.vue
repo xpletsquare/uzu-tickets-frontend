@@ -5,17 +5,20 @@
   @Component
   export default class PrimaryButton extends Vue {
     @Prop() label? : string;
-    @Prop() width? : string;
+    @Prop() full? : boolean;
     @Prop() loading? : boolean;
+    @Prop() link_to? : string;
   }
 
 </script>
 
 <template>
-  <button >
-    {{label}}
+ <NuxtLink :to="link_to ? link_to : ''">
+  <button :class="full ? 'full' : ''" >
+   {{label}} 
     <div :class="loading ? 'loader' : 'hide'"></div>
   </button>
+  </NuxtLink>
 </template>
 
 
@@ -37,6 +40,9 @@
     }
   }
 
+  .full{
+    width: 100%;
+  }
   .hide{
     visibility: hidden;
   }

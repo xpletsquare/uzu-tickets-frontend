@@ -1,5 +1,6 @@
 <template>
-  <div class="nav">
+<div class="main">
+<div class="nav">
     <div class="nav-logo">
       <NuxtLink to="/">
         <img alt="logo" src="~/assets/images/logo.svg" />
@@ -15,18 +16,21 @@
 
     <ul class="nav-links">
       <li>
-        <NuxtLink to="/">Home</NuxtLink>
+        <NuxtLink to="/">HOME</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/">BUY TICKETS</NuxtLink>
+        <NuxtLink to="/">REGISTER</NuxtLink>
       </li>
       <li>
-        <primary-button label='BUY TICKETS' ></primary-button>
+        <primary-button label='LOGIN' link_to="/login" ></primary-button>
       </li>
 
 
     </ul>
   </div>
+</div>
+  
+  
 </template>
 
 <script lang="ts">
@@ -42,12 +46,17 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.main{
+  max-height: 75px;
+  box-shadow: 0px 5px 10px rgba(0,0,0,0.05);
+}
 .nav {
   width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px auto;
+  margin: 0px auto;
+  /* border: 1px solid red; */
 
   @media (max-width: 1024px) {
     width: 90%;

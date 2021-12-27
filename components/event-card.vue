@@ -1,5 +1,5 @@
 <template>
-  <div class="event">
+  <div class="event cursor-pointer" @click="openEventPage">
     <div class="event-image">
       <img :src="imageUrl" alt="event" />
 
@@ -43,7 +43,11 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class FeaturedEvent extends Vue {
-  @Prop({ type: String, required: true }) readonly imageUrl!: String
+  @Prop({ type: String, required: true }) readonly imageUrl!: string
+
+  openEventPage(){
+    this.$router.push('/events/id')
+  }
 }
 </script>
 

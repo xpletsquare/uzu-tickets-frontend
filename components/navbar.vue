@@ -20,11 +20,8 @@
       <li>
         <NuxtLink to="/">BUY TICKETS</NuxtLink>
       </li>
-      <li class="nav-button">
-        <NuxtLink to="/">BUY TICKETS</NuxtLink>
-      </li>
       <li>
-        <primary-button />
+        <primary-button label='BUY TICKETS' ></primary-button>
       </li>
 
 

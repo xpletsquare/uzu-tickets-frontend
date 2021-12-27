@@ -24,7 +24,7 @@ export default {
   css: ['@/assets/css/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@/plugins/antd-ui'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -47,11 +47,13 @@ export default {
           solid: [
             'faSearch',
             'faChevronRight',
+            'faChevronDown',
             'faExclamation',
             'faCalendarCheck',
             'faMapMarkerAlt',
             'faMoneyBillWave',
             'faBars',
+            'faTimes',
           ],
           brands: ['faTwitter', 'faLinkedin', 'faInstagram', 'faFacebookF'],
         },

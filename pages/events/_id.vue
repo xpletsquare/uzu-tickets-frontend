@@ -83,11 +83,14 @@
             <div class="mb-10">
               <ticket-selection></ticket-selection>
             </div>
-            <button class="w-full md:w-2/5 bg-green-700 text-gray-50 rounded py-4 px-2 font-medium uppercase">proceed to checkout</button>
+            <button class="w-full md:w-2/5 bg-green-700 text-gray-50 rounded py-4 px-2 font-medium uppercase" @click="toggleCheckout">proceed to checkout</button>
           </div>
         </div>
       </section>
     </section>
+
+
+    <checkout v-if="showCheckout"></checkout>
   </main>
 </template>
 
@@ -98,7 +101,11 @@
     layout: 'public',
   })
   export default class EventDetailPage extends Vue {
-    
+    showCheckout = false;
+
+    toggleCheckout(){
+      this.showCheckout = !this.showCheckout;
+    }
   }
 </script>
 

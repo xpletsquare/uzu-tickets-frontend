@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import {Vue, Component, Prop} from 'vue-property-decorator';
 
- 
   @Component
   export default class PrimaryButton extends Vue {
     @Prop() label? : string;
@@ -21,7 +20,7 @@
 
 <style lang="scss" scoped>
   button{
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     min-width: 150px;
@@ -31,6 +30,11 @@
     color: var(--white);
     padding: 0 30px;
     text-transform: uppercase;
+    font-weight: 600;
+
+    div{
+      display: inline;
+    }
 
     &:hover{
       background-color: var(--dark-green);

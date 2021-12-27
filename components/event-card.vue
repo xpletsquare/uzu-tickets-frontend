@@ -55,10 +55,12 @@ export default class FeaturedEvent extends Vue {
     width: 100%;
     height: 181px;
     position: relative;
+    // overflow: hidden;
 
     img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -107,9 +109,9 @@ export default class FeaturedEvent extends Vue {
 
   .event-details {
     padding: 30px 18px;
-    border-bottom: 0.2px solid #707070;
-    border-right: 0.2px solid #707070;
-    border-left: 0.2px solid #707070;
+    border: 0.5px solid lightgray;
+    border-radius: 2px;
+    overflow: hidden;
 
     .name {
       font-weight: bold;

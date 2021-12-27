@@ -1,13 +1,15 @@
 <template>
   <main>
-    Event Detail Page
+    Event Detail Page 
   </main>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  @Component
+  @Component({
+    layout: 'public',
+  })
   export default class EventDetailPage extends Vue {
     
   }

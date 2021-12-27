@@ -2,7 +2,11 @@
   <main>
     <navbar />
     <div class="main">
-      <div class="left"></div>
+      <div class="left">
+        <div>
+          <input-field></input-field>
+        </div>
+      </div>
       <div class="right"></div>
     </div>
   </main>
@@ -19,5 +23,19 @@
 </script>
 
 <style lang="scss" scoped>
+  .main{
+    display: flex;
+    height: 80vh;
+  }
 
+  .left{
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div{
+      width: 65%;
+    }
+  }
 </style>

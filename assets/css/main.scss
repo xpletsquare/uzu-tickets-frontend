@@ -5,6 +5,8 @@
   transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
+
+
 :root {
   --light-green : #31D760;
   --white : #fff;
@@ -12,5 +14,10 @@
   --pale-green : #E8FFEF;
   --ash : #F4F4F4;
   --dark-grey : #6F6F6F;
+  --grey : #a0a0a0;
+  --red : red;
+
+  // font sizes
+  --tiny : 10pt;
   
 }

@@ -19,13 +19,11 @@ export default class PrimaryButton extends Vue {
   </NuxtLink>
 </template>
 
-<script lang="ts" setup>
-</script>
-
+<script lang="ts" setup></script>
 
 <style lang="scss" scoped>
 button {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   min-width: 150px;
@@ -35,33 +33,38 @@ button {
   color: var(--white);
   padding: 0 30px;
   text-transform: uppercase;
+  font-weight: 600;
+
+  div {
+    display: inline;
+  }
 
   &:hover {
     background-color: var(--dark-green);
   }
+}
 
-  .full {
-    width: 100%;
-  }
-  .hide {
-    visibility: hidden;
-  }
-  .loader {
-    border: 3px solid var(--white); /* Light grey */
-    border-top: 3px solid var(--light-green); /* white */
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    animation: spin 1s linear infinite;
-  }
+.full {
+  width: 100%;
+}
+.hide {
+  visibility: hidden;
+}
+.loader {
+  border: 3px solid var(--white); /* Light grey */
+  border-top: 3px solid var(--light-green); /* white */
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 1s linear infinite;
+}
 
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

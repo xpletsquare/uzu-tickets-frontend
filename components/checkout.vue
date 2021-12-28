@@ -1,8 +1,10 @@
 <template>
   <section class="wrapper md:flex justify-center items-center blur-md">
     <div class="checkout-card rounded bg-white">
+      <button class="close-btn shadow-lg" @click="close">&times;</button>
 
-      <section class="right bg-gray-50">
+      <section class="right relative bg-gray-50">
+
         <img class="bg-gray-200" src="https://images.unsplash.com/photo-1522938974444-f12497b69347?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1709&q=80" alt="">
         <div class="p-8">
           <div class="font-medium mb-8">Order Summary</div>
@@ -29,7 +31,7 @@
         </div>
       </section>
 
-      <section class="left p-14 text-sm">
+      <section class="left relative p-8 md:p-14 text-sm">
         <div class="bg-gray-100 p-4 rounded">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
           Similique ad incidunt consectetur iure in hic magni fugit sit quos explicabo 
@@ -57,8 +59,8 @@
           </div>
         </div>
 
-        <div class="text-right mt-10">
-          <primary-button label="Pay now"></primary-button>
+        <div class="text-right mt-10 pay-button-wrapper">
+          <primary-button buttonClass="w-full md:w-1/3" label="Pay now"></primary-button>
         </div>
       </section>
     </div>
@@ -67,12 +69,16 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-import { formatCurrency } from '~/common/utilities';
+  import { formatCurrency } from '~/common/utilities';
 
 
   @Component
   export default class Checkout extends Vue {
-    formatCurrency = formatCurrency
+    formatCurrency = formatCurrency;
+
+    close(){
+      this.$emit('close');
+    }
   }
 </script>
 
@@ -85,49 +91,85 @@ import { formatCurrency } from '~/common/utilities';
   height: 100vh;
   z-index: 50;
   backdrop-filter: blur(10px);
+  overflow-y: scroll;
 
   .checkout-card{
-    display: inline-grid;
-    width: min(92vw, 1000px);
-    height: 80vh;
-    grid-template-columns: auto 400px;
-    overflow: hidden;
+    position: relative;
+    width: 100%;
+    display: block;
+    height: 100vh;
+    overflow: scroll;
 
-    @media screen and (max-width: 700px) {
-      width: 100%;
-      grid-template-columns: 100%;
-      height: 100vh;
-      overflow-y: scroll;
+    @media screen and (min-width: 700px) {
+      display: inline-grid;
+      grid-template-columns: auto 400px;
+      grid-template-rows: 100%;
+      width: min(92vw, 1000px);
+      height: 80vh;
+
+
+      >section{
+        height: inherit;
+        overflow-y: scroll;
+      }
 
       .left{
-        grid-row: 2;
         grid-column: 1;
+        grid-row: 1;
       }
 
       .right{
+        grid-column: 2;
         grid-row: 1;
-        grid-column: 1;
       }
-
-      >section{
-        height: fit-content;
-      }
-    }
-
-    .left{
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .right{
-      grid-column: 2;
-    }
-
-    >section{
-      height: inherit;
-      overflow-y: scroll;
     }
   }
+
+  // .checkout-card{
+  //   display: inline-grid;
+
+  //   grid-template-columns: auto 400px;
+  //   position: relative;
+  //   // overflow: hidden;
+
+  //   @media screen and (max-width: 700px) {
+  //     width: 100%;
+  //     display: block;
+  //     grid-template-columns: 100%;
+  //     grid-template-rows: auto auto;
+  //     overflow-y: scroll;
+
+  //     .left{
+  //       grid-row: 2;
+  //       grid-column: 1;
+  //     }
+
+  //     .right{
+  //       grid-row: 1;
+  //       grid-column: 1;
+  //     }
+
+  //     >section{
+  //       height: auto;
+  //       overflow-y: scroll;
+  //     }
+  //   }
+
+  //   .left{
+  //     grid-column: 1;
+  //     grid-row: 1;
+  //   }
+
+  //   .right{
+  //     grid-column: 2;
+  //     grid-row: 1;
+  //   }
+
+  //   >section{
+  //     height: inherit;
+  //     overflow-y: scroll;
+  //   }
+  // }
 
   img{
     width: 100%;
@@ -139,7 +181,7 @@ import { formatCurrency } from '~/common/utilities';
     grid-template-columns: auto auto;
     gap: 1em;
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 1000px) {
       grid-template-columns: 100%;
     }
 
@@ -151,6 +193,37 @@ import { formatCurrency } from '~/common/utilities';
 
     .full{
       grid-column: 1/-1;
+    }
+  }
+
+  .close-btn{
+    width: 40px;
+    height: 40px;
+    display: inline-grid;
+    place-content: center;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    z-index: 20;
+    font-weight: 700;
+
+    @media screen and (max-width: 700px) {
+      position: fixed;
+      top: 1em;
+      right: 1em;
+    }
+  }
+
+  .pay-button-wrapper{
+    @media screen and (max-width: 700px) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1em;
+      z-index: 20;
     }
   }
 }

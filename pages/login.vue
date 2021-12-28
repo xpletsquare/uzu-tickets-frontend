@@ -7,12 +7,12 @@
           <div>
           <h2>Login</h2>
           </div>
-          <input-field label="Email/username" ></input-field>
-          <input-field label="Password" type="password"></input-field>
+          <input-field label="Email/username" :defaultValue="email" @change="handleEmailChange" ></input-field>
+          <input-field label="Password" @change="handlePasswordChange" type="password"></input-field>
           
           <div>
           <p class="fg-password" >Forgot password</p>
-            <primary-button label="LOGIN" full=true />
+            <primary-button @click="login" label="LOGIN" :loading="loading" full=true />
             <p class="reg-alt" >Don't have an account with us already? Sign-up <NuxtLink to="/register" class="light-green-link">here</NuxtLink></p>
           </div>
         </div>
@@ -46,7 +46,37 @@
 
   @Component
   export default class LoginPage extends Vue {
+    email = '';
+    password = '';
+    loading = false;
+
+    handleEmailChange(value: string){
+      this.email = value;
+    }
+
+    handlePasswordChange(value: string){
+      this.email = value;
+    }
     
+    login(){
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+
+      console.log(payload);
+      this.loading = true;
+
+      setTimeout(() => {
+        this.$router.push('/dashboard');
+      }, 2000);
+      // validate input
+      // show loading spinner
+      // make api call
+      // show success message
+      // onSuccess => save token to localstorage
+      // redirect to dashboard
+    }
   }
 </script>
 

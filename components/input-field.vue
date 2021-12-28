@@ -3,17 +3,25 @@ import {Vue, Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class InputField extends Vue{
- message = '';
+  @Prop() label? : string ;
+  @Prop() error_message? : string ;
+  @Prop() disabled? : boolean ;
+  @Prop() type? : string ;
+  @Prop() defaultValue!: string;
 
- get isEmpty(){
-   return this.message.length === 0
- }
+  value = '';
 
- @Prop() label? : string ;
- @Prop() error_message? : string ;
- @Prop() disabled? : boolean ;
- @Prop() type? : string ;
+  get isEmpty(){
+    return this.value.length === 0
+  }
 
+  mounted() {
+    this.value = this.defaultValue || ''; 
+  }
+
+  onInputChange(){
+    this.$emit('change', this.value);
+  }
 
 }
 
@@ -24,7 +32,7 @@ export default class InputField extends Vue{
       <label class="main-input ">
        <span class="secondary-label"> </span>
 
-       <input v-model="message" :type="type ? type : 'text'"/>
+       <input v-model="value" :type="type ? type : 'text'" @change="onInputChange"/>
        <span :class="isEmpty ? 'primary-label' : 'primary-label active'"> {{ label }}</span>
       </label>
 

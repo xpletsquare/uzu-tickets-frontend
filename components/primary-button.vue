@@ -1,25 +1,41 @@
-<script lang="ts" setup>
+<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-@Component
+@Component({
+  props: ['label', 'full', 'loading', 'link_to', 'buttonClasses']
+})
 export default class PrimaryButton extends Vue {
-  @Prop() label?: string
-  @Prop() full?: boolean
-  @Prop() loading?: boolean
-  @Prop() link_to?: string
+  @Prop() label!: string
+  @Prop() full!: boolean
+  @Prop() loading!: boolean
+  @Prop() link_to!: string
+  @Prop() buttonClasses!: string
+
+  get styleClasses(){
+    return {
+      loader: this.loading ? 'loader' : 'hide',
+      button: `${this.buttonClasses || ''} ${this.full ? 'full' : ''} inline-flex`
+    }
+  }
+
+  goToLink(){
+    if(!this.link_to){
+      return;
+    }
+
+    this.$router.push(this.link_to);
+  }
 }
+
 </script>
 
 <template>
-  <NuxtLink :to="link_to ? link_to : ''">
-    <button :class="full ? 'full' : ''">
-      {{ label }}
-      <div :class="loading ? 'loader' : 'hide'"></div>
-    </button>
-  </NuxtLink>
+  <button :class="styleClasses.button">
+    {{ label }}
+    <div :class="styleClasses.loader"></div>
+  </button>
 </template>
 
-<script lang="ts" setup></script>
 
 <style lang="scss" scoped>
 button {
@@ -30,7 +46,8 @@ button {
   background-color: var(--light-green);
   height: 45px;
   border-radius: 2.5px;
-  color: var(--white);
+  // color: var(--white);
+  color: white;
   padding: 0 30px;
   text-transform: uppercase;
   font-weight: 600;

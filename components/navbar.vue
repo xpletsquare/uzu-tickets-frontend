@@ -19,7 +19,7 @@
         <NuxtLink to="/">HOME</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/">REGISTER</NuxtLink>
+        <NuxtLink to="/register">REGISTER</NuxtLink>
       </li>
       <li>
         <primary-button label='LOGIN' link_to="/login" ></primary-button>

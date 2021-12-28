@@ -35,7 +35,7 @@
           <span>Wallet</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/wallet">
+        <nuxt-link to="/dashboard/developer">
           <span><i class="fas fa-chevron-left"></i></span> 
           <span>Development</span>
         </nuxt-link>

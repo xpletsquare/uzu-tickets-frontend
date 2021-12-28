@@ -44,7 +44,9 @@
         </div>
       </section>
 
-      <button class="view-all">VIEW ALL</button>
+      <div class="view-all">
+        <primary-button label="VIEW ALL" link_to="/events"></primary-button>
+      </div>
     </div>
   </main>
 </template>
@@ -183,13 +185,13 @@ main {
   }
 
   .view-all {
-    background-color: #31d760;
-    border-radius: 5px;
-    padding: 14px 36px;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-    // width: 138px;
+    // background-color: #31d760;
+    // border-radius: 5px;
+    // padding: 14px 36px;
+    // color: #ffffff;
+    // font-size: 15px;
+    // font-weight: 600;
+    // // width: 138px;
     margin: 0 auto;
   }
 }

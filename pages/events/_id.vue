@@ -12,7 +12,8 @@
           </div>
 
           <div class="w-1/3 text-center pt-8">
-            <button class="p-3 bg-green-400 text-gray-50 rounded">Buy Tickets</button>
+            <!-- <button class="p-3 bg-green-400 text-gray-50 rounded">Buy Tickets</button> -->
+            <primary-button label="Buy Tickets"></primary-button>
           </div>
 
           <div class="text-white w-1/5 pl-20">
@@ -26,7 +27,7 @@
 
     </section> 
 
-    <section class="lg:w-3/4 mt-8 my-8 mx-auto">
+    <section class="lg:w-3/4 mt-8 my-8 mx-auto hidden md:block">
       <button> <span><i class="fas fa-angle-left"></i></span> Back</button>
     </section>
 
@@ -49,7 +50,7 @@
 
         <div class="my-8">
           <div class="font-semibold capitalize mb-2">For promoters</div>
-          <button class="w-full bg-green-700 text-gray-50 rounded py-4 px-2 font-medium uppercase">promote this event</button>
+          <primary-button label="promote this event"></primary-button>
         </div>
       </section>
 
@@ -83,14 +84,14 @@
             <div class="mb-10">
               <ticket-selection></ticket-selection>
             </div>
-            <button class="w-full md:w-2/5 bg-green-700 text-gray-50 rounded py-4 px-2 font-medium uppercase" @click="toggleCheckout">proceed to checkout</button>
+            <primary-button @click="toggleCheckout" buttonClass="w-full md:w-2/5" label="promote this event"></primary-button>
           </div>
         </div>
       </section>
     </section>
 
 
-    <checkout v-if="showCheckout"></checkout>
+    <checkout v-if="showCheckout" @close="handleCheckoutClosed"></checkout>
   </main>
 </template>
 
@@ -101,10 +102,15 @@
     layout: 'public',
   })
   export default class EventDetailPage extends Vue {
-    showCheckout = false;
+    showCheckout = true;
 
     toggleCheckout(){
+      console.log('clicked');
       this.showCheckout = !this.showCheckout;
+    }
+
+    handleCheckoutClosed(){
+      this.toggleCheckout();
     }
   }
 </script>

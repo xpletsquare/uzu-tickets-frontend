@@ -54,6 +54,8 @@ export default {
             'faMoneyBillWave',
             'faBars',
             'faTimes',
+            'faClone',
+            'faPaperPlane',
           ],
           brands: ['faTwitter', 'faLinkedin', 'faInstagram', 'faFacebookF'],
         },

@@ -21,6 +21,7 @@ export default class InputField extends Vue{
 
   onInputChange(){
     this.$emit('change', this.value);
+    this.$emit('update:value', this.value);
   }
 
 }
@@ -32,7 +33,7 @@ export default class InputField extends Vue{
       <label class="main-input ">
        <span class="secondary-label"> </span>
 
-       <input v-model="value" :type="type ? type : 'text'" @change="onInputChange"/>
+       <input v-model="value" :type="type ? type : 'text'" @keyup="onInputChange"/>
        <span :class="isEmpty ? 'primary-label' : 'primary-label active'"> {{ label }}</span>
       </label>
 

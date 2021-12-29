@@ -19,6 +19,10 @@ export default class PrimaryButton extends Vue {
   }
 
   handleClick(){
+    if(this.loading){
+      return;
+    }
+    
     this.goToLink();
     this.emitClick();
   }

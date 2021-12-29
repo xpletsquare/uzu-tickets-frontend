@@ -1,15 +1,18 @@
+import { AppState, StoreMutations } from "~/common/storeHelpers"
 
 
 export default function ({ store, redirect }: any) {
-  const { authUser } = store.state.auth
+  const { currentUser } = store.state as AppState;
   const authUserInSession = sessionStorage.getItem('auth')
 
-  // if (authUserInSession) {
-  //   const data = JSON.parse(authUserInSession)
-  //   store.commit(MUTATIONS.auth.saveAuthData, data)
-  // }
+  if (authUserInSession) {
+    const data = JSON.parse(authUserInSession)
+    store.commit(StoreMutations.setUser, data)
+  }
 
-  // if (!authUser && !authUserInSession) {
-  //   return redirect('/login')
-  // }
+  console.log({ authUserInSession, currentUser })
+
+  if (!currentUser?.token && !authUserInSession) {
+    return redirect('/login')
+  }
 }

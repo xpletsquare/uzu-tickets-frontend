@@ -1,7 +1,9 @@
 <template>
   <div>
     <navbar />
-    <nuxt />
+    <section class="content-wrapper">
+      <nuxt />
+    </section>
     <main-footer />
   </div>
 </template>
@@ -14,4 +16,7 @@ export default class extends Vue {}
 </script>
 
 <style scoped>
+.content-wrapper{
+  min-height: 70vh;
+}
 </style>

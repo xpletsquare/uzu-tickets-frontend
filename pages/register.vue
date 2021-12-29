@@ -7,21 +7,19 @@
           <div>
           <h2>Register</h2>
           </div>
-          <input-field label="Username" ></input-field>
-          <input-field label="Email" ></input-field>
-          <input-field label="Firstname" ></input-field>
-          <input-field label="Lastname" ></input-field>
-          <input-field label="Phone number" ></input-field>
-          <input-field label="Password" type="password"></input-field>
+
+          <input-field v-bind:value.sync="details.email" label="Email" ></input-field>
+          <input-field v-bind:value.sync="details.firstName" label="Firstname" ></input-field>
+          <input-field v-bind:value.sync="details.lastName" label="Lastname" ></input-field>
+          <input-field v-bind:value.sync="details.phone" label="Phone number"></input-field>
+          <input-field v-bind:value.sync="details.password" label="Password" type="password"></input-field>
           
           <div class="mt-5">
-          <!-- <p class="fg-password" >Forgot password</p> -->
-            <primary-button label="REGISTER" full=true />
+            <primary-button @click="handleSubmit" :loading="isLoading" label="REGISTER" full=true />
             <p class="reg-alt" >Already have an account with us? Login <NuxtLink to="/login" class="light-green-link">here</NuxtLink></p>
           </div>
         </div>
       </div>
-
 
       <div class="right">
         <div class="inner"> 
@@ -45,12 +43,72 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { message } from 'ant-design-vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { AuthApi } from '~/common/api/auth.api';
+import { RegisterUserPayload, User } from '~/common/models/interfaces';
+import { catchAsync } from '~/common/utilities';
 
 
   @Component
   export default class RegistrationPage extends Vue {
-    
+    isLoading = false;
+    details: RegisterUserPayload = {
+      email: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      password: ''
+    };
+
+    mounted() {
+      const userEmail = localStorage.getItem('userToActivate');
+
+      if(!userEmail){
+        return;
+      }
+
+      this.$router.push('/activate-account');
+    }
+
+    validateData(){
+      const { email, firstName, lastName, phone, password } = this.details;
+
+      const hasEmptyValue = [email, firstName, lastName, phone, password].find(key => !key?.length);
+
+      if(hasEmptyValue){
+        return 'Please enter all fields';
+      }
+
+      if(password.length < 8){
+        return 'Passwords must have at least 8 characters';
+      }
+
+      return '';
+    }
+
+    async handleSubmit(){
+      const details = {...this.details};
+      console.log(details);
+      const errorMessage = this.validateData();
+
+      if(errorMessage){
+        return message.error(errorMessage);
+      }
+
+      this.isLoading = true;
+      const { error, data } = await catchAsync(() => AuthApi.signup(details));
+      this.isLoading = false;
+
+      if(error){
+        return message.error(error as string);
+      }
+
+      message.success('Registration Successful');
+      localStorage.setItem('userToActivate', details.email as string);
+
+      this.$router.push('/activate-account');
+    }
   }
 </script>
 

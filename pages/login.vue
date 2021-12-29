@@ -42,6 +42,10 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
+  import { message } from 'ant-design-vue';
+  import { catchAsync } from '~/common/utilities';
+  import { AuthApi } from '~/common/api/auth.api';
+  import { AppState, StoreMutations } from '~/common/storeHelpers'
 
 
   @Component
@@ -50,32 +54,48 @@
     password = '';
     loading = false;
 
+    mounted() {
+      const { currentUser } = this.$store as any as AppState;
+      console.log({ currentUser });
+    }
+
     handleEmailChange(value: string){
       this.email = value;
     }
 
     handlePasswordChange(value: string){
-      this.email = value;
+      this.password = value;
     }
     
-    login(){
-      const payload = {
-        email: this.email,
-        password: this.password
-      }
-
-      console.log(payload);
-      this.loading = true;
-
-      setTimeout(() => {
-        this.$router.push('/dashboard');
-      }, 2000);
+    async login(){
       // validate input
       // show loading spinner
       // make api call
       // show success message
       // onSuccess => save token to localstorage
       // redirect to dashboard
+
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+
+      if(!payload.email.length || !payload.password.length){
+        return message.warning('Please enter a valid email and password')
+      }
+
+      this.loading = true;
+      const { error, data } = await catchAsync(() => AuthApi.login(payload.email, payload.password));
+      this.loading = false;
+
+      if(error){
+        return message.error(error as string);
+      }
+
+      this.$store.commit(StoreMutations.setUser, data.data);
+      this.$router.push('/dashboard');
+
+      message.success('Login successful');
     }
   }
 </script>

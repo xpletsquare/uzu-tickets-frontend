@@ -19,7 +19,9 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
-  @Component
+  @Component({
+    middleware: ['authenticated']
+  })
   export default class DashboardLayout extends Vue {
     
   }

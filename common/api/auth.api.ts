@@ -13,7 +13,7 @@ export const AuthApi = {
     return auth.post('/register', { ...details });
   },
 
-  verifyAccount(email: string, activationPin: number) {
-    return auth.post('/activate', { email, activationPin })
+  verifyAccount(email: string, otp: number) {
+    return auth.post('/activate', { email, otp })
   }
 }

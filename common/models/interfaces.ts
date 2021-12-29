@@ -7,9 +7,15 @@ export interface AsyncResponse {
 }
 
 export interface User {
+  id: string
+  email: string
   firstName: string
   lastName: string
-  middleName: string
-  email: string
+  middleName?: string
   phone: string
+  flagged: boolean
+  activated: boolean
+  token?: string
 }
+
+export type RegisterUserPayload = Partial<User> & { password: string };

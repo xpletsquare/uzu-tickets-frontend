@@ -21,7 +21,11 @@ export const getAuthHeaders = () => {
   }
 }
 
-export const createAxiosInstance = (baseURL: string) => {
+export const API_BASE = 'https://uzu-dev.herokuapp.com/v1/api';
+
+export const createAxiosInstance = (base: string) => {
+  const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`;
+
   return axios.create({
     baseURL,
     headers: {

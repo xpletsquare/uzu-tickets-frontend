@@ -1,6 +1,6 @@
+import { format } from 'date-fns'
 import { AxiosError, AxiosResponse } from 'axios'
 import { AnyObject, AsyncFunction, } from '../models/types'
-import { format } from 'date-fns'
 import { AsyncResponse, User } from '../models/interfaces'
 
 export const getErrorMessage = (error: AxiosError & Error) => {
@@ -69,6 +69,15 @@ export const formatCurrency = (value: string) => {
   const stringAsNumber = Number(value);
   const formattedVAlue = new Intl.NumberFormat().format(stringAsNumber)
   return '₦' + formattedVAlue
+}
+
+export const formatPercentage = (value : string) => {
+  if(!value){
+    return 'please provide a float value as param';
+  }
+  const stringAsFloat = parseFloat(value);
+  return stringAsFloat + '%';
+
 }
 
 export const truncateText = (str: string) => {

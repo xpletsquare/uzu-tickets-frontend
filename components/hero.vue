@@ -36,7 +36,7 @@ export default class Hero extends Vue {}
   margin: 0px auto 20px;
   // height: 70vh;
   height: 600px;
-  background: transparent linear-gradient(180deg, #0000001a 0%, #000000e6 100%);
+  background: transparent linear-gradient(180deg, #00000013 0%, #000000cb 100%);
   box-shadow: inset 0px 3px 6px #17000029;
 
   @media (max-width: 568px) {
@@ -50,7 +50,7 @@ export default class Hero extends Vue {}
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/cottonbro.png') no-repeat center center/cover;
+    background: url('../assets/images/photoa.jpg') no-repeat center center/cover;
     opacity: 0.7;
     z-index: -1;
   }
@@ -69,23 +69,23 @@ export default class Hero extends Vue {}
     flex-direction: column;
     justify-content: space-between;
 
-    .bold-text {
-      font-size: 40px;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 1;
-    }
-
-    .alt-text {
-      color: #31d760;
-    }
-
-    p {
-      font-size: 20px;
-      font-weight: 500;
-      color: #ffffff;
-    }
+  .bold-text {
+    font-size: 40px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1;
   }
+
+  .alt-text {
+    color: #31d760;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+}
 
   .inverted-text p {
     transform: matrix(0, -1, 1, 0, 0, 0);

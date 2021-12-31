@@ -92,10 +92,12 @@
         return message.error(error as string);
       }
 
+      message.success('Login successful');
+      sessionStorage.setItem('auth', JSON.stringify(data.data));
+      
       this.$store.commit(StoreMutations.setUser, data.data);
       this.$router.push('/dashboard');
 
-      message.success('Login successful');
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <input type="search" name="search" placeholder="Search event" />
+    <input type="search" name="search" :placeholder="placeholder" />
     <span class="icon">
       <fa icon="search" />
     </span>
@@ -8,11 +8,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class Search extends Vue {
-  
+  @Prop({ type: String, required: true }) readonly placeholder!: string
 }
 </script>
 

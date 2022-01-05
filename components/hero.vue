@@ -2,7 +2,7 @@
   <div class="hero">
     <div class="wrapper">
       <div class="main-contents">
-        <search />
+        <search placeholder="Search events" />
 
         <p>Conventory event date at Lagos</p>
         <h2 class="bold-text">
@@ -69,23 +69,23 @@ export default class Hero extends Vue {}
     flex-direction: column;
     justify-content: space-between;
 
-  .bold-text {
-    font-size: 40px;
-    font-weight: 600;
-    color: #ffffff;
-    line-height: 1;
-  }
+    .bold-text {
+      font-size: 40px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1;
+    }
 
-  .alt-text {
-    color: #31d760;
-  }
+    .alt-text {
+      color: #31d760;
+    }
 
-  p {
-    font-size: 20px;
-    font-weight: 500;
-    color: #ffffff;
+    p {
+      font-size: 20px;
+      font-weight: 500;
+      color: #ffffff;
+    }
   }
-}
 
   .inverted-text p {
     transform: matrix(0, -1, 1, 0, 0, 0);

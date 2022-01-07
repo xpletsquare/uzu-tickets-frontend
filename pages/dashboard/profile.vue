@@ -21,15 +21,15 @@
 
       <div class="profile-form">
         <div class="wide">
-          <input-field label="Email"></input-field>
+          <input-field label="Email" :defaultValue="email"></input-field>
           <span class="count"> 14/40 </span>
         </div>
         <div class="wrap">
-          <input-field label="Firstname"></input-field>
-          <input-field label="Lastname"></input-field>
-          <input-field label="Date of birth"></input-field>
-          <input-field label="Phone number"></input-field>
-          <input-field label="Gender"></input-field>
+          <input-field label="Firstname" :defaultValue="email"></input-field>
+          <input-field label="Lastname" :defaultValue="email"></input-field>
+          <input-field label="Date of birth" :defaultValue="email"></input-field>
+          <input-field label="Phone number" :defaultValue="email"></input-field>
+          <input-field label="Gender" :defaultValue="email"></input-field>
         </div>
       </div>
     </section>
@@ -54,25 +54,48 @@
       </div>
 
       <div class="reset-form">
-        <input-field label="Current password"></input-field>
-        <input-field label="New password"></input-field>
-        <input-field label="Retype password"></input-field>
+        <input-field label="Current password" type="password"></input-field>
+        <input-field label="New password" @change="handlePasswordChange" type="password"></input-field>
+        <input-field label="Retype password" @change="handleConfirmPasswordChange" type="password"></input-field>
       </div>
     </section>
 
     <div class="save">
-      <primary-button label="SAVE"></primary-button>
+      <primary-button label="SAVE" :loading="loading"></primary-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { message } from 'ant-design-vue'
+import { catchAsync } from '~/common/utilities'
+import { AuthApi } from '~/common/api/auth.api'
+import { AppState, StoreMutations } from '~/common/storeHelpers'
 
 @Component({
   layout: 'dashboard',
 })
-export default class ProfilePage extends Vue {}
+export default class ProfilePage extends Vue {
+  currentUser = null
+  email = ''
+  password = ''
+  confirmPassword = ''
+  loading = false
+
+  mounted() {
+    const { currentUser } = this.$store as any as AppState
+    console.log({ currentUser })
+  }
+
+  handlePasswordChange(value: string) {
+    this.password = value
+  }
+
+  handleConfirmPasswordChange(value: string) {
+    this.confirmPassword = value
+  }
+}
 </script>
 
 <style lang="scss" scoped>

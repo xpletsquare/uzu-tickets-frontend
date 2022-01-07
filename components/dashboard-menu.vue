@@ -6,37 +6,37 @@
 
       <div class="links-wrapper flex flex-col gap-1">
         <nuxt-link to="/dashboard/events">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Events</span>
         </nuxt-link>
 
         <nuxt-link to="/dashboard/profile">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Profile</span>
         </nuxt-link>
 
         <nuxt-link to="/dashboard/sales">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Sales</span>
         </nuxt-link>
 
         <nuxt-link to="/dashboard/customers">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Customers</span>
         </nuxt-link>
 
         <nuxt-link to="/dashboard/promoter">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Promoter</span>
         </nuxt-link>
 
         <nuxt-link to="/dashboard/wallet">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Wallet</span>
         </nuxt-link>
 
         <nuxt-link to="/dashboard/developer">
-          <span><i class="fas fa-chevron-left"></i></span> 
+          <span><i class="fas fa-chevron-left"></i></span>
           <span>Development</span>
         </nuxt-link>
       </div>
@@ -49,20 +49,24 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
+import { StoreMutations } from '~/common/storeHelpers'
 
-  @Component
-  export default class DashboardMenu extends Vue {
-    showFullMenu = true;
+@Component
+export default class DashboardMenu extends Vue {
+  showFullMenu = true
 
-    logout(){
-      this.$router.push('/');
-    }
+  logout() {
+    sessionStorage.removeItem('auth')
+    this.$store.commit(StoreMutations.setUser, null)
+
+    this.$router.push('/')
   }
+}
 </script>
 
 <style lang="scss" scoped>
-.base{
+.base {
   display: grid;
   height: 90vh;
   grid-template-rows: 50px auto 40px;
@@ -70,12 +74,11 @@
   font-size: 0.8em;
 }
 
-a{
+a {
   padding: 0.8em;
 
-  &:hover{
+  &:hover {
     background-color: rgba(255, 255, 255, 0.4);
   }
-
 }
 </style>

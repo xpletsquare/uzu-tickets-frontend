@@ -3,7 +3,7 @@
     <events-sidebar />
     <main>
       <div class="search-wrapper">
-        <search />
+        <search placeholder="Search events"/>
       </div>
 
       <div class="events">

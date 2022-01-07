@@ -4,10 +4,10 @@
 
 
 <script lang="ts">
-import { Component, Vue, Ref } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Pagination extends Vue {
- 
+  current = 2
 }
 </script>

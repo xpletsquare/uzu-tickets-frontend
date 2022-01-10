@@ -198,13 +198,14 @@ export default class CustomersPage extends Vue {}
 <style lang="scss" scoped>
 .container {
   width: 60%;
-  margin: 3rem auto;
+  margin: 0 auto;
 
   @media (max-width: 1024px) {
     width: 90%;
   }
 
   @media (max-width: 768px) {
+    margin: 2rem auto;
     width: 100%;
   }
 

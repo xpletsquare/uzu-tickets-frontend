@@ -50,12 +50,12 @@ export default class DeveloperPage extends Vue {}
 <style  lang="scss" scoped>
 .container {
   width: 50%;
-  margin: 3rem auto;
+  margin: 0 auto;
 
   @media (max-width: 1024px) {
     width: 80%;
   }
-  
+
   @media (max-width: 768px) {
     width: 100%;
   }

@@ -17,32 +17,46 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
-  @Component({
-    middleware: ['authenticated']
-  })
-  export default class DashboardLayout extends Vue {
-    
-  }
+@Component({
+  middleware: ['authenticated'],
+})
+export default class DashboardLayout extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.layout-wrapper{
+.layout-wrapper {
   display: grid;
-  grid-template-rows: 60px auto;
+  grid-template-rows: 100px auto;
   height: 100vh;
+
+  @media (max-width: 1024px) {
+    grid-template-rows: 75px auto;
+  }
 }
 
-.layout-grid{
+.layout-grid {
   display: grid;
   grid-template-columns: 300px auto;
   gap: 1em;
 
-  >div{
-    height: inherit;
-    overflow-y: scroll;
+  // >div{
+    //   height: inherit;
+  //   overflow-y: scroll;
+  // }
+
+  @media (max-width: 768px) {
+    grid-template-columns: auto;
+
+    .menu {
+      display: none;
+    }
+
+    .content{
+      width: 90%;
+      margin: 0 auto;
+    }
   }
 }
-
 </style>

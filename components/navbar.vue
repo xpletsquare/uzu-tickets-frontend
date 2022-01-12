@@ -1,36 +1,38 @@
 <template>
-<div class="main">
-<div class="nav">
-    <div class="nav-logo">
-      <NuxtLink to="/">
-        <img alt="logo" src="~/assets/images/logo.svg" />
-      </NuxtLink>
-    </div>
-
-    <!-- ============= Mobile Nav Icon =========== -->
-    <div class="mobile">
-      <div class="icon">
-        <fa icon="bars" />
+  <div class="main">
+    <div class="nav">
+      <div class="nav-logo">
+        <NuxtLink to="/">
+          <img alt="logo" src="~/assets/images/logo.svg" />
+        </NuxtLink>
       </div>
+
+      <div class="mobile nav-logo">
+        <NuxtLink to="/">
+          <img alt="logo" src="~/assets/images/mobile-logo.svg" />
+        </NuxtLink>
+      </div>
+      
+      <!-- ============= Mobile Nav Icon =========== -->
+      <div class="mobile">
+        <div class="icon">
+          <fa icon="bars" />
+        </div>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <NuxtLink to="/">HOME</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/register">REGISTER</NuxtLink>
+        </li>
+        <li>
+          <primary-button label="LOGIN" link_to="/login"></primary-button>
+        </li>
+      </ul>
     </div>
-
-    <ul class="nav-links">
-      <li>
-        <NuxtLink to="/">HOME</NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/register">REGISTER</NuxtLink>
-      </li>
-      <li>
-        <primary-button label='LOGIN' link_to="/login" ></primary-button>
-      </li>
-
-
-    </ul>
   </div>
-</div>
-  
-  
 </template>
 
 <script lang="ts">
@@ -46,10 +48,11 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.main{
+.main {
   max-height: 75px;
-  box-shadow: 0px 5px 10px rgba(0,0,0,0.05);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
 }
+
 .nav {
   width: 70%;
   display: flex;
@@ -60,6 +63,18 @@ export default class Navbar extends Vue {
 
   @media (max-width: 1024px) {
     width: 90%;
+  }
+
+  @media (max-width: 768px) {
+    margin: 10px auto;
+  }
+
+  .nav-logo {
+    display: block;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .mobile {

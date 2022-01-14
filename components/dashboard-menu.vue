@@ -2,9 +2,14 @@
 <template>
   <section class="wrapper">
     <div class="px-8 py-10 base border" v-if="showFullMenu">
-      <div class="greeting text-green-500 px-2 font-semibold">Hi Jones</div>
+      <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div>
 
       <div class="links-wrapper flex flex-col gap-1">
+        <nuxt-link to="/dashboard">
+          <span class="icon"><i class="fas fa-home-alt"></i></span>
+          <span>Dashboard</span>
+        </nuxt-link>
+
         <nuxt-link to="/dashboard/events">
           <span class="icon"><i class="fas fa-calendar-alt"></i></span>
           <span>Events</span>
@@ -55,11 +60,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { StoreMutations } from '~/common/storeHelpers'
+import { AppState, StoreMutations } from '~/common/storeHelpers'
 
 @Component
 export default class DashboardMenu extends Vue {
   showFullMenu = true
+
+  get name(){
+    const { currentUser } = this.$store.state as AppState;
+    return currentUser?.firstName || currentUser?.lastName || 'User'
+  }
 
   logout() {
     sessionStorage.removeItem('auth')

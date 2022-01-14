@@ -46,7 +46,7 @@ export default class DashboardNavbar extends Vue {}
 
 <style lang="scss" scoped>
 .main {
-  max-height: 100px;
+  max-height: 80px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
 
   @media (max-width: 768px) {
@@ -55,11 +55,11 @@ export default class DashboardNavbar extends Vue {}
 }
 
 .nav {
-  width: 70%;
+  // width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0px auto;
+  margin: 0px 2.5em;
   /* border: 1px solid red; */
 
   @media (max-width: 1024px) {
@@ -72,6 +72,8 @@ export default class DashboardNavbar extends Vue {}
 
   .nav-logo {
     display: block;
+    position: relative;
+    top: -5px;
 
     @media (max-width: 768px) {
       display: none;

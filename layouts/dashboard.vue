@@ -18,17 +18,23 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { AppState } from '~/common/storeHelpers'
 
 @Component({
   middleware: ['authenticated'],
 })
-export default class DashboardLayout extends Vue {}
+export default class DashboardLayout extends Vue {
+  get activeUser(){
+    const state = this.$store.state as AppState;
+    return state.currentUser;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .layout-wrapper {
   display: grid;
-  grid-template-rows: 100px auto;
+  grid-template-rows: 80px auto;
   height: 100vh;
 
   @media (max-width: 1024px) {

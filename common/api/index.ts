@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
-// Api Logic goes here
 
 export const getAuthHeaders = () => {
   const userInSession = localStorage.getItem('auth') || ''

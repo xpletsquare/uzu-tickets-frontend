@@ -85,7 +85,7 @@
       }
 
       this.loading = true;
-      const { error, data } = await catchAsync(() => AuthApi.login(payload.email, payload.password));
+      const { error, data } = await AuthApi.login(payload.email, payload.password);
       this.loading = false;
 
       if(error){

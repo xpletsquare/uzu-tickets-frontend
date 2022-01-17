@@ -9,7 +9,7 @@
           </p>
         </div>
         <div class="right">
-          <primary-button class="desktop-button" label="create" />
+          <primary-button @click="openNewEventPage" class="desktop-button" label="create" />
         </div>
       </div>
       <total-event-sales></total-event-sales>
@@ -30,7 +30,11 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component({
   layout: 'dashboard',
 })
-export default class ProfilePage extends Vue {}
+export default class ProfilePage extends Vue {
+  openNewEventPage(){
+    this.$router.push('/dashboard/events/create');
+  }
+}
 </script>
 
 <style lang="scss" scoped>

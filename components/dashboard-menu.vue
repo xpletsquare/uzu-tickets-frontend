@@ -1,50 +1,69 @@
 
 <template>
   <section class="wrapper">
-    <div class="px-8 py-10 base border" v-if="showFullMenu">
-      <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div>
+    <div class="px-8 py-10 base border">
+      <template v-if="!showEventsMenu">
+        <!-- <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div> -->
 
-      <div class="links-wrapper flex flex-col gap-1">
-        <nuxt-link exact active-class="active" to="/dashboard">
-          <span class="icon"><i class="fas fa-home-alt"></i></span>
-          <span>Dashboard</span>
-        </nuxt-link>
+        <div class="links-wrapper flex flex-col gap-1">
+          <nuxt-link exact active-class="active" to="/dashboard">
+            <span class="icon"><i class="fas fa-home-alt"></i></span>
+            <span>Dashboard</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/events">
-          <span class="icon"><i class="fas fa-calendar-alt"></i></span>
-          <span>Events</span>
-        </nuxt-link>
+          <nuxt-link active-class="active" to="/dashboard/events">
+            <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+            <span>Events</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/profile">
-          <span class="icon"><i class="fas fa-user-alt"></i></span>
-          <span>Profile</span>
-        </nuxt-link>
+          <nuxt-link active-class="active" to="/dashboard/profile">
+            <span class="icon"><i class="fas fa-user-alt"></i></span>
+            <span>Profile</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/sales">
-          <span class="icon"><i class="fas fa-money-check-alt"></i></span>
-          <span>Sales</span>
-        </nuxt-link>
+          <nuxt-link exact active-class="active" to="/dashboard/sales">
+            <span class="icon"><i class="fas fa-money-check-alt"></i></span>
+            <span>Sales</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/customers">
-          <span class="icon"><i class="fas fa-user-friends"></i></span>
-          <span>Customers</span>
-        </nuxt-link>
+          <nuxt-link exact active-class="active" to="/dashboard/customers">
+            <span class="icon"><i class="fas fa-user-friends"></i></span>
+            <span>Customers</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/promoter">
-          <span class="icon"><i class="fas fa-check-circle"></i></span>
-          <span>Promoter</span>
-        </nuxt-link>
+          <nuxt-link exact active-class="active" to="/dashboard/promoter">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span>Promoter</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/wallet">
-          <span class="icon"><i class="fas fa-wallet"></i></span>
-          <span>Wallet</span>
-        </nuxt-link>
+          <nuxt-link exact active-class="active" to="/dashboard/wallet">
+            <span class="icon"><i class="fas fa-wallet"></i></span>
+            <span>Wallet</span>
+          </nuxt-link>
 
-        <nuxt-link exact active-class="active" to="/dashboard/developer">
-          <span class="icon"><i class="fas fa-code"></i></span>
-          <span>Development</span>
-        </nuxt-link>
-      </div>
+          <nuxt-link exact active-class="active" to="/dashboard/developer">
+            <span class="icon"><i class="fas fa-code"></i></span>
+            <span>Development</span>
+          </nuxt-link>
+        </div>
+      </template>
+
+      <template v-if="showEventsMenu">
+        <div>
+          <button class="w-full text-left" @click="goBack">
+            <i class="fas fa-chevron-left pr-2"></i>
+            <span>Back</span>
+          </button>
+
+          <div class="space-y-4 mt-10">
+            <div @click="setEventsMode('basic')">Basic Information</div>
+            <div @click="setEventsMode('schedule')">Schedules</div>
+            <div @click="setEventsMode('tickets')">Tickets</div>
+            <div @click="setEventsMode('details')">Details</div>
+            <div @click="setEventsMode('publish')">Publish</div>
+          </div>
+        </div>
+      </template>
 
       <div class="logout px-2">
         <button @click="logout">
@@ -64,11 +83,23 @@ import { AppState, StoreMutations } from '~/common/storeHelpers'
 
 @Component
 export default class DashboardMenu extends Vue {
-  showFullMenu = true
+
+  get showEventsMenu(){
+    return this.$route.path.includes('/dashboard/events/create');
+  }
 
   get name(){
     const { currentUser } = this.$store.state as AppState;
     return currentUser?.firstName || currentUser?.lastName || 'User'
+  }
+
+  goBack(){
+    this.$router.back()
+  }
+
+  setEventsMode(eventState: string){
+    const query = {...this.$route.query, eventState};
+    this.$router.replace({ query });
   }
 
   logout() {
@@ -84,7 +115,7 @@ export default class DashboardMenu extends Vue {
 .base {
   display: grid;
   height: 90vh;
-  grid-template-rows: 50px auto 40px;
+  grid-template-rows: auto 40px;
   gap: 1em;
   // font-size: 0.8em;
 

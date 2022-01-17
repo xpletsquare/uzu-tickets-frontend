@@ -1,16 +1,16 @@
 <template>
   <div class="main">
-    <div class="nav">
+    <div class="nav pt-3">
       <div class="nav-logo">
         <NuxtLink to="/">
-          <img alt="logo" src="~/assets/images/logo.svg" />
+          <img class="w-24" alt="logo" src="~/assets/images/logo.svg" />
         </NuxtLink>
       </div>
 
       <!-- ============= Mobile =========== -->
       <div class="mobile nav-logo">
         <NuxtLink to="/">
-          <img alt="logo" src="~/assets/images/mobile-logo.svg" />
+          <img class="w-16" alt="logo" src="~/assets/images/mobile-logo.svg" />
         </NuxtLink>
       </div>
 
@@ -24,14 +24,15 @@
 
       <ul class="nav-links">
         <li>
-          <NuxtLink to="/">HOME</NuxtLink>
-        </li>
-        <li>
           <NuxtLink to="/dashboard">BUY TICKETS</NuxtLink>
         </li>
-        <li>
-          <primary-button label="BUY TICKETS" link_to="/dashboard"></primary-button>
-        </li>
+        
+        <div class="inline-flex rounded items-center gap-4 p-3 cursor-pointer hover:bg-gray-100" v-if="userName">
+          <span class="font-medium uppercase">{{userName}}</span>
+          <div class="w-8 h-8 rounded-full bg-gray-800 inline-flex justify-center items-center text-gray-50">
+            <i class="fas fa-user-alt"></i>
+          </div>
+        </div>
       </ul>
     </div>
   </div>
@@ -39,9 +40,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { AppState } from '~/common/storeHelpers'
 
 @Component
-export default class DashboardNavbar extends Vue {}
+export default class DashboardNavbar extends Vue {
+  get userName(){
+    const state = this.$store.state as AppState;
+    return state.currentUser?.firstName || '';
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -55,12 +62,11 @@ export default class DashboardNavbar extends Vue {}
 }
 
 .nav {
-  // width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0px 2.5em;
-  /* border: 1px solid red; */
+  height: inherit;
 
   @media (max-width: 1024px) {
     width: 90%;

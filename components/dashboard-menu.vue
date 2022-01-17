@@ -5,42 +5,42 @@
       <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div>
 
       <div class="links-wrapper flex flex-col gap-1">
-        <nuxt-link to="/dashboard">
+        <nuxt-link exact active-class="active" to="/dashboard">
           <span class="icon"><i class="fas fa-home-alt"></i></span>
           <span>Dashboard</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/events">
+        <nuxt-link exact active-class="active" to="/dashboard/events">
           <span class="icon"><i class="fas fa-calendar-alt"></i></span>
           <span>Events</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/profile">
+        <nuxt-link exact active-class="active" to="/dashboard/profile">
           <span class="icon"><i class="fas fa-user-alt"></i></span>
           <span>Profile</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/sales">
+        <nuxt-link exact active-class="active" to="/dashboard/sales">
           <span class="icon"><i class="fas fa-money-check-alt"></i></span>
           <span>Sales</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/customers">
+        <nuxt-link exact active-class="active" to="/dashboard/customers">
           <span class="icon"><i class="fas fa-user-friends"></i></span>
           <span>Customers</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/promoter">
+        <nuxt-link exact active-class="active" to="/dashboard/promoter">
           <span class="icon"><i class="fas fa-check-circle"></i></span>
           <span>Promoter</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/wallet">
+        <nuxt-link exact active-class="active" to="/dashboard/wallet">
           <span class="icon"><i class="fas fa-wallet"></i></span>
           <span>Wallet</span>
         </nuxt-link>
 
-        <nuxt-link to="/dashboard/developer">
+        <nuxt-link exact active-class="active" to="/dashboard/developer">
           <span class="icon"><i class="fas fa-code"></i></span>
           <span>Development</span>
         </nuxt-link>
@@ -105,18 +105,23 @@ export default class DashboardMenu extends Vue {
 }
 
 a {
-  padding: 0.6em;
+  padding: 0.6em 1.5em;
   font-size: 12pt;
-  color: #000000;
+  color: #0000007A;
+  background: rgba(255, 255, 255, 0.277);
+  border-radius: 5px;
+  margin-bottom: 12px;
 
   span.icon {
-    margin-right: 10px;
-    font-size: 14pt;
+    display: inline-block;
+    font-size: 14px;
+    width: 40px;
   }
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-    color: var(--light-green);
+  &:hover, &.active {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: var(--dark-green);
+    font-weight: 500;
   }
 }
 </style>

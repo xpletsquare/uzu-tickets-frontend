@@ -42,6 +42,13 @@ export default class DashboardLayout extends Vue {
   }
 }
 
+.content{
+  padding: 2em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: calc(100vh - 80px);
+}
+
 .layout-grid {
   display: grid;
   grid-template-columns: 300px auto;
@@ -57,11 +64,6 @@ export default class DashboardLayout extends Vue {
 
     .menu {
       display: none;
-    }
-
-    .content{
-      width: 90%;
-      margin: 0 auto;
     }
   }
 }

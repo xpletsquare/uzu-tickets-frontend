@@ -56,11 +56,22 @@
           </button>
 
           <div class="space-y-4 mt-10">
-            <div @click="setEventsMode('basic')">Basic Information</div>
-            <div @click="setEventsMode('schedule')">Schedules</div>
-            <div @click="setEventsMode('tickets')">Tickets</div>
-            <div @click="setEventsMode('details')">Details</div>
-            <div @click="setEventsMode('publish')">Publish</div>
+            <div class="event-link" @click="setEventsMode('basic')">
+              <i class="fas fa-check-circle pr-2"></i>
+              Basic Information
+            </div>
+            <div class="event-link" @click="setEventsMode('schedule')">
+              <i class="fas fa-check-circle pr-2"></i>Schedules
+            </div>
+            <div class="event-link" @click="setEventsMode('tickets')">
+              <i class="fas fa-check-circle pr-2"></i>Tickets
+            </div>
+            <div class="event-link" @click="setEventsMode('details')">
+              <i class="fas fa-check-circle pr-2"></i>Details
+            </div>
+            <div class="event-link" @click="setEventsMode('publish')">
+              <i class="fas fa-check-circle pr-2"></i>Publish
+            </div>
           </div>
         </div>
       </template>
@@ -83,23 +94,24 @@ import { AppState, StoreMutations } from '~/common/storeHelpers'
 
 @Component
 export default class DashboardMenu extends Vue {
-
-  get showEventsMenu(){
-    return this.$route.path.includes('/dashboard/events/create');
+  get showEventsMenu() {
+    return (
+      this.$route.path.includes('/dashboard/events/create') || this.$route.path.includes('/dashboard/events/details')
+    )
   }
 
-  get name(){
-    const { currentUser } = this.$store.state as AppState;
+  get name() {
+    const { currentUser } = this.$store.state as AppState
     return currentUser?.firstName || currentUser?.lastName || 'User'
   }
 
-  goBack(){
+  goBack() {
     this.$router.back()
   }
 
-  setEventsMode(eventState: string){
-    const query = {...this.$route.query, eventState};
-    this.$router.replace({ query });
+  setEventsMode(eventState: string) {
+    const query = { ...this.$route.query, eventState }
+    this.$router.replace({ query })
   }
 
   logout() {
@@ -119,11 +131,11 @@ export default class DashboardMenu extends Vue {
   gap: 1em;
   // font-size: 0.8em;
 
-  .greeting {
-    font-size: 22pt;
-    color: #15b743;
-    // color: var(--light-green);
-  }
+  // .greeting {
+  //   font-size: 22pt;
+  //   color: #15b743;
+  //   // color: var(--light-green);
+  // }
 
   .links-wrapper {
     margin-top: 1rem;
@@ -135,10 +147,11 @@ export default class DashboardMenu extends Vue {
   }
 }
 
-a {
+a,
+.event-link {
   padding: 0.6em 1.5em;
   font-size: 12pt;
-  color: #0000007A;
+  color: #0000007a;
   background: rgba(255, 255, 255, 0.277);
   border-radius: 5px;
   margin-bottom: 12px;
@@ -149,7 +162,8 @@ a {
     width: 40px;
   }
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     background-color: rgba(255, 255, 255, 0.7);
     color: var(--dark-green);
     font-weight: 500;

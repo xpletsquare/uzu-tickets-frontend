@@ -146,7 +146,7 @@ export default class FilterSideBar extends Vue {
       width: 60%;
       margin: 0;
     }
-    
+
     @media (max-width: 568px) {
       width: 100%;
     }

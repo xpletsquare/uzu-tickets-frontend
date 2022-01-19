@@ -3,16 +3,11 @@
     <div class="nav">
       <div class="nav-logo">
         <NuxtLink to="/">
-          <img alt="logo" src="~/assets/images/logo.svg" />
+          <img class="w-24 hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg" />
+          <img class="w-12 inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
         </NuxtLink>
       </div>
 
-      <div class="mobile nav-logo">
-        <NuxtLink to="/">
-          <img alt="logo" src="~/assets/images/mobile-logo.svg" />
-        </NuxtLink>
-      </div>
-      
       <!-- ============= Mobile Nav Icon =========== -->
       <div class="mobile">
         <div class="icon">
@@ -23,6 +18,15 @@
       <ul class="nav-links">
         <li>
           <NuxtLink to="/">HOME</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/">BUY TICKETS</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/">ABOUT</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/">BLOG</NuxtLink>
         </li>
         <li>
           <NuxtLink to="/register">REGISTER</NuxtLink>
@@ -54,7 +58,7 @@ export default class Navbar extends Vue {
 }
 
 .nav {
-  width: 70%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,13 +73,13 @@ export default class Navbar extends Vue {
     margin: 10px auto;
   }
 
-  .nav-logo {
-    display: block;
+  // .nav-logo {
+  //   display: block;
 
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
+  //   @media (max-width: 768px) {
+  //     // display: none;
+  //   }
+  // }
 
   .mobile {
     display: none;
@@ -100,6 +104,10 @@ export default class Navbar extends Vue {
     justify-content: space-between;
     align-items: center;
     gap: 40px;
+
+    @media (max-width: 1024px) {
+      gap: 0px;
+    }
 
     @media (max-width: 768px) {
       display: none;

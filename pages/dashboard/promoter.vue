@@ -259,7 +259,7 @@ export default class PromoterPage extends Vue {
     align-items: center;
     justify-content: space-between;
     margin: 2rem 0;
-    max-width: 28%;
+    max-width: 30%;
 
     @media (max-width: 768px) {
       max-width: 100%;
@@ -297,7 +297,7 @@ export default class PromoterPage extends Vue {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 80%;
+      width: 85%;
 
       @media (max-width: 768px) {
         width: 100%;

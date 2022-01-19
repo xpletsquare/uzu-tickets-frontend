@@ -5,11 +5,16 @@ import { formatCurrency } from '~/common/utilities/index'
 @Component
 export default class DashboardEventCard extends Vue {
   formatCurrency = formatCurrency
+
+  openEvent() {
+    this.$router.push('/dashboard/events/details')
+    // this.$router.push('/dashboard/events/create')
+  }
 }
 </script>
 
 <template>
-  <main>
+  <main @click="openEvent">
     <div class="container">
       <div class="desktop">
         <div class="event-name">Codova hive</div>

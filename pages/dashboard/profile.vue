@@ -10,7 +10,7 @@
           </p>
         </div>
         <div class="btn">
-          <button>
+          <button @click="setEdit('profile')">
             Edit
             <span class="icon">
               <i class="fas fa-pen"></i>
@@ -21,15 +21,40 @@
 
       <div class="profile-form">
         <div class="wide">
-          <input-field label="Email" :defaultValue="email"></input-field>
+          <input-field label="Email" :defaultValue="activeUser.email" :disabled="profileEditDisabled"></input-field>
           <span class="count"> 14/40 </span>
         </div>
         <div class="wrap">
-          <input-field label="Firstname" :defaultValue="email"></input-field>
-          <input-field label="Lastname" :defaultValue="email"></input-field>
-          <input-field label="Date of birth" :defaultValue="email"></input-field>
-          <input-field label="Phone number" :defaultValue="email"></input-field>
-          <input-field label="Gender" :defaultValue="email"></input-field>
+          <input-field
+            label="Firstname"
+            :defaultValue="capitalize(activeUser.firstName)"
+            @change="handleFirstNameChange"
+            :disabled="profileEditDisabled"
+          ></input-field>
+          <input-field
+            label="Lastname"
+            :defaultValue="capitalize(activeUser.lastName)"
+            @change="handleLastNameChange"
+            :disabled="profileEditDisabled"
+          ></input-field>
+          <input-field
+            label="Date of birth"
+            :defaultValue="dob"
+            @change="handleDOBChange"
+            :disabled="profileEditDisabled"
+          ></input-field>
+          <input-field
+            label="Phone number"
+            :defaultValue="activeUser.phone"
+            @change="handlePhoneChange"
+            :disabled="profileEditDisabled"
+          ></input-field>
+          <input-field
+            label="Gender"
+            :defaultValue="gender"
+            @change="handleGenderChange"
+            :disabled="profileEditDisabled"
+          ></input-field>
         </div>
       </div>
     </section>
@@ -44,7 +69,7 @@
           </p>
         </div>
         <div class="btn">
-          <button>
+          <button @click="setEdit('password')">
             Edit
             <span class="icon">
               <i class="fas fa-pen"></i>
@@ -54,14 +79,29 @@
       </div>
 
       <div class="reset-form">
-        <input-field label="Current password" type="password"></input-field>
-        <input-field label="New password" @change="handlePasswordChange" type="password"></input-field>
-        <input-field label="Retype password" @change="handleConfirmPasswordChange" type="password"></input-field>
+        <input-field
+          label="Current password"
+          type="password"
+          @change="handleCurrentPasswordChange"
+          :disabled="passwordEditDisabled"
+        ></input-field>
+        <input-field
+          label="New password"
+          @change="handleNewPasswordChange"
+          type="password"
+          :disabled="passwordEditDisabled"
+        ></input-field>
+        <input-field
+          label="Retype password"
+          @change="handleConfirmPasswordChange"
+          type="password"
+          :disabled="passwordEditDisabled"
+        ></input-field>
       </div>
     </section>
 
     <div class="save">
-      <primary-button label="SAVE" :loading="loading"></primary-button>
+      <primary-button label="SAVE" @click="save" :loading="loading"></primary-button>
     </div>
   </div>
 </template>
@@ -69,31 +109,77 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
-import { catchAsync } from '~/common/utilities'
 import { AuthApi } from '~/common/api/auth.api'
-import { AppState, StoreMutations } from '~/common/storeHelpers'
+import { AppState, StoreMutations, AuthUser } from '~/common/storeHelpers'
 
 @Component({
   layout: 'dashboard',
 })
 export default class ProfilePage extends Vue {
-  currentUser = null
-  email = ''
+  dob = ''
+  gender = ''
+  currentPassword = ''
   password = ''
   confirmPassword = ''
   loading = false
+  profileEditDisabled = true
+  passwordEditDisabled = true
 
-  mounted() {
-    const { currentUser } = this.$store as any as AppState
-    console.log({ currentUser })
+  get activeUser() {
+    const { currentUser } = this.$store.state as AppState
+    return currentUser
   }
 
-  handlePasswordChange(value: string) {
+  capitalize(value: string) {
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+
+  setEdit(section: string) {
+    console.log(section)
+
+    if (section === 'profile') {
+      this.profileEditDisabled = false
+      // this.profileEditDisabled = !this.profileEditDisabled
+    }
+
+    if (section === 'password') {
+      this.passwordEditDisabled = false
+      // this.passwordEditDisabled = !this.passwordEditDisabled
+    }
+  }
+
+  handleFirstNameChange(value: string) {
+    console.log(value)
+  }
+  handleLastNameChange(value: string) {
+    console.log(value)
+  }
+  handlePhoneChange(value: string) {
+    console.log(value)
+  }
+  handleDOBChange(value: string) {
+    console.log(value)
+  }
+  handleGenderChange(value: string) {
+    console.log(value)
+  }
+
+  handleCurrentPasswordChange(value: string) {
+    this.currentPassword = value
+  }
+  handleNewPasswordChange(value: string) {
     this.password = value
   }
-
   handleConfirmPasswordChange(value: string) {
     this.confirmPassword = value
+  }
+
+  save() {
+    console.log('saving')
+    if (!this.profileEditDisabled) {
+      // console.log(this.activeUser)
+      console.log("this.activeUser")
+    }
   }
 }
 </script>

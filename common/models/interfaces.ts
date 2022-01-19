@@ -19,3 +19,36 @@ export interface User {
 }
 
 export type RegisterUserPayload = Partial<User> & { password: string };
+
+export interface ITicket {
+  id: string
+  title: string
+  price: string | number
+  schedule: string
+}
+
+export interface ISchedule {
+  date: string
+  start: string
+  end: string
+}
+
+export interface EventDetailsFull {
+  id: string
+  title: string
+  images: {
+    landscape: string
+    portrait: string
+  },
+  description: string
+  category: string
+  location: string
+  schedules: ISchedule[]
+  tickets: ITicket[]
+  tags: string[]
+  isPublished: boolean
+}
+
+export interface ElementWithValidateFunction {
+  validate: () => string;
+}

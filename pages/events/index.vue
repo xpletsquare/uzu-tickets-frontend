@@ -1,6 +1,7 @@
 <template>
   <div class="events-page">
     <events-sidebar />
+    
     <main>
       <div class="search-wrapper">
         <search placeholder="Search events"/>

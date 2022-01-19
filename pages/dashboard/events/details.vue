@@ -1,7 +1,6 @@
 <template>
   <div>
     New Event - {{currentMode}}
-    <event-details></event-details>
   </div>
 </template>
 

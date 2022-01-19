@@ -49,31 +49,7 @@
       </template>
 
       <template v-if="showEventsMenu">
-        <div>
-          <button class="w-full text-left" @click="goBack">
-            <i class="fas fa-chevron-left pr-2"></i>
-            <span>Back</span>
-          </button>
-
-          <div class="space-y-4 mt-10">
-            <div class="event-link" @click="setEventsMode('basic')">
-              <i class="fas fa-check-circle pr-2"></i>
-              Basic Information
-            </div>
-            <div class="event-link" @click="setEventsMode('schedule')">
-              <i class="fas fa-check-circle pr-2"></i>Schedules
-            </div>
-            <div class="event-link" @click="setEventsMode('tickets')">
-              <i class="fas fa-check-circle pr-2"></i>Tickets
-            </div>
-            <div class="event-link" @click="setEventsMode('details')">
-              <i class="fas fa-check-circle pr-2"></i>Details
-            </div>
-            <div class="event-link" @click="setEventsMode('publish')">
-              <i class="fas fa-check-circle pr-2"></i>Publish
-            </div>
-          </div>
-        </div>
+        <events-menu></events-menu>
       </template>
 
       <div class="logout px-2">
@@ -105,14 +81,6 @@ export default class DashboardMenu extends Vue {
     return currentUser?.firstName || currentUser?.lastName || 'User'
   }
 
-  goBack() {
-    this.$router.back()
-  }
-
-  setEventsMode(eventState: string) {
-    const query = { ...this.$route.query, eventState }
-    this.$router.replace({ query })
-  }
 
   logout() {
     sessionStorage.removeItem('auth')

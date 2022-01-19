@@ -89,7 +89,6 @@ import { catchAsync } from '~/common/utilities';
 
     async handleSubmit(){
       const details = {...this.details};
-      console.log(details);
       const errorMessage = this.validateData();
 
       if(errorMessage){
@@ -97,7 +96,7 @@ import { catchAsync } from '~/common/utilities';
       }
 
       this.isLoading = true;
-      const { error, data } = await catchAsync(() => AuthApi.signup(details));
+      const { error } = await catchAsync(() => AuthApi.signup(details));
       this.isLoading = false;
 
       if(error){

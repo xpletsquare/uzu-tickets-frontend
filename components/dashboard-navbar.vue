@@ -1,47 +1,34 @@
 <template>
   <div class="main">
-    <div class="nav">
+    <div class="nav pt-3">
       <div class="nav-logo">
         <NuxtLink to="/">
-          <img alt="logo" src="~/assets/images/logo.svg" />
+          <img class="w-24 hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg" />
+          <img class="w-12 inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
         </NuxtLink>
       </div>
 
-      <!-- ============= Mobile =========== -->
-      <div class="mobile nav-logo">
-        <NuxtLink to="/">
-          <img alt="logo" src="~/assets/images/mobile-logo.svg" />
-        </NuxtLink>
-      </div>
-
-      <div class="mobile user">
-        <span> Jones </span>
-        <div class="icon">
-          <i class="fas fa-user-circle"></i>
+      <div class="inline-flex rounded items-center gap-4 md:p-3 cursor-pointer hover:bg-gray-100" v-if="userName">
+        <span class="font-medium uppercase">{{userName}}</span>
+        <div class="w-8 h-8 rounded-full bg-gray-800 inline-flex justify-center items-center text-gray-50">
+          <i class="fas fa-user-alt"></i>
         </div>
       </div>
-      <!-- ============= End Mobile =========== -->
-
-      <ul class="nav-links">
-        <li>
-          <NuxtLink to="/">HOME</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/dashboard">BUY TICKETS</NuxtLink>
-        </li>
-        <li>
-          <primary-button label="BUY TICKETS" link_to="/dashboard"></primary-button>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { AppState } from '~/common/storeHelpers'
 
 @Component
-export default class DashboardNavbar extends Vue {}
+export default class DashboardNavbar extends Vue {
+  get userName(){
+    const state = this.$store.state as AppState;
+    return state.currentUser?.firstName || '';
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -55,29 +42,28 @@ export default class DashboardNavbar extends Vue {}
 }
 
 .nav {
-  // width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0px 2.5em;
-  /* border: 1px solid red; */
+  margin: 0px 2em;
+  height: inherit;
 
   @media (max-width: 1024px) {
-    width: 90%;
+    // width: 90%;
   }
 
-  @media (max-width: 768px) {
-    margin: 10px auto;
-  }
+  // @media (max-width: 768px) {
+  //   margin: 10px auto;
+  // }
 
   .nav-logo {
     display: block;
     position: relative;
-    top: -5px;
+    // top: -5px;
 
-    @media (max-width: 768px) {
-      display: none;
-    }
+    // @media (max-width: 768px) {
+    //   display: none;
+    // }
   }
 
   .mobile {
@@ -114,12 +100,12 @@ export default class DashboardNavbar extends Vue {}
     align-items: center;
     gap: 40px;
 
-    @media (max-width: 768px) {
-      display: none;
-    }
+    // @media (max-width: 768px) {
+    //   display: none;
+    // }
 
     li {
-      padding: 14px 24px;
+      // padding: 14px 24px;
 
       a {
         text-transform: uppercase;

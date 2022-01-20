@@ -1,4 +1,3 @@
-
 // THIS FILE HOLDS ALL THE INTERFACES FOR THE APPLICATION
 export interface AsyncResponse {
   data: any
@@ -12,13 +11,15 @@ export interface User {
   firstName: string
   lastName: string
   middleName?: string
+  dob?: string // date of birth
+  gender?: string
   phone: string
   flagged: boolean
   activated: boolean
   token?: string
 }
 
-export type RegisterUserPayload = Partial<User> & { password: string };
+export type RegisterUserPayload = Partial<User> & { password: string }
 
 export interface ITicket {
   id: string
@@ -39,7 +40,7 @@ export interface EventDetailsFull {
   images: {
     landscape: string
     portrait: string
-  },
+  }
   description: string
   category: string
   location: string
@@ -50,5 +51,5 @@ export interface EventDetailsFull {
 }
 
 export interface ElementWithValidateFunction {
-  validate: () => string;
+  validate: () => string
 }

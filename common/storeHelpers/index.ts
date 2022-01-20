@@ -1,22 +1,23 @@
-import { User } from "../models/interfaces";
-
+import { User } from '../models/interfaces'
 
 export interface AppState {
   currentUser: AuthUser | null
 }
 
 export class AuthUser implements User {
-  id = '';
-  email = '';
-  firstName = '';
-  lastName = '';
-  middleName = '';
+  id = ''
+  email = ''
+  firstName = ''
+  lastName = ''
+  middleName = ''
+  dob = '' // date of birth
+  gender = ''
   phone = ''
-  activated = false;
-  flagged = false;
-  token = '';
+  activated = false
+  flagged = false
+  token = ''
 }
 
 export enum StoreMutations {
-  setUser = 'setUser'
+  setUser = 'setUser',
 }

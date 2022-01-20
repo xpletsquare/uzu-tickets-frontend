@@ -5,7 +5,14 @@
       <span>Back</span>
     </button>
 
-    <div class="space-y-4 mt-10">
+    <template v-if="showEventName">
+      <!-- <div class="event-name">Codova hive</div> -->
+      <div class="md:w-3/4 mt-5 event-name">
+        <multiselect v-model="selectValue" :options="options" :show-labels="false" placeholder="Codova hive"></multiselect>
+      </div>
+    </template>
+
+    <div class="space-y-4 mt-8">
       <div class="event-link" :class="shouldShowAsPassed(1)" @click="setEventsMode('basic', 1)">
         <i class="fas fa-check-circle pr-2"></i> Basic Information
       </div>
@@ -26,32 +33,46 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
+import Multiselect from 'vue-multiselect'
 
-  @Component
-  export default class EventsMenu extends Vue {
-    get currentStage(){
-      const stage = this.$route.query.stage as string || '1';
-      return parseInt(stage);
-    }
+@Component({
+  components: { Multiselect },
+})
+export default class EventsMenu extends Vue {
+  selectValue: string = ''
+  options: string[] = ['Event 1', 'Event 2', 'Event 3', 'Event 4', 'Event 5']
 
-    shouldShowAsPassed(target: number){
-      return this.currentStage >= target ? 'passed' : ''
-    }
-
-    setEventsMode(eventState: string, stage = 1) {
-      const stageAsString = stage + '';
-      const query = { ...this.$route.query, eventState, stage: stageAsString }
-      this.$router.replace({ query })
-    }
-
-    goBack() {
-      this.$router.back()
-    }
+  get showEventName() {
+    return this.$route.path.includes('/dashboard/events/details')
   }
+
+  get currentStage() {
+    const stage = (this.$route.query.stage as string) || '1'
+    return parseInt(stage)
+  }
+
+  shouldShowAsPassed(target: number) {
+    return this.currentStage >= target ? 'passed' : ''
+  }
+
+  setEventsMode(eventState: string, stage = 1) {
+    const stageAsString = stage + ''
+    const query = { ...this.$route.query, eventState, stage: stageAsString }
+    this.$router.replace({ query })
+  }
+
+  goBack() {
+    this.$router.back()
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+.event-name {
+  border: 1px solid #15b743;
+}
+
 .event-link {
   padding: 0.6em 1.5em;
   font-size: 12pt;
@@ -59,14 +80,17 @@
   background: rgba(255, 255, 255, 0.277);
   border-radius: 5px;
   margin-bottom: 12px;
+  cursor: pointer;
 
-  &:hover,
-  &.active,
   &.passed {
     background-color: rgba(255, 255, 255, 0.7);
     color: var(--light-green);
     font-weight: 500;
   }
 
+  &:hover,
+  &.active {
+    color: var(--dark-green);
+  }
 }
 </style>

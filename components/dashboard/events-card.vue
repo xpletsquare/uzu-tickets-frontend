@@ -43,6 +43,7 @@ export default class DashboardEventCard extends Vue {
 main {
   width: 100%;
 }
+
 .container {
   width: 100%;
 

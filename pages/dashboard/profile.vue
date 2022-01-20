@@ -116,8 +116,10 @@ import { AppState, StoreMutations, AuthUser } from '~/common/storeHelpers'
   layout: 'dashboard',
 })
 export default class ProfilePage extends Vue {
+  // user: AuthUser | null = null
   dob = ''
   gender = ''
+
   currentPassword = ''
   password = ''
   confirmPassword = ''
@@ -129,6 +131,27 @@ export default class ProfilePage extends Vue {
     const { currentUser } = this.$store.state as AppState
     return currentUser
   }
+
+  // mounted() {
+  //   if (this.activeUser) {
+  //     this.user = { ...this.activeUser }
+  //     return
+  //   }
+
+  //   this.user = {
+  //     id: '',
+  //     email: '',
+  //     firstName: '',
+  //     middleName: '',
+  //     lastName: '',
+  //     dob: '',
+  //     gender: '',
+  //     phone: '',
+  //     activated: false,
+  //     flagged: false,
+  //     token: '',
+  //   }
+  // }
 
   capitalize(value: string) {
     return value.charAt(0).toUpperCase() + value.slice(1)
@@ -178,7 +201,7 @@ export default class ProfilePage extends Vue {
     console.log('saving')
     if (!this.profileEditDisabled) {
       // console.log(this.activeUser)
-      console.log("this.activeUser")
+      console.log('this.activeUser')
     }
   }
 }

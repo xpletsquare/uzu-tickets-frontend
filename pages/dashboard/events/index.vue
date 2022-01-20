@@ -12,7 +12,7 @@
           <primary-button @click="openNewEventPage" class="desktop-button" label="create" />
         </div>
       </div>
-      <total-event-sales></total-event-sales>
+      <dashboard-total-event-sales></dashboard-total-event-sales>
       <dashboard-events-card></dashboard-events-card>
       <dashboard-events-card></dashboard-events-card>
       <dashboard-events-card></dashboard-events-card>

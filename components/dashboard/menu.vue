@@ -49,7 +49,7 @@
       </template>
 
       <template v-if="showEventsMenu">
-        <events-menu></events-menu>
+        <dashboard-events-menu></dashboard-events-menu>
       </template>
 
       <div class="logout px-2">
@@ -80,7 +80,6 @@ export default class DashboardMenu extends Vue {
     const { currentUser } = this.$store.state as AppState
     return currentUser?.firstName || currentUser?.lastName || 'User'
   }
-
 
   logout() {
     sessionStorage.removeItem('auth')
@@ -115,8 +114,7 @@ export default class DashboardMenu extends Vue {
   }
 }
 
-a,
-.event-link {
+a {
   padding: 0.6em 1.5em;
   font-size: 12pt;
   color: #0000007a;

@@ -19,8 +19,8 @@
   </div>
       </div>
    </div>
-   <div id="app2" class="solid">
-      <div class="border2">
+   <div id="app" class="solid">
+      <div class="border">
           <div class="center"><label for="file-input">
     <div class="i"><img src="../assets/images/imgup.png" height="35pt" width="35pt"/></div>
     <p>Upload Image</p>
@@ -55,18 +55,6 @@
     onFileChange(e) {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
-    }
-  },
-  el: '#app2',
-  data() {
-    return {
-      url2: null,
-    }
-  },
-  methods: {
-    onFileChange(e) {
-      const file = e.target.files[0];
-      this.url2 = URL.createObjectURL(file);
     }
   }
 }       

@@ -51,6 +51,9 @@
     <div class="description mt-10">
       <p>Descripion</p>
       <v-textarea class="txtarea" counter="100" filled @input="handleDescriptionChange"></v-textarea>
+      <!-- <v-textarea class="txtarea" counter="100" filled :value.sync="formFields.description"></v-textarea> -->
+
+      <!-- <div>{{ this.formFields.description }}</div> -->
     </div>
   </div>
 </template>
@@ -90,16 +93,15 @@ export default class DetailsForm extends Vue {
   }
 
   handleDescriptionChange(value: string) {
-    console.log(value)
-
     this.formFields.description = value
   }
 
   validate(): string {
     const { description } = this.formFields
+    console.log(description)
 
     if (!description) {
-      return 'Please fill in the description'
+      return 'Please add a description'
     }
 
     return ''
@@ -142,34 +144,5 @@ h2 {
   > input {
     display: none;
   }
-}
-
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
-}
-
-.custom-file-input::before {
-  content: 'Upload image';
-  display: inline-block;
-  background-image: url('~/assets/images/imgup.png');
-  border: 1px solid #999;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  font-size: 10pt;
-}
-
-.custom-file-input:hover::before {
-  border-color: black;
-}
-
-.custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 </style>

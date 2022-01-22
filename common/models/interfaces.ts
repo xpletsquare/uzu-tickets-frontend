@@ -22,9 +22,10 @@ export interface User {
 export type RegisterUserPayload = Partial<User> & { password: string }
 
 export interface ITicket {
-  id: string
+  // id: string
   title: string
-  price: string | number
+  price: string
+  // price: string | number
   schedule: string
 }
 

@@ -6,11 +6,11 @@
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.
       </p>
 
-      <input-field label="Title" v-bind:value.sync="formFields.title" class="mt-8"></input-field>
+      <input-field label="Title" :value.sync="formFields.title" class="mt-8"></input-field>
 
       <div class="md:w-2/4 mt-4 border rounded border-gray-500">
         <multiselect
-          v-model="selectValue"
+          v-model="formFields.category"
           :options="categories"
           :show-labels="false"
           placeholder="Category"
@@ -22,33 +22,32 @@
         <p>Improve discoverability of your event by adding tags relevant to the subject matter.</p>
 
         <div class="flex">
-          <input-field label="Tags" class="bi"></input-field> <primary-button class="btn" label="Add" />
+          <input-field label="Tags" class="bi" :value.sync="tag"></input-field>
+          <primary-button class="btn" label="Add" @click="addItem" />
         </div>
 
-        <div class="my-6">
-          <span class="filled p-2 text-xs cursor-pointer">
-            category 1
-            <i class="fa fa-times ml-2" aria-hidden="true"></i
+        <div class="my-6 flex flex-wrap">
+          <span class="filled p-2 text-xs cursor-pointer" v-for="(tag, index) in formFields.tags" :key="index">
+            {{ tag }}
+            <i class="fa fa-times ml-2" aria-hidden="true" @click="removeItem(tag)"></i
           ></span>
         </div>
       </div>
     </section>
-    <!-- <v-divider></v-divider> -->
 
     <section class="location">
       <h2 class="mt-4">Location</h2>
       <p>Help people in the area discover your event and let attendees know where to show up.</p>
       <secondary-button label="Venue" class="mr-2"></secondary-button>
-      <primary-button label="Online event"></primary-button>
-      <input-field label="Search location" class="mt-4"></input-field>
-      <!-- <v-divider></v-divider> -->
+      <primary-button label="Online event" @click="setOnlineEvent"></primary-button>
+      <input-field label="Search location" class="mt-4" :value.sync="formFields.location"></input-field>
     </section>
 
     <section class="date-time">
       <h2>Date and time</h2>
       <p>Help people in the area discover your event and let attendees know where to show up.</p>
-      <secondary-button label="Single event" class="mr-2"></secondary-button>
-      <primary-button label="Reoccuring event"></primary-button>
+      <secondary-button label="Single event" class="mr-2" @click="setSingleEvent"></secondary-button>
+      <primary-button label="Reoccuring event" @click="setMultipleEvent"></primary-button>
 
       <p class="mt-10 py-6">
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique. Name
@@ -61,6 +60,7 @@
 </template>
 
 <script lang="ts">
+import { message } from 'ant-design-vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { EventDetailsFull } from '~/common/models/interfaces'
 import Multiselect from 'vue-multiselect'
@@ -70,14 +70,47 @@ import Multiselect from 'vue-multiselect'
 })
 export default class BasicForm extends Vue {
   @Prop() details!: EventDetailsFull
+
   selectValue: string = ''
   categories: string[] = ['fashion', 'art', 'business']
+  tag: string = ''
 
   formFields: Partial<EventDetailsFull> = {
     title: '',
     category: '',
-    tags: [],
+    tags: ['category 1', 'category 2', 'category 3'],
     location: '',
+  }
+
+  addItem() {
+    if (this.tag === '') {
+      message.warning('Add a tag')
+      return
+    }
+
+    this.formFields.tags?.push(this.tag)
+
+    // fix bug with clearing tag
+    this.tag = ''
+    console.log(this.tag)
+  }
+
+  removeItem(item: string) {
+    // console.log(tag)
+    const filtered = this.formFields.tags?.filter((eTag) => eTag !== item)
+
+    // console.log(filtered)
+    this.formFields.tags = filtered
+  }
+
+  setOnlineEvent() {
+    message.info('Setting online event')
+  }
+  setSingleEvent() {
+    message.info('Setting single event')
+  }
+  setMultipleEvent() {
+    message.info('Setting multiple event')
   }
 
   validate(): string {
@@ -87,7 +120,7 @@ export default class BasicForm extends Vue {
       return 'Invalid title'
     }
     if (!category) {
-      return 'Invalid title'
+      return 'Invalid category'
     }
     if (!tags?.length) {
       return 'Add tag(s)'
@@ -110,20 +143,6 @@ section {
   }
 }
 
-// .drpdown {
-//   width: 325pt;
-//   border: 1px solid var(--grey);
-//   min-height: 45px;
-//   padding: 0 15px;
-//   border-radius: 2.5px;
-// }
-// .v-select:before {
-//   border-style: none;
-// }
-// .v-select:after {
-//   border-style: none;
-// }
-
 .btn {
   float: right;
   margin-top: 10px;
@@ -133,10 +152,6 @@ section {
   width: 551pt;
   margin-right: 10pt;
 }
-
-// .binfo {
-//   display: flex;
-// }
 
 .filled {
   background-color: #e8ffef;

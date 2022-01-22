@@ -10,67 +10,39 @@
         <p class="p-0 m-0">Improve discoverability of your event by adding tags relevant to the subject matter.</p>
 
         <div class="flex items-center gap-2 mt-2">
-          <input-field label="Date" v-bind:value.sync="schedule.date"></input-field>
-          <input-field label="Start time" v-bind:value.sync="schedule.start"></input-field>
-          <input-field label="End time" v-bind:value.sync="schedule.end"></input-field>
-          <primary-button label="Add" class="btn" @click="addSchedule"></primary-button>
+          <input-field label="Date" :value.sync="schedule.date"></input-field>
+          <input-field label="Start time" :value.sync="schedule.start"></input-field>
+          <input-field label="End time" :value.sync="schedule.end"></input-field>
+          <primary-button label="Add" class="btn" @click="addItem"></primary-button>
         </div>
       </div>
     </section>
 
-    <!-- <section class="wrapper divide-y divide-gray-500" v-for="(item, schedule) in formFields.schedules" :key="item">
-      <div class="flex items-center justify-between py-2">
-        <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black">{{ schedule }} Schedule 1 </span>
-          <span class="text-black"> 21/12/2021 </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="start-time text-xs text-gray"> Start time </span>
-          <span class="text-black"> 03:00 PM </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="end-time text-xs"> End time </span>
-          <span class="text-black"> 05:00 PM </span>
-        </div>
-        <div>
-          <span><i class="fas fa-times fa-2x"></i> </span>
-        </div>
-      </div>
-    </section> -->
-
     <section class="wrapper divide-y divide-gray-500">
-      <div class="flex items-center justify-between py-2">
+      <div
+        class="flex items-center justify-between py-2"
+        v-for="(schedule, index) in formFields.schedules"
+        :key="index"
+      >
         <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black">Schedule 1 </span>
-          <span class="text-black"> 21/12/2021 </span>
+          <span class="mb-1 font-bold text-black"> Schedule {{ formFields.schedules.indexOf(schedule) + 1 }} </span>
+          <span class="text-black"> {{ schedule.date }} </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="start-time text-xs text-gray"> Start time </span>
-          <span class="text-black"> 03:00 PM </span>
+          <span class="text-black"> {{ schedule.start }} </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="end-time text-xs"> End time </span>
-          <span class="text-black"> 05:00 PM </span>
+          <span class="text-black"> {{ schedule.end }} </span>
         </div>
         <div>
-          <span><i class="fas fa-times fa-2x"></i> </span>
-        </div>
-      </div>
-      <div class="flex items-center justify-between py-2">
-        <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black"> Schedule 1 </span>
-          <span class="text-black"> 21/12/2021 </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="start-time text-xs text-gray"> Start time </span>
-          <span class="text-black"> 03:00 PM </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="end-time text-xs"> End time </span>
-          <span class="text-black"> 05:00 PM </span>
-        </div>
-        <div>
-          <span><i class="fas fa-times fa-2x"></i> </span>
+          <span
+            ><i
+              class="fas fa-times fa-2x cursor-pointer"
+              @click="removeItem(formFields.schedules.indexOf(schedule))"
+            ></i>
+          </span>
         </div>
       </div>
     </section>
@@ -93,7 +65,57 @@ export default class SchedulesForm extends Vue {
   }
 
   formFields: Partial<EventDetailsFull> = {
-    schedules: [],
+    schedules: [
+      {
+        date: '21/12/2021',
+        start: '03:00 PM',
+        end: '05:00 PM',
+      },
+      {
+        date: '21/12/2021',
+        start: '03:00 PM',
+        end: '05:00 PM',
+      },
+      {
+        date: '21/12/2021',
+        start: '03:00 PM',
+        end: '05:00 PM',
+      },
+    ],
+  }
+
+  addItem() {
+    const { date, start, end } = this.schedule
+
+    const hasEmptyValue = [date, start, end].filter((key) => !key?.length)
+
+    // console.log(hasEmptyValue)
+
+    if (hasEmptyValue.length) {
+      message.warning('Please enter all fields')
+      return
+    }
+
+    this.formFields.schedules?.push(this.schedule)
+
+    // fix bug with clearing
+
+    this.schedule = {
+      date: '',
+      start: '',
+      end: '',
+    }
+    console.log(this.schedule)
+  }
+
+  removeItem(index: Number) {
+    // console.log(index)
+    const filtered = this.formFields.schedules?.filter(
+      (schedule) => this.formFields.schedules?.indexOf(schedule) !== index
+    )
+
+    // console.log(filtered)
+    this.formFields.schedules = filtered
   }
 
   addSchedule() {

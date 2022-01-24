@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { formatCurrency } from '~/common/utilities/index'
+import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
 export default class DashboardEventCard extends Vue {
+  @Prop() event!: EventDetailsFull
+
   formatCurrency = formatCurrency
 
-  openEvent() {
-    this.$router.push('/dashboard/events/details')
-    // this.$router.push('/dashboard/events/create')
+  openEvent(id: string) {
+    this.$router.push(`/dashboard/events/details`) // event details id is supposed to be attached
   }
 }
 </script>

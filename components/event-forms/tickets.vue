@@ -15,7 +15,15 @@
         </div>
 
         <div class="flex items-center gap-4 mt-2 w-4/5">
-          <input-field label="Ticket schedule" :value.sync="ticket.schedule" class="w-1/2"></input-field>
+          <!-- <input-field label="Ticket schedule" :value.sync="ticket.schedule" class="w-1/2"></input-field> -->
+          <multiselect
+            v-model="selectValue"
+            :options="options"
+            :show-labels="false"
+            placeholder="Ticket schedule"
+            @select="onSelect"
+            class="border border-gray-500 rounded"
+          ></multiselect>
           <input-field label="Price" :value.sync="ticket.price" class="w-1/2"></input-field>
         </div>
       </div>
@@ -45,10 +53,17 @@
 import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { EventDetailsFull, ITicket } from '~/common/models/interfaces'
+import Multiselect from 'vue-multiselect'
 
-@Component
+@Component({
+  components: { Multiselect },
+})
 export default class TicketsForm extends Vue {
-  @Prop() details!: EventDetailsFull
+  @Prop() eventDetails!: EventDetailsFull
+
+  selectValue: string = '' // should be the schedule selected
+  options: string[] = ['Schedule 1', 'Schedule 2', 'Schedule 3', 'Schedule 4', 'Schedule 5']
+  schedules: string[] = [] // schedules available
 
   ticket: ITicket = {
     // id: '',
@@ -58,26 +73,44 @@ export default class TicketsForm extends Vue {
   }
 
   formFields: Partial<EventDetailsFull> = {
-    tickets: [
-      {
-        // id: '1',
-        title: 'Regular',
-        schedule: 'Schedule 1 • 21/12/2022 • 03:00 PM',
-        price: 'N 20,000',
-      },
-      {
-        // id: '2',
-        title: 'Regular',
-        schedule: 'Schedule 1 • 21/12/2022 • 03:00 PM',
-        price: 'N 20,000',
-      },
-      {
-        // id: '3',
-        title: 'Regular',
-        schedule: 'Schedule 1 • 21/12/2022 • 03:00 PM',
-        price: 'N 20,000',
-      },
-    ],
+    tickets: [],
+  }
+
+  // mounted() {
+  //   if (this.eventDetails) {
+  //     const { tickets } = this.eventDetails
+  //     this.formFields = { tickets }
+  //     return
+  //   }
+
+  //   message.warning('danger')
+
+  //   this.formFields = {
+  //     tickets: [
+  //       {
+  //         // id: '1',
+  //         title: 'Regular',
+  //         schedule: 'Schedule 1 • 21/12/2022 • 03:00 PM',
+  //         price: 'N 20,000',
+  //       },
+  //       {
+  //         // id: '2',
+  //         title: 'Regular',
+  //         schedule: 'Schedule 1 • 21/12/2022 • 03:00 PM',
+  //         price: 'N 20,000',
+  //       },
+  //       {
+  //         // id: '3',
+  //         title: 'Regular',
+  //         schedule: 'Schedule 1 • 21/12/2022 • 03:00 PM',
+  //         price: 'N 20,000',
+  //       },
+  //     ],
+  //   }
+  // }
+
+  onSelect(schedule: string) {
+    message.info(schedule)
   }
 
   addItem() {
@@ -120,6 +153,8 @@ export default class TicketsForm extends Vue {
       return 'Add tickets'
     }
 
+    // emit event to save data in parent
+    this.$emit('save', this.formFields)
     return ''
   }
 }

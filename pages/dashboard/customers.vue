@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <h3>Customers</h3>
+      <h3>Transactions</h3>
 
       <div class="mini-header">
         <p>
@@ -12,7 +12,7 @@
         </span>
       </div>
 
-      <search placeholder="Search customers" />
+      <search placeholder="Search transactions" />
     </div>
 
     <div class="customers">

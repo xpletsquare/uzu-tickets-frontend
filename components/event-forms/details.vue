@@ -65,7 +65,7 @@ import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
 export default class DetailsForm extends Vue {
-  @Prop() details!: EventDetailsFull
+  @Prop() eventDetails!: EventDetailsFull
 
   landscape: string = 'No file chosen'
   portrait: string = 'No file chosen'
@@ -77,6 +77,22 @@ export default class DetailsForm extends Vue {
     },
     description: '',
   }
+
+  // mounted() {
+  //   if (this.eventDetails) {
+  //     const { images, description } = this.eventDetails
+  //     this.formFields = { images, description }
+  //     return
+  //   }
+
+  //   this.formFields = {
+  //     images: {
+  //       landscape: '',
+  //       portrait: '',
+  //     },
+  //     description: '',
+  //   }
+  // }
 
   onFileChange(event: any) {
     const file = event.target.files[0]
@@ -103,6 +119,9 @@ export default class DetailsForm extends Vue {
     if (!description) {
       return 'Please add a description'
     }
+
+    // emit event to save data in parent
+    this.$emit('save', this.formFields)
 
     return ''
   }

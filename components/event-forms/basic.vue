@@ -6,7 +6,12 @@
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.
       </p>
 
-      <input-field label="Title" :value.sync="formFields.title" class="mt-8"></input-field>
+      <input-field
+        label="Title"
+        :value.sync="formFields.title"
+        :defaultValue="formFields.title"
+        class="mt-8"
+      ></input-field>
 
       <div class="md:w-2/4 mt-4 border rounded border-gray-500">
         <multiselect
@@ -40,7 +45,12 @@
       <p>Help people in the area discover your event and let attendees know where to show up.</p>
       <secondary-button label="Venue" class="mr-2"></secondary-button>
       <primary-button label="Online event" @click="setOnlineEvent"></primary-button>
-      <input-field label="Search location" class="mt-4" :value.sync="formFields.location"></input-field>
+      <input-field
+        label="Search location"
+        class="mt-4"
+        :value.sync="formFields.location"
+        :disabled="disabled"
+      ></input-field>
     </section>
 
     <section class="date-time">
@@ -69,7 +79,9 @@ import Multiselect from 'vue-multiselect'
   components: { Multiselect },
 })
 export default class BasicForm extends Vue {
-  @Prop() details!: EventDetailsFull
+  @Prop() eventDetails!: EventDetailsFull
+
+  disabled = false
 
   selectValue: string = ''
   categories: string[] = ['fashion', 'art', 'business']
@@ -78,9 +90,25 @@ export default class BasicForm extends Vue {
   formFields: Partial<EventDetailsFull> = {
     title: '',
     category: '',
-    tags: ['category 1', 'category 2', 'category 3'],
+    tags: [],
+    // tags: ['category 1', 'category 2', 'category 3'],
     location: '',
   }
+
+  // mounted() {
+  //   if (this.eventDetails) {
+  //     const { title, category, tags, location } = this.eventDetails
+  //     this.formFields = { title, category, tags, location }
+  //     return
+  //   }
+
+  //   this.formFields = {
+  //     title: '',
+  //     category: '',
+  //     tags: ['category 1', 'category 2', 'category 3'],
+  //     location: '',
+  //   }
+  // }
 
   addItem() {
     if (this.tag === '') {
@@ -105,10 +133,14 @@ export default class BasicForm extends Vue {
 
   setOnlineEvent() {
     message.info('Setting online event')
+    this.disabled = true
+    this.formFields.location = 'Online event'
   }
+
   setSingleEvent() {
     message.info('Setting single event')
   }
+
   setMultipleEvent() {
     message.info('Setting multiple event')
   }
@@ -128,6 +160,9 @@ export default class BasicForm extends Vue {
     if (!location) {
       return 'Invalid location'
     }
+
+    // emit event to save data in parent
+    this.$emit('save', this.formFields)
 
     return ''
   }

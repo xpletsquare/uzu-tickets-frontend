@@ -28,12 +28,25 @@
         <li>
           <NuxtLink to="/">BLOG</NuxtLink>
         </li>
-        <li>
-          <NuxtLink to="/register">REGISTER</NuxtLink>
-        </li>
-        <li>
-          <primary-button label="LOGIN" link_to="/login"></primary-button>
-        </li>
+        <div v-if="!activeUser">
+          <li>
+            <NuxtLink to="/register">REGISTER</NuxtLink>
+          </li>
+          <li>
+            <primary-button label="LOGIN" link_to="/login"></primary-button>
+          </li>
+        </div>
+        <NuxtLink
+          to="/dashboard"
+          v-else
+          class="inline-flex rounded items-center gap-4 md:p-3 cursor-pointer hover:bg-gray-100 text-black hover:text-black"
+        >
+          <span class="font-medium uppercase">Dashboard</span>
+          <!-- <span class="font-medium uppercase">{{ userName }}</span> -->
+          <div class="w-8 h-8 rounded-full bg-gray-800 inline-flex justify-center items-center text-gray-50">
+            <i class="fas fa-user-alt"></i>
+          </div>
+        </NuxtLink>
       </ul>
     </div>
   </div>
@@ -41,9 +54,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { AppState } from '~/common/storeHelpers'
 
 @Component
 export default class Navbar extends Vue {
+  get activeUser() {
+    const { currentUser } = this.$store.state as AppState
+    return currentUser
+  }
+
+  // get userName() {
+  //   const state = this.$store.state as AppState
+  //   return state.currentUser?.firstName || ''
+  // }
+
   // showNav() {
   //   const nav = document.getElementById("mobileNav");
   //   nav.classList.toggle("hidden");

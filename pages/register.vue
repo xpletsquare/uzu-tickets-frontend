@@ -81,6 +81,10 @@ export default class RegistrationPage extends Vue {
       return 'Please enter all fields'
     }
 
+    if (password.length < 8) {
+      return 'Passwords must have at least 8 characters'
+    }
+
     return ''
   }
 

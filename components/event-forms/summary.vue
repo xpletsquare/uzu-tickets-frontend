@@ -122,10 +122,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
-export default class Summary extends Vue {}
+export default class Summary extends Vue {
+  @Prop() eventDetails!: EventDetailsFull
+}
 </script>
 
 <style lang="scss" scoped>

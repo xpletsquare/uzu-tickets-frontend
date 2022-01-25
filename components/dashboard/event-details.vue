@@ -74,6 +74,8 @@ export default class EventDetails extends Vue {
       tickets: [],
       tags: [],
       isPublished: false,
+      sales: [],
+      promoters: []
     }
   }
 

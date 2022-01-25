@@ -95,21 +95,6 @@ export default class BasicForm extends Vue {
     location: '',
   }
 
-  // mounted() {
-  //   if (this.eventDetails) {
-  //     const { title, category, tags, location } = this.eventDetails
-  //     this.formFields = { title, category, tags, location }
-  //     return
-  //   }
-
-  //   this.formFields = {
-  //     title: '',
-  //     category: '',
-  //     tags: ['category 1', 'category 2', 'category 3'],
-  //     location: '',
-  //   }
-  // }
-
   addItem() {
     if (this.tag === '') {
       message.warning('Add a tag')

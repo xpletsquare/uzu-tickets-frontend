@@ -14,9 +14,23 @@
           <primary-button label="Add" class="btn" @click="addItem"></primary-button>
         </div>
         <div class="flex items-center gap-2 mt-2">
-          <input-field label="Date" :value.sync="schedule.date"></input-field>
-          <input-field label="Start time" :value.sync="schedule.start"></input-field>
-          <input-field label="End time" :value.sync="schedule.end"></input-field>
+          <a-date-picker placeholder="Date" :format="dateFormat" :value="date" size="large" @change="onDateChange" />
+          <a-time-picker
+            :value="start"
+            format="hh:mm a"
+            placeholder="Start time"
+            @change="onStartChange"
+            size="large"
+            use12-hours
+          />
+          <a-time-picker
+            :value="end"
+            format="hh:mm a"
+            placeholder="End time"
+            @change="onEndChange"
+            size="large"
+            use12-hours
+          />
         </div>
       </div>
     </section>
@@ -42,7 +56,7 @@
         <div>
           <span
             ><i
-              class="fas fa-times fa-2x cursor-pointer"
+              class="fas fa-times fa-2x cursor-pointer hover:text-red-500"
               @click="removeItem(formFields.schedules.indexOf(schedule))"
             ></i>
           </span>
@@ -57,9 +71,19 @@ import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { EventDetailsFull, ISchedule } from '~/common/models/interfaces'
 
-@Component
+import moment from 'moment'
+
+@Component({
+  components: {},
+})
 export default class SchedulesForm extends Vue {
   @Prop() eventDetails!: EventDetailsFull
+
+  moment = moment
+  dateFormat = 'DD/MM/YYYY'
+  date = null
+  start = null
+  end = null
 
   schedule: ISchedule = {
     name: '',
@@ -72,36 +96,23 @@ export default class SchedulesForm extends Vue {
     schedules: [],
   }
 
-  // mounted() {
-  //   if (this.eventDetails) {
-  //     const { schedules } = this.eventDetails
-  //     this.formFields = { schedules }
-  //     return
-  //   }
+  onDateChange(date: any) {
+    this.date = date
+    const formattedDate = moment(date).format(this.dateFormat)
+    this.schedule.date = formattedDate
+  }
 
-  //   this.formFields = {
-  //     schedules: [
-  //       {
-  //         name: 'Schedule name',
-  //         date: '21/12/2021',
-  //         start: '03:00 PM',
-  //         end: '05:00 PM',
-  //       },
-  //       {
-  //         name: 'Schedule name',
-  //         date: '21/12/2021',
-  //         start: '03:00 PM',
-  //         end: '05:00 PM',
-  //       },
-  //       {
-  //         name: 'Schedule name',
-  //         date: '21/12/2021',
-  //         start: '03:00 PM',
-  //         end: '05:00 PM',
-  //       },
-  //     ],
-  //   }
-  // }
+  onStartChange(time: any) {
+    this.start = time
+    const startTime = moment(time).format('hh:mm a')
+    this.schedule.start = startTime
+  }
+
+  onEndChange(time: any) {
+    this.end = time
+    const endTime = moment(time).format('hh:mm a')
+    this.schedule.end = endTime
+  }
 
   addItem() {
     const { name, date, start, end } = this.schedule
@@ -125,6 +136,7 @@ export default class SchedulesForm extends Vue {
       start: '',
       end: '',
     }
+
     console.log(this.schedule)
   }
 
@@ -139,14 +151,14 @@ export default class SchedulesForm extends Vue {
   }
 
   addSchedule() {
-    message.success('adding')
+    message.success('adding schedule')
   }
 
   validate(): string {
     const { schedules } = this.formFields
 
     if (!schedules?.length) {
-      return 'Add schedules'
+      return 'Add a schedule'
     }
 
     // emit event to save data in parent

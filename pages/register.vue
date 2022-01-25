@@ -49,7 +49,6 @@ import { message } from 'ant-design-vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { AuthApi } from '~/common/api/auth.api'
 import { RegisterUserPayload, User } from '~/common/models/interfaces'
-import { catchAsync } from '~/common/utilities'
 
 @Component
 export default class RegistrationPage extends Vue {
@@ -97,7 +96,7 @@ export default class RegistrationPage extends Vue {
     }
 
     this.isLoading = true
-    const { error } = await catchAsync(() => AuthApi.signup(details))
+    const { error } = await AuthApi.signup(details)
     this.isLoading = false
 
     if (error) {

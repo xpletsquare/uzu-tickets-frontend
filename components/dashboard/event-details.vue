@@ -23,6 +23,7 @@
         ></event-forms-details>
         <event-forms-summary :eventDetails="event" ref="summary" v-if="stage === 5"></event-forms-summary>
       </div>
+
       <div v-else>
         <event-forms-summary :eventDetails="event" ref="summary" v-if="stage === 1"></event-forms-summary>
         <event-forms-sales :eventDetails="event" ref="sales" v-if="stage === 2"></event-forms-sales>
@@ -34,7 +35,12 @@
         NEXT <i class="fas fa-chevron-right"></i>
       </button>
 
-      <primary-button v-else-if="!detailsMode" @click="publish" label="PUBLISH"></primary-button>
+      <primary-button
+        v-else-if="!detailsMode"
+        @click="publishEvent"
+        :loading="loading"
+        label="PUBLISH"
+      ></primary-button>
     </div>
   </section>
 </template>
@@ -42,13 +48,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
+import { EventsApi } from '~/common/api/events.api'
 
 import { message } from 'ant-design-vue'
 
 @Component
 export default class EventDetails extends Vue {
   @Prop() eventDetails!: EventDetailsFull
-  event: EventDetailsFull | null = null
+  event: EventDetailsFull | {} = {}
+
+  isLoading = false
 
   get stage() {
     const stage = (this.$route.query.stage as string) || '1'
@@ -105,18 +114,19 @@ export default class EventDetails extends Vue {
       tags: [],
       isPublished: false,
       sales: [],
-      promoters: []
+      promoters: [],
     }
   }
 
-  saveForm(value: object) {
-    console.log(value)
+  saveForm(formData: object) {
+    console.log(formData)
 
-    // save to event object
-    // for (const key in this.event) {
-    //   console.log(`${key}`)
-    //   console.log(`${key}: ${this.event[key]}`)
-    // }
+    Object.entries(formData).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`)
+      // save to event object
+
+      // this.event = { ...this.event, key: value }
+    })
 
     message.success('Saved')
   }
@@ -147,10 +157,24 @@ export default class EventDetails extends Vue {
     this.$router.replace({ query })
   }
 
-  publish() {
-    message.success('publishing')
-
+  async publishEvent() {
     // make api call to publish event
+    // const details = { ...this.event }
+
+    // this.isLoading = true
+    message.success('publishing event')
+    // const { error, data } = await EventsApi.createEvent(details)
+    // this.isLoading = false
+
+    // if (error) {
+    //   return message.error(error as string)
+    // }
+
+    // commit event data to the store
+
+    // message.success('Event published')
+
+    this.$router.push('/dashboard/events')
   }
 }
 </script>

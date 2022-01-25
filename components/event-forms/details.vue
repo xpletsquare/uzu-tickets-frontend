@@ -20,7 +20,7 @@
               </div>
               Upload Image
             </label>
-            <input type="file" id="landscape" ref="landscape" accept="image/*" @change="onFileChange" />
+            <input type="file" id="landscape" ref="landscape" accept="image/*" @change="onLandscapeChange($event)" />
           </div>
         </div>
         <div class="preview">
@@ -39,7 +39,7 @@
               </div>
               Upload Image
             </label>
-            <input type="file" id="portrait" ref="portrait" accept="image/*" @change="onFileChange" />
+            <input type="file" id="portrait" ref="portrait" accept="image/*" @change="onPortraitChange($event)" />
           </div>
         </div>
         <div class="preview">
@@ -51,9 +51,6 @@
     <div class="description mt-10">
       <p>Descripion</p>
       <v-textarea class="txtarea" counter="100" filled @input="handleDescriptionChange"></v-textarea>
-      <!-- <v-textarea class="txtarea" counter="100" filled :value.sync="formFields.description"></v-textarea> -->
-
-      <!-- <div>{{ this.formFields.description }}</div> -->
     </div>
   </div>
 </template>
@@ -78,34 +75,22 @@ export default class DetailsForm extends Vue {
     description: '',
   }
 
-  // mounted() {
-  //   if (this.eventDetails) {
-  //     const { images, description } = this.eventDetails
-  //     this.formFields = { images, description }
-  //     return
-  //   }
-
-  //   this.formFields = {
-  //     images: {
-  //       landscape: '',
-  //       portrait: '',
-  //     },
-  //     description: '',
-  //   }
-  // }
-
-  onFileChange(event: any) {
+  onPortraitChange(event: any) {
     const file = event.target.files[0]
-
-    if (this.$refs.landscape) {
-      console.log(file)
-      this.landscape = file.name
-    } else if (this.$refs.portrait) {
-      console.log(file)
-    }
+    console.log(file)
+    this.portrait = file.name
 
     // this.url = URL.createObjectURL(file)
-    message.warning('upload image')
+    message.info('upload image')
+  }
+
+  onLandscapeChange(event: any) {
+    const file = event.target.files[0]
+    console.log(file)
+    this.landscape = file.name
+
+    // this.url = URL.createObjectURL(file)
+    message.info('upload image')
   }
 
   handleDescriptionChange(value: string) {

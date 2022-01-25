@@ -22,6 +22,7 @@
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Email</th>
+            <th>Event name</th>
             <th>Description</th>
             <th>Amount</th>
           </tr>
@@ -38,13 +39,18 @@
               <span class="email">jonesbgabriel@gmail.com</span>
             </td>
             <td>
+              <span class="email">Cavemen Live</span>
+            </td>
+            <td>
               <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
             </td>
             <td>
               <span class="amount">N 84,000</span>
             </td>
           </tr>
-          <tr>
+          
+
+           <tr>
             <td>
               <span class="firstname">Jones</span>
             </td>
@@ -55,13 +61,16 @@
               <span class="email">jonesbgabriel@gmail.com</span>
             </td>
             <td>
+              <span class="email">Cavemen Live</span>
+            </td>
+            <td>
               <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
             </td>
             <td>
               <span class="amount">N 84,000</span>
             </td>
           </tr>
-          <tr>
+           <tr>
             <td>
               <span class="firstname">Jones</span>
             </td>
@@ -72,13 +81,16 @@
               <span class="email">jonesbgabriel@gmail.com</span>
             </td>
             <td>
+              <span class="email">Cavemen Live</span>
+            </td>
+            <td>
               <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
             </td>
             <td>
               <span class="amount">N 84,000</span>
             </td>
           </tr>
-          <tr>
+           <tr>
             <td>
               <span class="firstname">Jones</span>
             </td>
@@ -87,6 +99,9 @@
             </td>
             <td>
               <span class="email">jonesbgabriel@gmail.com</span>
+            </td>
+            <td>
+              <span class="email">Cavemen Live</span>
             </td>
             <td>
               <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>

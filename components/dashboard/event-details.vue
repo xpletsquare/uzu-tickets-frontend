@@ -1,18 +1,46 @@
 <template>
   <section class="max-600 mx-auto">
     <div class="content">
-      <event-forms-basic :details="event" ref="basic" v-if="stage === 1"></event-forms-basic>
-      <event-forms-schedules ref="schedule" v-if="stage === 2"></event-forms-schedules>
-      <event-forms-tickets ref="tickets" v-if="stage === 3"></event-forms-tickets>
-      <event-forms-details ref="details" v-if="stage === 4"></event-forms-details>
-      <event-forms-summary ref="summary" v-if="stage === 5"></event-forms-summary>
+      <div v-if="!detailsMode">
+        <event-forms-basic :eventDetails="event" ref="basic" @save="saveForm" v-if="stage === 1"></event-forms-basic>
+        <event-forms-schedules
+          :eventDetails="event"
+          ref="schedule"
+          @save="saveForm"
+          v-if="stage === 2"
+        ></event-forms-schedules>
+        <event-forms-tickets
+          :eventDetails="event"
+          ref="tickets"
+          @save="saveForm"
+          v-if="stage === 3"
+        ></event-forms-tickets>
+        <event-forms-details
+          :eventDetails="event"
+          ref="details"
+          @save="saveForm"
+          v-if="stage === 4"
+        ></event-forms-details>
+        <event-forms-summary :eventDetails="event" ref="summary" v-if="stage === 5"></event-forms-summary>
+      </div>
+
+      <div v-else>
+        <event-forms-summary :eventDetails="event" ref="summary" v-if="stage === 1"></event-forms-summary>
+        <event-forms-sales :eventDetails="event" ref="sales" v-if="stage === 2"></event-forms-sales>
+      </div>
     </div>
-    
+
     <div class="flex justify-end">
       <button v-if="showNextButton" @click="next" class="border p-3 rounded">
         NEXT <i class="fas fa-chevron-right"></i>
       </button>
-      <primary-button v-else @click="publish" label="PUBLISH"></primary-button>
+
+      <primary-button
+        v-else-if="!detailsMode"
+        @click="publishEvent"
+        :loading="loading"
+        label="PUBLISH"
+      ></primary-button>
     </div>
   </section>
 </template>
@@ -20,13 +48,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
+import { EventsApi } from '~/common/api/events.api'
 
 import { message } from 'ant-design-vue'
 
 @Component
 export default class EventDetails extends Vue {
-  @Prop() details!: EventDetailsFull
-  event: EventDetailsFull | null = null
+  @Prop() eventDetails!: EventDetailsFull
+  event: EventDetailsFull | {} = {}
+
+  isLoading = false
 
   get stage() {
     const stage = (this.$route.query.stage as string) || '1'
@@ -34,7 +65,15 @@ export default class EventDetails extends Vue {
   }
 
   get showNextButton() {
+    if (this.detailsMode) {
+      return this.stage < 2
+    }
+
     return this.stage < 5
+  }
+
+  get detailsMode() {
+    return this.$route.path.includes('/dashboard/events/details')
   }
 
   get currentStageRef(): ElementWithValidateFunction & any {
@@ -55,8 +94,8 @@ export default class EventDetails extends Vue {
   }
 
   mounted() {
-    if (this.details) {
-      this.event = { ...this.details }
+    if (this.eventDetails) {
+      this.event = { ...this.eventDetails }
       return
     }
 
@@ -75,8 +114,21 @@ export default class EventDetails extends Vue {
       tags: [],
       isPublished: false,
       sales: [],
-      promoters: []
+      promoters: [],
     }
+  }
+
+  saveForm(formData: object) {
+    console.log(formData)
+
+    Object.entries(formData).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`)
+      // save to event object
+
+      // this.event = { ...this.event, key: value }
+    })
+
+    message.success('Saved')
   }
 
   next() {
@@ -84,17 +136,19 @@ export default class EventDetails extends Vue {
       return
     }
 
-    const ref: ElementWithValidateFunction = this.currentStageRef
+    if (!this.detailsMode) {
+      const ref: ElementWithValidateFunction = this.currentStageRef
 
-    if (!ref) {
-      return
-    }
+      if (!ref) {
+        return
+      }
 
-    const error = ref.validate()
+      const error = ref.validate()
 
-    if (error) {
-      message.error(error)
-      return
+      if (error) {
+        message.error(error)
+        return
+      }
     }
 
     const nextStage = this.stage + 1
@@ -103,8 +157,24 @@ export default class EventDetails extends Vue {
     this.$router.replace({ query })
   }
 
-  publish() {
-    message.success('publishing')
+  async publishEvent() {
+    // make api call to publish event
+    // const details = { ...this.event }
+
+    // this.isLoading = true
+    message.success('publishing event')
+    // const { error, data } = await EventsApi.createEvent(details)
+    // this.isLoading = false
+
+    // if (error) {
+    //   return message.error(error as string)
+    // }
+
+    // commit event data to the store
+
+    // message.success('Event published')
+
+    this.$router.push('/dashboard/events')
   }
 }
 </script>

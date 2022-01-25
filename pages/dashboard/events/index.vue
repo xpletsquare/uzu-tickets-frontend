@@ -13,6 +13,9 @@
         </div>
       </div>
       <dashboard-total-event-sales></dashboard-total-event-sales>
+      <!-- <div v-for="(event, index) in events" :key="index">
+        <dashboard-events-card :event="event"></dashboard-events-card>
+      </div> -->
       <dashboard-events-card></dashboard-events-card>
       <dashboard-events-card></dashboard-events-card>
       <dashboard-events-card></dashboard-events-card>
@@ -26,13 +29,47 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { AppState } from '~/common/storeHelpers'
+import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component({
   layout: 'dashboard',
 })
 export default class ProfilePage extends Vue {
-  openNewEventPage(){
-    this.$router.push('/dashboard/events/create');
+  events: EventDetailsFull[] = []
+
+  openNewEventPage() {
+    this.$router.push('/dashboard/events/create')
+  }
+
+  get currentEvents() {
+    const { currentUser } = this.$store.state as AppState
+    return currentUser?.events
+  }
+
+  mounted() {
+    if (this.currentEvents) {
+      this.events = [...this.currentEvents]
+      return
+    }
+
+    this.events = [
+      {
+        id: '1',
+        title: 'Codova hive',
+        images: {
+          landscape: 'Codova-hive.jpeg',
+          portrait: 'Codova-hive.jpeg',
+        },
+        description: 'Codova hive',
+        category: 'fashion',
+        location: 'Muson center, Lagos',
+        schedules: [],
+        tickets: [],
+        tags: [],
+        isPublished: true,
+      },
+    ]
   }
 }
 </script>

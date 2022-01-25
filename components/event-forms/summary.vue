@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="description mt-10">
+    <div class="description mt-5">
       <h3>Descripion</h3>
       <p>
         We are in a truly pivotal time in history where the collective momentum of the voices of women across the globe
@@ -41,7 +41,7 @@
       </p>
     </div>
 
-    <div class="schedule">
+    <div class="schedule mt-5">
       <div class="flex items-center justify-between py-2">
         <div class="flex flex-col">
           <span class="mb-1 font-bold text-black">Schedule 1 </span>
@@ -122,10 +122,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
-export default class Summary extends Vue {}
+export default class Summary extends Vue {
+  @Prop() eventDetails!: EventDetailsFull
+}
 </script>
 
 <style lang="scss" scoped>

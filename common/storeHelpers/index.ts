@@ -16,8 +16,10 @@ export class AuthUser implements User {
   activated = false
   flagged = false
   token = ''
+  events = []
 }
 
 export enum StoreMutations {
   setUser = 'setUser',
+  setEvent = 'setEvent',
 }

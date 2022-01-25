@@ -21,38 +21,38 @@
 
       <div class="profile-form">
         <div class="wide">
-          <input-field label="Email" :defaultValue="activeUser.email" :disabled="profileEditDisabled"></input-field>
+          <input-field label="Email" :defaultValue="user.email" :disabled="profileEditDisabled"></input-field>
           <span class="count"> 14/40 </span>
         </div>
         <div class="wrap">
           <input-field
             label="Firstname"
-            :defaultValue="capitalize(activeUser.firstName)"
-            @change="handleFirstNameChange"
+            :defaultValue="capitalize(user.firstName)"
+            :value.sync="user.firstName"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Lastname"
-            :defaultValue="capitalize(activeUser.lastName)"
-            @change="handleLastNameChange"
+            :defaultValue="capitalize(user.lastName)"
+            :value.sync="user.lastName"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Date of birth"
             :defaultValue="dob"
-            @change="handleDOBChange"
+            :value.sync="user.dob"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Phone number"
-            :defaultValue="activeUser.phone"
-            @change="handlePhoneChange"
+            :defaultValue="user.phone"
+            :value.sync="user.phone"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Gender"
             :defaultValue="gender"
-            @change="handleGenderChange"
+            :value.sync="user.gender"
             :disabled="profileEditDisabled"
           ></input-field>
         </div>
@@ -82,18 +82,18 @@
         <input-field
           label="Current password"
           type="password"
-          @change="handleCurrentPasswordChange"
+          :value.sync="passwordInfo.currentPassword"
           :disabled="passwordEditDisabled"
         ></input-field>
         <input-field
           label="New password"
-          @change="handleNewPasswordChange"
+          :value.sync="passwordInfo.newPassword"
           type="password"
           :disabled="passwordEditDisabled"
         ></input-field>
         <input-field
           label="Retype password"
-          @change="handleConfirmPasswordChange"
+          :value.sync="passwordInfo.confirmNewPassword"
           type="password"
           :disabled="passwordEditDisabled"
         ></input-field>
@@ -116,13 +116,17 @@ import { AppState, StoreMutations, AuthUser } from '~/common/storeHelpers'
   layout: 'dashboard',
 })
 export default class ProfilePage extends Vue {
-  // user: AuthUser | null = null
+  user = this.activeUser
+
   dob = ''
   gender = ''
 
-  currentPassword = ''
-  password = ''
-  confirmPassword = ''
+  passwordInfo = {
+    currentPassword: '',
+    newPassword: '',
+    confirmNewPassword: '',
+  }
+
   loading = false
   profileEditDisabled = true
   passwordEditDisabled = true
@@ -131,27 +135,6 @@ export default class ProfilePage extends Vue {
     const { currentUser } = this.$store.state as AppState
     return currentUser
   }
-
-  // mounted() {
-  //   if (this.activeUser) {
-  //     this.user = { ...this.activeUser }
-  //     return
-  //   }
-
-  //   this.user = {
-  //     id: '',
-  //     email: '',
-  //     firstName: '',
-  //     middleName: '',
-  //     lastName: '',
-  //     dob: '',
-  //     gender: '',
-  //     phone: '',
-  //     activated: false,
-  //     flagged: false,
-  //     token: '',
-  //   }
-  // }
 
   capitalize(value: string) {
     return value.charAt(0).toUpperCase() + value.slice(1)
@@ -171,37 +154,11 @@ export default class ProfilePage extends Vue {
     }
   }
 
-  handleFirstNameChange(value: string) {
-    console.log(value)
-  }
-  handleLastNameChange(value: string) {
-    console.log(value)
-  }
-  handlePhoneChange(value: string) {
-    console.log(value)
-  }
-  handleDOBChange(value: string) {
-    console.log(value)
-  }
-  handleGenderChange(value: string) {
-    console.log(value)
-  }
-
-  handleCurrentPasswordChange(value: string) {
-    this.currentPassword = value
-  }
-  handleNewPasswordChange(value: string) {
-    this.password = value
-  }
-  handleConfirmPasswordChange(value: string) {
-    this.confirmPassword = value
-  }
-
   save() {
     console.log('saving')
+
     if (!this.profileEditDisabled) {
-      // console.log(this.activeUser)
-      console.log('this.activeUser')
+      console.log(this.user)
     }
   }
 }

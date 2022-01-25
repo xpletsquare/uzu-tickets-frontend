@@ -9,11 +9,28 @@
       <div class="my-8">
         <p class="p-0 m-0">Improve discoverability of your event by adding tags relevant to the subject matter.</p>
 
-        <div class="flex items-center gap-2 mt-2">
-          <input-field label="Date" :value.sync="schedule.date"></input-field>
-          <input-field label="Start time" :value.sync="schedule.start"></input-field>
-          <input-field label="End time" :value.sync="schedule.end"></input-field>
+        <div class="flex items-center gap-4 mt-2 w-full">
+          <input-field label="Schedule name" :value.sync="schedule.name" class="w-full"></input-field>
           <primary-button label="Add" class="btn" @click="addItem"></primary-button>
+        </div>
+        <div class="flex items-center gap-2 mt-2">
+          <a-date-picker placeholder="Date" :format="dateFormat" :value="date" size="large" @change="onDateChange" />
+          <a-time-picker
+            :value="start"
+            format="hh:mm a"
+            placeholder="Start time"
+            @change="onStartChange"
+            size="large"
+            use12-hours
+          />
+          <a-time-picker
+            :value="end"
+            format="hh:mm a"
+            placeholder="End time"
+            @change="onEndChange"
+            size="large"
+            use12-hours
+          />
         </div>
       </div>
     </section>
@@ -25,7 +42,7 @@
         :key="index"
       >
         <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black"> Schedule {{ formFields.schedules.indexOf(schedule) + 1 }} </span>
+          <span class="mb-1 font-bold text-black"> {{ schedule.name }} </span>
           <span class="text-black"> {{ schedule.date }} </span>
         </div>
         <div class="flex flex-col gap-1">
@@ -39,7 +56,7 @@
         <div>
           <span
             ><i
-              class="fas fa-times fa-2x cursor-pointer"
+              class="fas fa-times fa-2x cursor-pointer hover:text-red-500"
               @click="removeItem(formFields.schedules.indexOf(schedule))"
             ></i>
           </span>
@@ -54,40 +71,53 @@ import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { EventDetailsFull, ISchedule } from '~/common/models/interfaces'
 
-@Component
+import moment from 'moment'
+
+@Component({
+  components: {},
+})
 export default class SchedulesForm extends Vue {
-  @Prop() details!: EventDetailsFull
+  @Prop() eventDetails!: EventDetailsFull
+
+  moment = moment
+  dateFormat = 'DD/MM/YYYY'
+  date = null
+  start = null
+  end = null
 
   schedule: ISchedule = {
+    name: '',
     date: '',
     start: '',
     end: '',
   }
 
   formFields: Partial<EventDetailsFull> = {
-    schedules: [
-      {
-        date: '21/12/2021',
-        start: '03:00 PM',
-        end: '05:00 PM',
-      },
-      {
-        date: '21/12/2021',
-        start: '03:00 PM',
-        end: '05:00 PM',
-      },
-      {
-        date: '21/12/2021',
-        start: '03:00 PM',
-        end: '05:00 PM',
-      },
-    ],
+    schedules: [],
+  }
+
+  onDateChange(date: any) {
+    this.date = date
+    const formattedDate = moment(date).format(this.dateFormat)
+    this.schedule.date = formattedDate
+  }
+
+  onStartChange(time: any) {
+    this.start = time
+    const startTime = moment(time).format('hh:mm a')
+    this.schedule.start = startTime
+  }
+
+  onEndChange(time: any) {
+    this.end = time
+    const endTime = moment(time).format('hh:mm a')
+    this.schedule.end = endTime
   }
 
   addItem() {
-    const { date, start, end } = this.schedule
+    const { name, date, start, end } = this.schedule
 
-    const hasEmptyValue = [date, start, end].filter((key) => !key?.length)
+    const hasEmptyValue = [name, date, start, end].filter((key) => !key?.length)
 
     // console.log(hasEmptyValue)
 
@@ -101,10 +131,12 @@ export default class SchedulesForm extends Vue {
     // fix bug with clearing
 
     this.schedule = {
+      name: '',
       date: '',
       start: '',
       end: '',
     }
+
     console.log(this.schedule)
   }
 
@@ -119,15 +151,18 @@ export default class SchedulesForm extends Vue {
   }
 
   addSchedule() {
-    message.success('adding')
+    message.success('adding schedule')
   }
 
   validate(): string {
     const { schedules } = this.formFields
 
     if (!schedules?.length) {
-      return 'Add schedules'
+      return 'Add a schedule'
     }
+
+    // emit event to save data in parent
+    this.$emit('save', this.formFields)
 
     return ''
   }

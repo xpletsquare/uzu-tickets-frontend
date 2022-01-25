@@ -21,14 +21,14 @@
             <span>Profile</span>
           </nuxt-link>
 
-          <nuxt-link exact active-class="active" to="/dashboard/sales">
+          <!-- <nuxt-link exact active-class="active" to="/dashboard/sales">
             <span class="icon"><i class="fas fa-money-check-alt"></i></span>
             <span>Sales</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <nuxt-link exact active-class="active" to="/dashboard/customers">
             <span class="icon"><i class="fas fa-user-friends"></i></span>
-            <span>Customers</span>
+            <span>Transactions</span>
           </nuxt-link>
 
           <nuxt-link exact active-class="active" to="/dashboard/promoter">

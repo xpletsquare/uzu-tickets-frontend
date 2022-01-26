@@ -111,11 +111,13 @@ import { Component, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
 import { AuthApi } from '~/common/api/auth.api'
 import { AppState, StoreMutations, AuthUser } from '~/common/storeHelpers'
+import { capitalize } from '~/common/utilities/index'
 
 @Component({
   layout: 'dashboard',
 })
 export default class ProfilePage extends Vue {
+  capitalize = capitalize
   user = this.activeUser
 
   dob = ''
@@ -134,10 +136,6 @@ export default class ProfilePage extends Vue {
   get activeUser() {
     const { currentUser } = this.$store.state as AppState
     return currentUser
-  }
-
-  capitalize(value: string) {
-    return value.charAt(0).toUpperCase() + value.slice(1)
   }
 
   setEdit(section: string) {

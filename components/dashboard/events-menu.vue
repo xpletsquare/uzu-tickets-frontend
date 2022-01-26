@@ -53,17 +53,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Multiselect from 'vue-multiselect'
 import { AppState } from '~/common/storeHelpers'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
 import { message } from 'ant-design-vue'
+import Multiselect from 'vue-multiselect'
 
 @Component({
   components: { Multiselect },
 })
 export default class EventsMenu extends Vue {
-  selectValue: string = '' // should be the event selected
+  selectValue = null // should be the event selected
   options: object[] = [
     { title: 'Event title 1', description: 'event description' },
     { title: 'Event title 2', description: 'event description' },
@@ -88,7 +88,7 @@ export default class EventsMenu extends Vue {
     return parseInt(stage)
   }
 
-  onSelect(event: any) {
+  onSelect(event: EventDetailsFull) {
     // console.log(event)
     message.info(event.title)
 

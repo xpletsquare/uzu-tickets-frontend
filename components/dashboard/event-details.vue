@@ -113,21 +113,14 @@ export default class EventDetails extends Vue {
       tickets: [],
       tags: [],
       isPublished: false,
-      sales: [],
-      promoters: [],
+      // sales: [],
+      // promoters: [],
     }
   }
 
-  saveForm(formData: object) {
-    console.log(formData)
-
-    Object.entries(formData).forEach(([key, value]) => {
-      console.log(`${key}: ${value}`)
-      // save to event object
-
-      // this.event = { ...this.event, key: value }
-    })
-
+  saveForm(formData: any) {
+    this.event = { ...this.event, ...formData }
+    console.log(this.event)
     message.success('Saved')
   }
 

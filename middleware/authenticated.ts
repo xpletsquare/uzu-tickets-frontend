@@ -10,7 +10,7 @@ export default function ({ store, redirect }: any) {
     store.commit(StoreMutations.setUser, data)
   }
 
-  console.log({ authUserInSession, currentUser })
+  // console.log({ authUserInSession, currentUser })
 
   if (!currentUser?.token && !authUserInSession) {
     return redirect('/login')

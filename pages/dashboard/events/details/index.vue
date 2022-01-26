@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dashboard-event-details :eventdetails="event"></dashboard-event-details>
+    <dashboard-event-details :eventDetails="event"></dashboard-event-details>
   </div>
 </template>
 

@@ -17,10 +17,12 @@
         <div class="flex items-center gap-4 mt-2 w-4/5">
           <multiselect
             v-model="selectValue"
-            :options="options"
+            :options="schedules"
             :show-labels="false"
             placeholder="Ticket schedule"
             @select="onSelect"
+            track-by="name"
+            label="name"
             class="border border-gray-500 rounded"
           ></multiselect>
           <input-field label="Price" :value.sync="ticket.price" class="w-1/2"></input-field>
@@ -31,8 +33,12 @@
     <section class="wrapper divide-y divide-gray-500">
       <div class="flex items-center justify-between py-3" v-for="(ticket, index) in formFields.tickets" :key="index">
         <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black"> {{ ticket.title }} </span>
-          <span class="text-black"> {{ ticket.schedule }} </span>
+          <span class="mb-1 font-bold text-black"
+            >{{ capitalize(ticket.schedule.name) }} • {{ capitalize(ticket.title) }}
+          </span>
+          <span class="text-black">
+            {{ ticket.schedule.date }} • {{ ticket.schedule.start }} • {{ ticket.schedule.end }}
+          </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="price text-xs"> Price</span>
@@ -53,7 +59,7 @@ import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { EventDetailsFull, ITicket, ISchedule } from '~/common/models/interfaces'
 import Multiselect from 'vue-multiselect'
-import { formatCurrency } from '~/common/utilities/index'
+import { formatCurrency, capitalize } from '~/common/utilities/index'
 
 @Component({
   components: { Multiselect },
@@ -61,10 +67,10 @@ import { formatCurrency } from '~/common/utilities/index'
 export default class TicketsForm extends Vue {
   @Prop() eventDetails!: EventDetailsFull
   formatCurrency = formatCurrency
+  capitalize = capitalize
 
-  selectValue: string = '' // should be the schedule selected
-  options: string[] = ['Schedule 1', 'Schedule 2', 'Schedule 3', 'Schedule 4', 'Schedule 5']
-  schedules: ISchedule[] = [] // schedules available
+  selectValue = null // should be the schedule selected
+  schedules: ISchedule[] = this.eventDetails.schedules // schedules available
 
   ticket: ITicket = {
     // id: '',
@@ -82,8 +88,10 @@ export default class TicketsForm extends Vue {
     tickets: [],
   }
 
-  onSelect(schedule: string) {
-    message.info(schedule)
+  onSelect(schedule: ISchedule) {
+    console.log(schedule)
+    this.ticket.schedule = schedule
+    // message.info(schedule)
   }
 
   addItem() {

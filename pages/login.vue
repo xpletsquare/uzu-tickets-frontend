@@ -58,7 +58,7 @@ export default class LoginPage extends Vue {
   mounted() {
     const { currentUser } = this.$store.state as any as AppState
 
-    console.log({ currentUser })
+    // console.log({ currentUser })
 
     if (currentUser?.email !== '') {
       console.log('already logged in')

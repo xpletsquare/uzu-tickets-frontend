@@ -53,23 +53,25 @@ export default class ProfilePage extends Vue {
       return
     }
 
-    this.events = [
-      {
-        id: '1',
-        title: 'Codova hive',
-        images: {
-          landscape: 'Codova-hive.jpeg',
-          portrait: 'Codova-hive.jpeg',
-        },
-        description: 'Codova hive',
-        category: 'fashion',
-        location: 'Muson center, Lagos',
-        schedules: [],
-        tickets: [],
-        tags: [],
-        isPublished: true,
-      },
-    ]
+    // this.events = [
+    //   {
+    //     id: '1',
+    //     title: 'Codova hive',
+    //     images: {
+    //       landscape: 'Codova-hive.jpeg',
+    //       portrait: 'Codova-hive.jpeg',
+    //     },
+    //     description: 'Codova hive',
+    //     category: 'fashion',
+    //     location: 'Muson center, Lagos',
+    //     schedules: [],
+    //     tickets: [],
+    //     tags: [],
+    //     isPublished: true,
+    //     sales: [],
+    //     promoters: [],
+    //   },
+    // ]
   }
 }
 </script>

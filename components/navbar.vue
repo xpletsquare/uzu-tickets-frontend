@@ -28,18 +28,28 @@
         <li>
           <NuxtLink to="/">BLOG</NuxtLink>
         </li>
-        <div v-if="!activeUser">
-          <li>
-            <NuxtLink to="/register">REGISTER</NuxtLink>
-          </li>
-          <li>
-            <primary-button label="LOGIN" link_to="/login"></primary-button>
-          </li>
-        </div>
+
+        <li v-show="activeUser.email === ''">
+          <NuxtLink to="/register">REGISTER</NuxtLink>
+        </li>
+        <li v-show="activeUser.email === ''">
+          <primary-button label="LOGIN" link_to="/login"></primary-button>
+        </li>
+
         <NuxtLink
           to="/dashboard"
-          v-else
-          class="inline-flex rounded items-center gap-4 md:p-3 cursor-pointer hover:bg-gray-100 text-black hover:text-black"
+          v-show="activeUser.email !== ''"
+          class="
+            inline-flex
+            rounded
+            items-center
+            gap-4
+            md:p-3
+            cursor-pointer
+            hover:bg-gray-100
+            text-black
+            hover:text-black
+          "
         >
           <span class="font-medium uppercase">Dashboard</span>
           <!-- <span class="font-medium uppercase">{{ userName }}</span> -->
@@ -62,11 +72,6 @@ export default class Navbar extends Vue {
     const { currentUser } = this.$store.state as AppState
     return currentUser
   }
-
-  // get userName() {
-  //   const state = this.$store.state as AppState
-  //   return state.currentUser?.firstName || ''
-  // }
 
   // showNav() {
   //   const nav = document.getElementById("mobileNav");

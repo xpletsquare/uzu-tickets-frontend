@@ -1,12 +1,12 @@
 <template>
   <div>
-    <button class="w-full text-left" @click="goBack">
+    <button class="w-full text-left back" @click="goBack">
       <i class="fas fa-chevron-left pr-2"></i>
-      <span>Back</span>
+      <span class="">Back</span>
     </button>
 
     <template v-if="showEventName">
-      <div class="md:w-3/4 mt-5 p-0">
+      <div class="md:w-3/4 mt-5 p-0 event-title-holder">
         <multiselect
           v-model="selectValue"
           :options="options"
@@ -15,7 +15,7 @@
           @select="onSelect"
           track-by="title"
           label="title"
-          class="border rounded border-green-500"
+          class="event-title"
         ></multiselect>
       </div>
     </template>
@@ -119,24 +119,47 @@ export default class EventsMenu extends Vue {
 //   border: 1px solid #15b743;
 // }
 
+  .back{
+    color: var(--light-green);
+  }
 .event-link {
   padding: 0.6em 1.5em;
   font-size: 12pt;
-  color: #0000007a;
-  background: rgba(255, 255, 255, 0.277);
+  color: var(--light-green);
+  background: none;
+  border: 1px solid var(--light-green);
   border-radius: 5px;
   margin-bottom: 12px;
   cursor: pointer;
 
   &.passed {
-    background-color: rgba(255, 255, 255, 0.7);
-    color: var(--light-green);
+    background-color: var(--light-green);
+    color: var(--dark-green);
     font-weight: 500;
   }
 
   &:hover,
   &.active {
     color: var(--dark-green);
+     background-color: var(--light-green);
+
   }
+
+ 
 }
+
+
+.event-title-holder{
+  min-width: 100% !important;
+}
+ .event-title{
+    min-width: 100%;
+    border: 1px solid var(--light-green) !important;
+    border-radius: 10px !important;
+    padding: 10px 0;
+
+ 
+
+  }
+
 </style>

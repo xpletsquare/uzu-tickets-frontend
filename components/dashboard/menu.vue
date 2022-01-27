@@ -1,7 +1,7 @@
 
 <template>
   <section class="wrapper">
-    <div class="px-8 py-10 base border">
+    <div class="px-8 py-10 base">
       <template v-if="!showEventsMenu">
         <!-- <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div> -->
 
@@ -43,7 +43,7 @@
 
           <nuxt-link exact active-class="active" to="/dashboard/developer">
             <span class="icon"><i class="fas fa-code"></i></span>
-            <span>Development</span>
+            <span>Developer</span>
           </nuxt-link>
         </div>
       </template>
@@ -110,15 +110,20 @@ export default class DashboardMenu extends Vue {
 
   .logout button {
     font-size: 12pt;
-    color: #000000;
+    color: var(--light-green);
   }
 }
 
 a {
   padding: 0.6em 1.5em;
   font-size: 12pt;
-  color: #0000007a;
-  background: rgba(255, 255, 255, 0.277);
+  transition: all .1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  /* color: var(--light-green); */
+  color: #dbdbdb;
+  /* background: rgba(255, 255, 255, 0.277); */
+  background: none;
+  border: 1px solid var(--light-green);
+  /* border: 1px solid var(--light-green); */
   border-radius: 5px;
   margin-bottom: 12px;
 
@@ -130,7 +135,7 @@ a {
 
   &:hover,
   &.active {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: var(--light-green);
     color: var(--dark-green);
     font-weight: 500;
   }

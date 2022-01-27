@@ -5,7 +5,7 @@
     <dashboard-navbar></dashboard-navbar>
 
     <section class="layout-grid">
-      <div class="menu bg-gray-200">
+      <div class="menu">
         <dashboard-menu></dashboard-menu>
       </div>
 
@@ -32,6 +32,11 @@ export default class DashboardLayout extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
+.menu{
+  background-color: var(--dark-green);
+  /* background-color: var(--dark-green); */
+}
 .layout-wrapper {
   display: grid;
   grid-template-rows: 80px auto;

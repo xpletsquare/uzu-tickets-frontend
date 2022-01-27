@@ -212,7 +212,7 @@ export default class CustomersPage extends Vue {}
 
 <style lang="scss" scoped>
 .container {
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
 
   @media (max-width: 1024px) {
@@ -336,7 +336,7 @@ export default class CustomersPage extends Vue {}
     table,
     th,
     td {
-      padding: 15px 5px;
+      padding: 15px 2px;
     }
 
     thead {

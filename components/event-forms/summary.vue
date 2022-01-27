@@ -2,11 +2,16 @@
   <div>
     <h2>Summary</h2>
     <p>
-      Name your event and tell event-goers why they should come. Add details that highlight what makes it unique. For
-      free event, set price to zero [0]
+      Name : <strong>{{ eventDetails.title }}</strong>
     </p>
+    <p>
+      Category : <strong>{{ eventDetails.category }}</strong>
+    </p>
+    <!-- show tags in tags area -->
+    <p>Tags : {{ tags }}</p>
+    <!-- <p>Tags : {{ tags.join(', ') }}</p> -->
 
-    <div class="flex gap-4">
+    <div class="flex gap-4 mt-10">
       <div class="landscape">
         <p>Landscape photo</p>
 
@@ -32,102 +37,65 @@
 
     <div class="description mt-5">
       <h3>Descripion</h3>
-      <p>
-        We are in a truly pivotal time in history where the collective momentum of the voices of women across the globe
-        can no longer be ignored and is therefore changing the shape of the world as we know it. We are seeing over and
-        over that where institutions have failed, women are taking ownership and doing the work to build the world they
-        desire. With Ada The Country, we are bringing to the stage this remarkable idea of a woman as her own nation,
-        her own country; autonomous, resourceful and powerful.
-      </p>
+      <p>{{ eventDetails.description }}</p>
     </div>
 
-    <div class="schedule mt-5">
-      <div class="flex items-center justify-between py-2">
+    <!-- loop through schedules and show each schedule with tickets associated with the schedule-->
+    <div class="schedule-wrapper mt-5">
+      <div class="flex items-center justify-between py-2" v-for="(schedule, index) in schedules" :key="index">
         <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black">Schedule 1 </span>
-          <span class="text-black"> 21/12/2021 </span>
+          <span class="mb-1 font-bold text-black"> {{ schedule.name }} </span>
+          <span class="text-black"> {{ schedule.date }} </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="start-time text-xs text-gray"> Start time </span>
-          <span class="text-black"> 03:00 PM </span>
+          <span class="text-black"> {{ schedule.start }} </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="end-time text-xs"> End time </span>
-          <span class="text-black"> 05:00 PM </span>
+          <span class="text-black"> {{ schedule.end }} </span>
         </div>
       </div>
-
-      <v-container class="schedule-list">
-        <div class="flex items-center justify-between py-2">
+      <!-- tickets within a particular schedule-->
+      <div class="schedule-list">
+        <div class="flex items-center justify-between py-3" v-for="(ticket, index) in tickets" :key="index">
           <div class="flex flex-col">
-            <span class="mb-1 font-bold text-black">Schedule 1 • Regular</span>
-            <span class="text-black"> Schedule 1 • 21/12/2022 • 03:00 PM </span>
+            <span class="mb-1 font-bold text-black"
+              >{{ capitalize(ticket.schedule.name) }} • {{ capitalize(ticket.title) }}
+            </span>
+            <span class="text-black">
+              {{ ticket.schedule.date }} • {{ ticket.schedule.start }} • {{ ticket.schedule.end }}
+            </span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="price text-xs"> Price </span>
-            <span class="font-bold text-black"> N20,000 </span>
+            <span class="price text-xs"> Price</span>
+            <span class="text-black font-bold"> {{ formatCurrency(ticket.price) }} </span>
           </div>
-        </div>
-        <div class="flex items-center justify-between py-2">
-          <div class="flex flex-col">
-            <span class="mb-1 font-bold text-black">Schedule 1 • Regular</span>
-            <span class="text-black"> Schedule 1 • 21/12/2022 • 03:00 PM </span>
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="price text-xs"> Price </span>
-            <span class="font-bold text-black"> N20,000 </span>
-          </div>
-        </div>
-        <div class="flex items-center justify-between py-2">
-          <div class="flex flex-col">
-            <span class="mb-1 font-bold text-black">Schedule 1 • Regular</span>
-            <span class="text-black"> Schedule 1 • 21/12/2022 • 03:00 PM </span>
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="price text-xs"> Price </span>
-            <span class="font-bold text-black"> N20,000 </span>
-          </div>
-        </div>
-      </v-container>
-
-      <div class="flex items-center justify-between py-2">
-        <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black">Schedule 2 </span>
-          <span class="text-black"> 21/12/2021 </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="start-time text-xs text-gray"> Start time </span>
-          <span class="text-black"> 03:00 PM </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="end-time text-xs"> End time </span>
-          <span class="text-black"> 05:00 PM </span>
         </div>
       </div>
-
-      <v-container class="schedule-list">
-        <div class="flex items-center justify-between py-2">
-          <div class="flex flex-col">
-            <span class="mb-1 font-bold text-black">Schedule 2 • Regular</span>
-            <span class="text-black"> Schedule 2 • 21/12/2022 • 03:00 PM </span>
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="price text-xs"> Price </span>
-            <span class="font-bold text-black"> N20,000 </span>
-          </div>
-        </div>
-      </v-container>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { EventDetailsFull } from '~/common/models/interfaces'
+import { EventDetailsFull, ISchedule, ITicket } from '~/common/models/interfaces'
+import { formatCurrency, capitalize } from '~/common/utilities/index'
 
 @Component
 export default class Summary extends Vue {
   @Prop() eventDetails!: EventDetailsFull
+  formatCurrency = formatCurrency
+  capitalize = capitalize
+
+  schedules: ISchedule[] = this.eventDetails.schedules // schedules available
+  tickets: ITicket[] = this.eventDetails.tickets // tickets available
+
+  tags = this.eventDetails.tags //
+
+  // scheduleTickets = this.tickets.filter((ticket) => ticket.schedule.name === schedule.name)
+
+  scheduleData = []
 }
 </script>
 

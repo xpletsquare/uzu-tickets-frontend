@@ -26,8 +26,8 @@
             <span>Sales</span>
           </nuxt-link> -->
 
-          <nuxt-link exact active-class="active" to="/dashboard/customers">
-            <span class="icon"><i class="fas fa-user-friends"></i></span>
+          <nuxt-link exact active-class="active" to="/dashboard/transactions">
+            <span class="icon"><i class="fas fa-address-book"></i></span>
             <span>Transactions</span>
           </nuxt-link>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="w-full text-left back" @click="goBack">
+    <button class="text-left back" @click="goBack">
       <i class="fas fa-chevron-left pr-2"></i>
       <span class="">Back</span>
     </button>
@@ -119,9 +119,9 @@ export default class EventsMenu extends Vue {
 //   border: 1px solid #15b743;
 // }
 
-  .back{
-    color: var(--light-green);
-  }
+.back {
+  color: var(--light-green);
+}
 .event-link {
   padding: 0.6em 1.5em;
   font-size: 12pt;
@@ -141,25 +141,17 @@ export default class EventsMenu extends Vue {
   &:hover,
   &.active {
     color: var(--dark-green);
-     background-color: var(--light-green);
-
+    background-color: var(--light-green);
   }
-
- 
 }
 
-
-.event-title-holder{
+.event-title-holder {
   min-width: 100% !important;
 }
- .event-title{
-    min-width: 100%;
-    border: 1px solid var(--light-green) !important;
-    border-radius: 10px !important;
-    padding: 10px 0;
-
- 
-
-  }
-
+.event-title {
+  min-width: 100%;
+  border: 1px solid var(--light-green) !important;
+  border-radius: 10px !important;
+  // padding: 10px 0;
+}
 </style>

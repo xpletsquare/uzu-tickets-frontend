@@ -1,198 +1,183 @@
-<template>
-  <main>
-    <hero />
-
-    <div class="container">
-      <!-- featured events -->
-      <section class="featured-events">
-        <featured-event :imageUrl="require('~/assets/images/anete-lusina.png')" />
-        <featured-event :imageUrl="require('~/assets/images/davido.png')" />
-        <featured-event :imageUrl="require('~/assets/images/Tems.png')" />
-        <div class="arrow">
-          <fa icon="chevron-right" />
-        </div>
-      </section>
-
-      <!--  disclaimer -->
-      <section class="disclaimer">
-        <disclaimer />
-        <div class="icon">
-          <fa icon="exclamation" />
-        </div>
-      </section>
-
-      <!-- events -->
-      <section class="events-container">
-        <button class="filled">Events near you</button>
-        <button>All events</button>
-
-        <div class="events">
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
-          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
-          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
-          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-        </div>
-      </section>
-
-      <div class="view-all">
-        <primary-button label="VIEW ALL" link_to="/events"></primary-button>
-      </div>
-    </div>
-  </main>
-</template>
-
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-
-@Component({
-  layout: 'public',
-})
-export default class IndexPage extends Vue {}
+<script lang="ts" setup>
+  console.log('jones')
 </script>
 
+<template>
+  <div class="main">
+    <div class="inner">
+
+          <div class="left">
+
+            <div class="logo">
+              <img src="../assets/images/logo-update.png">
+            </div>
+          <h1 class="title">
+            We are creating <br>
+            a <span class="highlight"><span></span>seamless</span><br>
+            <span class="highlight"><span></span>ticketing</span> experience <br>
+            for event managers <br>
+            and attendees. <br>
+          </h1>
+
+          <div class="md:hidden mobile">
+            <img src="../assets/images/mobile-landing.png"> 
+          </div>
+          
+
+          <div class="email-list hidden">
+            <div class="email-list-tag"> Sign up to our email list <img class="send-img" src="../assets/images/send.svg"> </div>
+
+            <div class="form">
+
+              <input-field
+                label="Firstname"
+              ></input-field>
+              <input-field
+                label="Lastname"
+              ></input-field>
+              <input-field
+                label="Email"
+              ></input-field>
+
+              <primary-button
+                label="Join waiting list"
+              ></primary-button>
+              
+            </div>
+
+          </div>
+
+          <div class="socials">
+            <p>For more insights and updates about uzu tickets<br>
+            Follow us on our social media channels.</p>
+
+            <div class="social_links">
+              <a href="https://twitter.com/uzutickets" target="_blank"><i class="fab fa-twitter"></i></a>
+              <a href="https://instagram.com/uzutickets" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://web.facebook.com/uzutickets/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="right hidden md:flex">
+          <img src="../assets/images/landing.png">
+        </div>
+    </div>
+    
+  </div>
+</template>
+
 <style lang="scss" scoped>
-main {
-  height: 100%;
-  width: 100vw;
-  margin-bottom: 100px;
 
-  @media (max-width: 568px) {
-    margin-bottom: 50px;
+  .logo{
+    margin: 20px 0;
   }
-
-  .container {
-    width: 70%;
-    margin: 50px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    @media (max-width: 1024px) {
-      width: 90%;
+  .mobile{
+    img{
+      min-width: 120%;
+      transform: translateX(-3%);
     }
   }
 
-  .featured-events {
+  .highlight{
+  
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-
-    @media (max-width: 568px) {
-      // overflow-x: scroll;
-      width: 100%;
-      gap: 0.5rem;
-    }
-
-    .arrow {
-      position: absolute;
-      width: 29px;
-      height: 29px;
-      background-color: #31d760;
-      top: 40%;
-      right: -1.5%;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-
-      @media (max-width: 568px) {
-        top: 30%;
-        right: -3%;
-        width: 20px;
+    span{
+        display: inline-block;
+        position: absolute;
         height: 20px;
-        font-size: 12px;
-      }
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        z-index: -2;
+        background-color: var(--light-green);
     }
   }
 
-  .disclaimer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 50px 0;
-
-    @media (max-width: 768px) {
-      margin: 30px 0;
-    }
-
-    .icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 2px solid #ff4e00;
-      color: #ff4e00;
-      font-size: 14px;
-    }
+  .send-img{
+    display: inline-block;
+    max-width: 30px;
+    height: auto;
   }
 
-  .events-container {
-    margin-bottom: 50px;
-
-    @media (max-width: 568px) {
-      margin-bottom: 30px;
-    }
-
-    button {
-      padding: 11px 23px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #6f6f6f;
-
-      &.filled {
-        background-color: #e8ffef;
-        border: 1px solid #31d760;
-        border-radius: 20px;
-        color: #31d760;
-        margin-right: 10px;
-      }
-    }
-
-    .events {
-      margin: 42px 0;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      column-gap: 20px;
-      row-gap: 42px;
-
-      @media (max-width: 1024px) {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @media (max-width: 568px) {
-        grid-template-columns: 1fr;
-      }
-    }
+  .email-list-tag{
+    color: var(--dark-green);
+    font-size: 15pt;
+    margin: 30px 0;
   }
 
-  .view-all {
-    // background-color: #31d760;
-    // border-radius: 5px;
-    // padding: 14px 36px;
-    // color: #ffffff;
-    // font-size: 15px;
-    // font-weight: 600;
-    // // width: 138px;
-    margin: 0 auto;
+.socials{
+  margin: 25px 0;
+  p{
+    font-weight: 200;
+  }
+}  
+
+.social_links{
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  a{
+
+    color: var(--dark-green);
+    font-size: 25px;
+
+    &:hover{
+      color: var(--light-green);
+    }
+
   }
 }
+
+  .title{
+    font-size: 35pt;
+
+
+      @media screen and (max-width: 920px){
+          font-size: 25pt;
+        }
+  }
+  .main{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    overflow-x:hidden ;
+
+    @media screen and (max-width: 920px){
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 0;
+    }
+
+    .inner{
+
+      display: flex;
+      width: 70%;
+
+      @media screen and (max-width: 920px){
+          width: 92%;
+        }
+
+      .left{
+        width: 50%;
+        /* border: 1px solid red; */
+        @media screen and (max-width: 920px){
+          width: 100%;
+        }
+      }
+
+      .right{
+        /* overflow: hidden; */
+        img{
+          position: absolute;
+          min-width: auto !important;
+        }
+      }
+    }
+
+  }
+
+  
 </style>

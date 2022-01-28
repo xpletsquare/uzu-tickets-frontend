@@ -1,36 +1,21 @@
 <template>
   <div class="container">
-
     <template v-if="specify_amount">
       <div class="amount-popup">
-
-        <div class="amount-popup-inner"> 
+        <div class="amount-popup-inner">
           Please specify amount below
-          <div >
-            <input-field
-              label="Amount"
-              type="number"
-            ></input-field>
+          <div>
+            <input-field label="Amount" type="number"></input-field>
 
             <div class="na-line"></div>
             Please enter your password below to authorize this request
-            <input-field
-              label="Password"
-              type="password"
-            ></input-field>
+            <input-field label="Password" type="password"></input-field>
           </div>
-         
-         <div class="buttons">
-            <button class="secondary-btn" @click="showAmount">
-            CANCEL
-        </button>
-        <primary-button
-          label="CONFIRM"
-          :loading="loading"
-          @click="request_withdrawal"
-          >
-        </primary-button>
-         </div>
+
+          <div class="buttons">
+            <button class="secondary-btn" @click="showAmount">CANCEL</button>
+            <primary-button label="CONFIRM" :loading="loading" @click="request_withdrawal"> </primary-button>
+          </div>
         </div>
       </div>
     </template>
@@ -192,7 +177,6 @@ import { formatCurrency } from '~/common/utilities/index'
 
 @Component({
   layout: 'dashboard',
- 
 })
 export default class WalletPage extends Vue {
   formatCurrency = formatCurrency
@@ -201,97 +185,85 @@ export default class WalletPage extends Vue {
   accountNumber = '•••••••566'
   specify_amount = false
   loading = false
-  showAmount(){
-    this.specify_amount = !this.specify_amount;
+  showAmount() {
+    this.specify_amount = !this.specify_amount
   }
 
   request_withdrawal() {
-    this.loading = true;
+    this.loading = true
 
     setTimeout(() => {
-      this.loading = false;
-    }, 2000);
+      this.loading = false
+    }, 2000)
   }
 }
-
-
 </script>
 
 <style lang="scss" scoped>
-
-.na-line{
+.na-line {
   height: 10px;
-  border-bottom: .5px solid var(--light-green);
+  border-bottom: 0.5px solid var(--light-green);
   margin-bottom: 10px;
 }
-.buttons{
+.buttons {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-   *{
-     width: 50%;
-   }
-
-  
-}
- 
- .secondary-btn{
-     &:hover{
-      color: black;
-     }
+  * {
+    width: 50%;
   }
+}
 
-.amount-popup{
+.secondary-btn {
+  &:hover {
+    color: black;
+  }
+}
+
+.amount-popup {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 100;
 
-
-  .amount-popup-inner{
+  .amount-popup-inner {
     padding: 20px;
     width: 20%;
     height: max-content;
     background: white;
-    border-radius: 10px ;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 
-   
-    @media screen and (max-width: 1300px){
-       width: 30%;
+    @media screen and (max-width: 1300px) {
+      width: 30%;
     }
 
-     @media screen and (max-width: 1080px){
-       width: 40%;
+    @media screen and (max-width: 1080px) {
+      width: 40%;
     }
 
-
-    @media screen and (max-width: 720px){
-       width: 80%;
+    @media screen and (max-width: 720px) {
+      width: 80%;
     }
 
-
-   
-    div{
+    div {
       cursor: pointer;
     }
-
   }
-  
 }
 
 .container {
   width: 60%;
   margin: 0 auto;
 
- @media (max-width: 1920px) {
+  @media (max-width: 1920px) {
     width: 90%;
   }
   @media (max-width: 1024px) {

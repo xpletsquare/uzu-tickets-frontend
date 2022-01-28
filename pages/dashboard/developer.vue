@@ -125,6 +125,13 @@
       </pre>
     </div>
     <!-- end of codebase section -->
+
+    <h2>Help</h2>
+
+    <p>
+        If you have any difficulies implementing Uzu tickets on website, feel free to contact our technical support team via email at tech@uzutickets.com.
+    </p>
+
   </div>
 </template>
 
@@ -167,6 +174,9 @@ export default class DeveloperPage extends Vue {
 
 <style  lang="scss" scoped>
 
+h2{
+  font-size: 20pt;
+}
 .thecode{
   display: inline-block;
   color: rgb(88, 88, 88);

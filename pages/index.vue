@@ -149,6 +149,7 @@
       justify-content: center;
       align-items: flex-start;
       padding: 80px 0;
+      /*  */
     }
 
     .inner{

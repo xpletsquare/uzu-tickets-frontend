@@ -164,7 +164,7 @@ export default class ProfilePage extends Vue {
 
 <style lang="scss" scoped>
 .container {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
 
   @media (max-width: 1024px) {

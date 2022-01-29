@@ -22,11 +22,16 @@ export default class Search extends Vue {
   position: relative;
 
   input[type='search'] {
-    border: 1px solid #707070;
+    border: 1px solid var(--light-grey);
     border-radius: 5px;
     padding: 16px 20px;
     background-color: #fff;
     width: 100%;
+    outline: none;
+
+    &:focus{
+       border: 1px solid var(--light-green);
+    }
   }
 
   .icon {

@@ -22,6 +22,8 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.scss'],
+  // css: ['@/assets/css/main.scss'],
+  // css: ['~/assets/variable.less'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['@/plugins/antd-ui'],
@@ -38,6 +40,8 @@ export default {
 
     // Simple usage
     '@nuxtjs/vuetify',
+
+    
 
     [
       '@nuxtjs/fontawesome',
@@ -61,6 +65,8 @@ export default {
         },
       },
     ],
+
+    
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -69,9 +75,11 @@ export default {
     '@nuxtjs/axios',
     ['nuxt-highlightjs', {
       // Module Options
-      // style: 'atelier-dune-dark'
-      style: 'atom-one-dark'
-    }]
+      style: 'a11y-light'
+      // style: 'atom-one-dark'
+    }],
+
+    
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -81,9 +89,21 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: { 
+    loaders: {
+      less: {
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+     },
+   },
+
+  },
 
   server: {
     port: 25001,
   },
+
+  // #31d760
+
 }

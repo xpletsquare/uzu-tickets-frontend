@@ -196,6 +196,7 @@ h2{
   tab-size: 2 !important;
   max-height: max-content;
   margin: 0px !important;
+  background-color: rgb(238, 238, 238) !important;
   /* display: flex !important; */
 }
 

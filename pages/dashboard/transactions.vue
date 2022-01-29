@@ -212,7 +212,7 @@ export default class CustomersPage extends Vue {}
 
 <style lang="scss" scoped>
 .container {
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
 
   @media (max-width: 1024px) {
@@ -302,7 +302,7 @@ export default class CustomersPage extends Vue {}
 
         .name span {
           font-weight: bold;
-          color: #15b743;
+          color: var(--light-green);
         }
 
         .right {
@@ -348,7 +348,7 @@ export default class CustomersPage extends Vue {}
       font-size: 14px;
 
       tr {
-        border-bottom: 1px solid var(--grey);
+        border-bottom: 1px solid var(--light-grey);
       }
     }
 
@@ -361,7 +361,7 @@ export default class CustomersPage extends Vue {}
 
     .amount {
       font-weight: bold;
-      color: #15b743;
+      color: var(--light-green);
     }
   }
 

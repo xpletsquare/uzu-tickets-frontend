@@ -11,7 +11,7 @@
           <span>352842ye623</span>
         </div>
 
-        <span class="icon">
+        <span class="icon" @click="doCopy">
           <i class="far fa-clone"></i>
         </span>
       </div>
@@ -204,13 +204,32 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { message } from 'ant-design-vue'
 import { formatCurrency } from '~/common/utilities/index'
 
 @Component({
   layout: 'dashboard',
+  methods: {
+    doCopy(){
+
+      // @ts-ignore
+      this.$copyText(this.code).then(function (e){
+        // alert('Copied')
+         message.success('Copied !')
+        console.log(e)
+        
+      }, function(e){
+        // alert('Cant copy')
+          message.warning('Code not copied !')
+        console.log(e)
+      })
+    }
+  }
 })
 export default class PromoterPage extends Vue {
-  formatCurrency = formatCurrency
+  formatCurrency = formatCurrency;
+  code = "352842ye623"
+ 
 }
 </script>
 

@@ -2,8 +2,10 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 
 export const getAuthHeaders = () => {
-  const userInSession = localStorage.getItem('auth') || ''
-  const parsed = userInSession ? JSON.parse(userInSession) : ''
+  const userInSession = sessionStorage.getItem('auth') || '';
+  const parsed = userInSession ? JSON.parse(userInSession) : '';
+
+  console.log('MAKING AUTH CALL', parsed?.token || 'NO token')
 
   if (!parsed || !parsed.token) {
     return {

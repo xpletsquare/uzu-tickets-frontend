@@ -1,18 +1,35 @@
 <template>
   <div class="container">
     <section class="schedules">
-      <h2 class="m-0">Schedules</h2>
-      <p class="p-0 m-0">
+      <!-- <p class="p-0 m-0">
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.
-      </p>
+      </p> -->
+
+      <h2>Event Occurrence</h2>
+      <p>Help people in the area discover your event and let attendees know where to show up.</p>
+      <!-- <secondary-button label="One Time" class="mr-2" @click="setEventOccurence('single')"></secondary-button>
+      <primary-button label="Reoccuring event" @click="setEventOccurence('mutiple')"></primary-button> -->
+
+      <div class="inline-block w-1/3">
+        <select 
+          class="inline-block rounded-md w-full p-2 bg-green-800 text-gray-50 outline-none" 
+          v-model="formFields.occurrence"
+          @change="handleOccurenceChange"
+        >
+          <option value="single">One Time Event</option>
+          <option value="multiple">Multiple</option>
+        </select>
+      </div>
 
       <div class="my-8">
+        <h2 class="m-0">Schedules</h2>
         <p class="p-0 m-0">Improve discoverability of your event by adding tags relevant to the subject matter.</p>
 
         <div class="flex items-center gap-4 mt-2 w-full">
           <input-field label="Schedule name" :value.sync="schedule.name" class="w-full"></input-field>
           <primary-button label="Add" class="btn" @click="addItem"></primary-button>
         </div>
+
         <div class="flex items-center gap-2 mt-2">
           <a-date-picker placeholder="Date" :format="dateFormat" :value="date" size="large" @change="onDateChange" />
           <a-time-picker
@@ -92,8 +109,29 @@ export default class SchedulesForm extends Vue {
     end: '',
   }
 
-  formFields: Partial<EventDetailsFull> = {
+  formFields: Pick<EventDetailsFull, 'occurrence' | 'schedules'> = {
+    occurrence: 'single',
     schedules: [],
+  }
+
+  mounted() {
+    this.formFields = {
+      occurrence: this.eventDetails.occurrence || 'single',
+      schedules: this.eventDetails.schedules || []
+    } 
+  }
+
+  handleOccurenceChange(){
+    const { occurrence, schedules } = this.formFields;
+
+    if(occurrence === 'multiple'){
+      return;
+    }
+
+    if(occurrence === 'single' && schedules.length > 1){
+      this.formFields.occurrence = 'multiple';
+      message.warning('One time events cannot have more than one schedule');
+    }
   }
 
   onDateChange(date: any) {
@@ -114,19 +152,28 @@ export default class SchedulesForm extends Vue {
     this.schedule.end = endTime
   }
 
+  setEventOccurence(value: "single" | "multiple"){
+    this.formFields.occurrence = value;
+  }
+
   addItem() {
-    const { name, date, start, end } = this.schedule
+    const { occurrence, schedules } = this.formFields;
+
+    if(occurrence === 'single' && schedules.length){
+      message.warning('Cannot have multiple schedules for a one-time event.')
+    }
+    let { name, date, start, end } = this.schedule;
+
+    this.schedule.end = end = end || 'None';
 
     const hasEmptyValue = [name, date, start, end].filter((key) => !key?.length)
-
-    // console.log(hasEmptyValue)
 
     if (hasEmptyValue.length) {
       message.warning('Please enter all fields')
       return
     }
 
-    this.formFields.schedules?.push(this.schedule)
+    this.formFields.schedules?.push({...this.schedule});
 
     // fix bug with clearing
 
@@ -136,29 +183,23 @@ export default class SchedulesForm extends Vue {
       start: '',
       end: '',
     }
-
-    console.log(this.schedule)
   }
 
   removeItem(index: Number) {
-    // console.log(index)
     const filtered = this.formFields.schedules?.filter(
       (schedule) => this.formFields.schedules?.indexOf(schedule) !== index
     )
 
-    // console.log(filtered)
     this.formFields.schedules = filtered
   }
 
-  addSchedule() {
-    message.success('adding schedule')
-  }
-
   validate(): string {
-    const { schedules } = this.formFields
+    const { schedules } = this.formFields;
 
-    if (!schedules?.length) {
-      return 'Add a schedule'
+    console.log({ schedules: this.formFields.schedules });
+
+    if (!schedules.length) {
+      return 'Add a schedule';
     }
 
     // emit event to save data in parent

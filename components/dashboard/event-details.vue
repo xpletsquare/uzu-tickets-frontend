@@ -1,27 +1,35 @@
 <template>
-  <section class="max-600 mx-auto">
+  <section class="max-600 mx-auto" v-if="eventInitialized">
     <div class="content">
       <div v-if="!detailsMode">
         <event-forms-basic :eventDetails="event" ref="basic" @save="saveForm" v-if="stage === 1"></event-forms-basic>
+
         <event-forms-schedules
           :eventDetails="event"
           ref="schedule"
           @save="saveForm"
           v-if="stage === 2"
         ></event-forms-schedules>
+
         <event-forms-tickets
           :eventDetails="event"
           ref="tickets"
           @save="saveForm"
           v-if="stage === 3"
         ></event-forms-tickets>
+
         <event-forms-details
           :eventDetails="event"
           ref="details"
           @save="saveForm"
           v-if="stage === 4"
         ></event-forms-details>
-        <event-forms-summary :eventDetails="event" ref="summary" v-if="stage === 5"></event-forms-summary>
+
+        <event-forms-summary 
+          :eventDetails="event" 
+          ref="summary" 
+          v-if="stage === 5"
+        ></event-forms-summary>
       </div>
 
       <div v-else>
@@ -31,6 +39,12 @@
     </div>
 
     <div class="flex justify-end">
+      <div class="px-4">
+        <button v-if="showBackButton" @click="back" class="border p-3 rounded">
+          PREV <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
       <button v-if="showNextButton" @click="next" class="border p-3 rounded">
         NEXT <i class="fas fa-chevron-right"></i>
       </button>
@@ -42,26 +56,37 @@
         label="PUBLISH"
       ></primary-button>
     </div>
+
+    <!-- GOOGLE MAPS INTEGRATION -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQETAxXCxJ867hOECYndGOIIBMvRrCGsQ&libraries=places"></script>
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
-import { EventsApi } from '~/common/api/events.api'
-
 import { message } from 'ant-design-vue'
+import { EventsApi } from '~/common/api/events.api';
+import { AppState } from '~/common/storeHelpers';
 
 @Component
 export default class EventDetails extends Vue {
   @Prop() eventDetails!: EventDetailsFull
-  event: EventDetailsFull | {} = {}
+  event: Partial<EventDetailsFull> | null = null;
 
   isLoading = false
+
+  get eventInitialized(){
+    return this.event !== null;
+  }
 
   get stage() {
     const stage = (this.$route.query.stage as string) || '1'
     return parseInt(stage)
+  }
+
+  get showBackButton(){
+    return this.stage > 1;
   }
 
   get showNextButton() {
@@ -119,9 +144,7 @@ export default class EventDetails extends Vue {
   }
 
   saveForm(formData: any) {
-    this.event = { ...this.event, ...formData }
-    console.log(this.event)
-    message.success('Saved')
+    this.event = { ...this.event, ...formData };
   }
 
   next() {
@@ -136,7 +159,7 @@ export default class EventDetails extends Vue {
         return
       }
 
-      const error = ref.validate()
+      const error = ref?.validate()
 
       if (error) {
         message.error(error)
@@ -150,22 +173,32 @@ export default class EventDetails extends Vue {
     this.$router.replace({ query })
   }
 
+  back(){
+    const prevStage = this.stage - 1
+    const stageAsString = prevStage + ''
+    const query = { ...this.$route.query, stage: stageAsString }
+    this.$router.replace({ query })
+  }
+
   async publishEvent() {
     // make api call to publish event
-    // const details = { ...this.event }
+    const { currentUser } = this.$store.state as AppState;
 
-    // this.isLoading = true
+    const author = currentUser?.id || '';
+
+    const details: Partial<EventDetailsFull> = { ...this.event, author };
+    details.venue = details.location;
+
+    this.isLoading = true
     message.success('publishing event')
-    // const { error, data } = await EventsApi.createEvent(details)
-    // this.isLoading = false
+    const { error, data } = await EventsApi.createEvent(details);
+    this.isLoading = false
 
-    // if (error) {
-    //   return message.error(error as string)
-    // }
+    if (error) {
+      return message.error(error as string)
+    }
 
-    // commit event data to the store
-
-    // message.success('Event published')
+    message.success('Event published')
 
     this.$router.push('/dashboard/events')
   }

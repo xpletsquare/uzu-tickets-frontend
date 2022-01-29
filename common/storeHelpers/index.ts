@@ -1,7 +1,8 @@
-import { User } from '../models/interfaces'
+import { EventDetailsFull, User } from '../models/interfaces'
 
 export interface AppState {
-  currentUser: AuthUser | null
+  currentUser: AuthUser | null,
+  events: EventDetailsFull[]
 }
 
 export class AuthUser implements User {
@@ -21,5 +22,5 @@ export class AuthUser implements User {
 
 export enum StoreMutations {
   setUser = 'setUser',
-  setEvent = 'setEvent',
+  setEvents = 'setEvents',
 }

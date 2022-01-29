@@ -6,11 +6,15 @@ const events = createAxiosInstance('/events')
 
 export const EventsApi = {
   createEvent(details: AnyObject) {
-    return catchAsync(() => events.post('', details))
+    return catchAsync(() => events.post('', details, getAuthHeaders()))
   },
 
   createEventTicket(details: AnyObject) {
     return catchAsync(() => events.post('/tickets', details, getAuthHeaders()))
+  },
+
+  getUserEvents(userId: string) {
+    return catchAsync(() => events.get(`/mine/${userId}`, getAuthHeaders()))
   },
 
   listEvents() {

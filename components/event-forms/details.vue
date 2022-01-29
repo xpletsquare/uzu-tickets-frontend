@@ -23,6 +23,7 @@
             <input type="file" id="landscape" ref="landscape" accept="image/*" @change="onLandscapeChange($event)" />
           </div>
         </div>
+
         <div class="preview">
           <p id="file-chosen">{{ landscape }}</p>
         </div>
@@ -75,6 +76,11 @@ export default class DetailsForm extends Vue {
     description: '',
   }
 
+  mounted() {
+    this.formFields.images = this.eventDetails.images || this.eventDetails.images;
+    this.formFields.description = this.eventDetails.description || ''; 
+  }
+
   onPortraitChange(event: any) {
     const file = event.target.files[0]
     console.log(file)
@@ -99,7 +105,6 @@ export default class DetailsForm extends Vue {
 
   validate(): string {
     const { description } = this.formFields
-    console.log(description)
 
     if (!description) {
       return 'Please add a description'

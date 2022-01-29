@@ -12,15 +12,15 @@
           <primary-button @click="openNewEventPage" class="desktop-button" label="create" />
         </div>
       </div>
-      <dashboard-total-event-sales></dashboard-total-event-sales>
-      <!-- <div v-for="(event, index) in events" :key="index">
+
+      <div v-for="event in events" :key="event.id">
         <dashboard-events-card :event="event"></dashboard-events-card>
-      </div> -->
-      <dashboard-events-card></dashboard-events-card>
-      <dashboard-events-card></dashboard-events-card>
-      <dashboard-events-card></dashboard-events-card>
-      <dashboard-events-card></dashboard-events-card>
-      <dashboard-events-card></dashboard-events-card>
+      </div>
+
+      <div class="py-20">
+        <a-empty description="You have no Events" />
+      </div>
+
     </div>
 
     <div class="round-btn">+</div>
@@ -31,6 +31,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { AppState } from '~/common/storeHelpers'
 import { EventDetailsFull } from '~/common/models/interfaces'
+import { EventsApi } from '~/common/api/events.api'
+import { message } from 'ant-design-vue'
 
 @Component({
   layout: 'dashboard',
@@ -43,15 +45,43 @@ export default class ProfilePage extends Vue {
   }
 
   get currentEvents() {
-    const { currentUser } = this.$store.state as AppState
-    return currentUser?.events
+    const { events } = this.$store.state as AppState
+    return events;
+  }
+
+  async loadEventsFromServer(){
+    const { currentUser } = this.$store.state as AppState;
+
+    if(!currentUser){
+      return;
+    }
+
+    const { data, error, status} = await EventsApi.getUserEvents(currentUser?.id);
+
+    console.log({ data });
+
+    if(status === 404){
+      this.events = [];
+      return;
+    }
+
+    if(error){
+      message.error(error as string);
+      return;
+    }
+
+    // this.events = data.data;
   }
 
   mounted() {
-    if (this.currentEvents) {
-      this.events = [...this.currentEvents]
-      return
+    this.loadEventsFromServer();
+    
+    if (this.currentEvents.length) {
+      this.events = [...this.currentEvents];
+      console.log({events: this.events});
+      return;
     }
+
 
     // this.events = [
     //   {

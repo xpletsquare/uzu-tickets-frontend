@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="formFields">
     <section class="basic-info main">
       <h2>Basic info</h2>
       <p class="p-0 m-0">
@@ -22,17 +22,21 @@
         ></multiselect>
       </div>
 
-      <div class="basic-info sub">
-        <h4 class="mt-5 font-semibold">Basic info</h4>
+      <div class="basic-info mt-10 sub">
+        <h4 class="mt-5 font-semibold">Add Tags (Optional)</h4>
         <p>Improve discoverability of your event by adding tags relevant to the subject matter.</p>
 
-        <div class="flex">
-          <input-field label="Tags" class="bi" :value.sync="tag"></input-field>
+        <div class="flex items-center">
+          <!-- <input-field label="Tags" class="bi" :value.sync="tag"></input-field> -->
+          <div class="input-wrapper border bi top-1">
+            <input @keyup.enter="addItem" class=" outline-none border focus:border-green-600" v-model="tag" type="text">
+          </div>
+
           <primary-button class="btn" label="Add" @click="addItem" />
         </div>
 
         <div class="my-6 flex flex-wrap">
-          <span class="filled p-2 text-xs cursor-pointer" v-for="(tag, index) in formFields.tags" :key="index">
+          <span class="filled py-2 px-3 text-xs cursor-pointer" v-for="(tag, index) in formFields.tags" :key="index">
             {{ tag }}
             <i class="fa fa-times ml-2" aria-hidden="true" @click="removeItem(tag)"></i
           ></span>
@@ -43,23 +47,37 @@
     <section class="location">
       <h2 class="mt-4">Location</h2>
       <p>Help people in the area discover your event and let attendees know where to show up.</p>
-      <secondary-button label="Venue" class="mr-2"></secondary-button>
-      <primary-button label="Online event" @click="setOnlineEvent"></primary-button>
+
+      <!-- <template v-if="showLocationInput">
+        <VueGoogleAutocomplete
+          id="map"
+          classname="block p-2 mt-3 border w-full gray-border rounded"
+          placeholder="Search Location"
+          @placechanged="getAddressData"
+          :country="['ng']"
+          v-model="formFields.location"
+        >
+        </VueGoogleAutocomplete>
+      </template> -->
+
       <input-field
-        label="Search location"
-        class="mt-4"
+        label="Venue"
         :value.sync="formFields.location"
-        :disabled="disabled"
+        :defaultValue="formFields.location"
+        class="mt-4"
       ></input-field>
+
+      <input-field
+        label="Address (Optional)"
+        :value.sync="formFields.address"
+        :defaultValue="formFields.address"
+        class="mt-4"
+      ></input-field>
+      
     </section>
 
     <section class="date-time">
-      <h2>Date and time</h2>
-      <p>Help people in the area discover your event and let attendees know where to show up.</p>
-      <secondary-button label="Single event" class="mr-2" @click="setSingleEvent"></secondary-button>
-      <primary-button label="Reoccuring event" @click="setMultipleEvent"></primary-button>
-
-      <p class="mt-10 py-6">
+      <p class="mt-10 py-6 opacity-50">
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique. Name
         your event and tell event-goers why they should come. Add details that highlight what makes it unique. Name your
         event and tell event-goers why they should come. Add details that highlight what makes it unique.Name your event
@@ -73,26 +91,50 @@
 import { message } from 'ant-design-vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { EventDetailsFull } from '~/common/models/interfaces'
-import Multiselect from 'vue-multiselect'
+import Multiselect from 'vue-multiselect';
+
+// @ts-ignore
+import VueGoogleAutocomplete from 'vue-google-autocomplete';
+
 
 @Component({
-  components: { Multiselect },
+  components: { Multiselect, VueGoogleAutocomplete },
 })
 export default class BasicForm extends Vue {
-  @Prop() eventDetails!: EventDetailsFull
+  @Prop() eventDetails!: EventDetailsFull;
 
-  disabled = false
+  showLocationInput = false;
 
-  selectValue: string = ''
-  categories: string[] = ['fashion', 'art', 'business']
-  tag: string = ''
+  disabled = false;
 
-  formFields: Partial<EventDetailsFull> = {
-    title: '',
-    category: '',
-    tags: [],
-    // tags: ['category 1', 'category 2', 'category 3'],
-    location: '',
+  selectValue: string = '';
+  categories: string[] = ['fashion', 'art', 'business'];
+  tag: string = '';
+
+  formFields: Partial<EventDetailsFull> | null = null;
+
+  mounted() {
+    // this.checkGoogle();
+
+    this.formFields = {
+      title: this.eventDetails?.title || '',
+      category: this.eventDetails?.category || '',
+      tags: this.eventDetails?.tags || [],
+      location: this.eventDetails?.location || '',
+      address: this.eventDetails?.address || '',
+    }
+
+    console.log({fields: this.formFields});
+  }
+
+  checkGoogle(){
+    // @ts-ignore
+    if(window?.google){
+      this.showLocationInput = true;
+      return;
+    }
+
+    setTimeout(() => this.checkGoogle(), 300);
   }
 
   addItem() {
@@ -101,25 +143,33 @@ export default class BasicForm extends Vue {
       return
     }
 
-    this.formFields.tags?.push(this.tag)
+    this.formFields?.tags?.push(this.tag)
 
     // fix bug with clearing tag
-    this.tag = ''
-    console.log(this.tag)
+    this.tag = '';
+    console.log(this.tag);
   }
 
   removeItem(item: string) {
-    // console.log(tag)
-    const filtered = this.formFields.tags?.filter((eTag) => eTag !== item)
+    if(!this.formFields){
+      return;
+    }
+
+    const filtered = this.formFields?.tags?.filter((eTag) => eTag !== item)
 
     // console.log(filtered)
-    this.formFields.tags = filtered
+    this.formFields.tags = filtered;
   }
 
-  setOnlineEvent() {
+  setOnlineEvent(value: string) {
+    if(!this.formFields){
+      return;
+    }
+    
     message.info('Setting online event')
-    this.disabled = true
-    this.formFields.location = 'Online event'
+    this.formFields.location = value;
+
+    this.disabled = value.length > 0;
   }
 
   setSingleEvent() {
@@ -130,18 +180,22 @@ export default class BasicForm extends Vue {
     message.info('Setting multiple event')
   }
 
+  getAddressData(addressData: any, placeResultData: any, id: string){
+    const location = this.formFields?.location;
+    console.log({addressData, placeResultData, id, location});
+  }
+
   validate(): string {
-    const { title, category, tags, location } = this.formFields
+    const { title, category, tags, location } = this.formFields as Partial<EventDetailsFull>
 
     if (!title) {
       return 'Invalid title'
     }
+
     if (!category) {
       return 'Invalid category'
     }
-    if (!tags?.length) {
-      return 'Add tag(s)'
-    }
+
     if (!location) {
       return 'Invalid location'
     }
@@ -149,7 +203,7 @@ export default class BasicForm extends Vue {
     // emit event to save data in parent
     this.$emit('save', this.formFields)
 
-    return ''
+    return '';
   }
 }
 </script>
@@ -162,6 +216,35 @@ section {
     border-bottom: 1px solid var(--grey);
   }
 }
+
+.input-wrapper{
+  position: relative;
+
+  label{
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    background: white;
+  }
+
+  input{
+    border: 1px solid lightgray;
+    padding: 0.5em;
+    border-radius: 3px;
+    width: 100%;
+    height: 45px;
+  
+    &:focus{
+      border: 1px solid var(--light-green);
+
+      &+label{
+        top: -10px;
+      }
+    }
+  
+  }
+}
+
 
 .btn {
   float: right;
@@ -188,5 +271,16 @@ h2 {
 .light-green-link {
   color: var(--light-green);
   cursor: pointer;
+}
+
+input .border{
+  height: 45px;
+  border: 1px solid lightgray;
+}
+
+.gray-border{
+  border: 1px solid gray;
+  height: 45px;
+  outline: none;
 }
 </style>

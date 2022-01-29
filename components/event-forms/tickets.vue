@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="schedules">
-      <h2 class="m-0">Tickets</h2>
+      <h2 class="m-0">Ticket Category</h2>
       <p class="p-0 m-0">
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.
       </p>
@@ -10,11 +10,16 @@
         <p class="p-0 m-0">Ticket name is the name on the ticket: ex; Regular, VIP, VVIP</p>
 
         <div class="flex items-center gap-4 mt-1 w-full">
-          <input-field label="Ticket name" :value.sync="ticket.title" class="w-full"></input-field>
-          <primary-button label="Add" class="btn" @click="addItem"></primary-button>
+          <!-- <input-field label="Ticket name" :value.sync="ticket.title" class="w-full"></input-field> -->
+          <div class="flex-auto">
+            <div class="mt-4 mb-2">Ticket Name</div>
+            <div class="border border-gray-500 rounded w-full">
+              <input placeholder="Ticket name" v-model="ticket.title" class="w-full px-3 outline-none h-10" />
+            </div>
+          </div>
         </div>
 
-        <div class="flex items-center gap-4 mt-2 w-4/5">
+        <div class="flex items-center gap-4 mt-4 w-full">
           <multiselect
             v-model="selectValue"
             :options="schedules"
@@ -25,8 +30,21 @@
             label="name"
             class="border border-gray-500 rounded"
           ></multiselect>
-          <input-field label="Price" :value.sync="ticket.price" class="w-1/2"></input-field>
+
+          <div class="w-1/2 border border-gray-500 rounded">
+            <input placeholder="Price" v-model="ticket.price" class="w-full px-3 outline-none h-10" />
+          </div>
         </div>
+
+        <div class="mt-4 mb-2">Available Tickets</div>
+        <div class="w-full border border-gray-500 rounded">
+          <input v-model="ticket.nLimit" class="w-full px-3 outline-none h-10" />
+        </div>
+
+        <div class="text-right mt-4">
+          <primary-button label="Add" class="btn" @click="addItem"></primary-button>
+        </div>
+
       </div>
     </section>
 
@@ -37,9 +55,14 @@
             >{{ capitalize(ticket.schedule.name) }} • {{ capitalize(ticket.title) }}
           </span>
           <span class="text-black">
-            {{ ticket.schedule.date }} • {{ ticket.schedule.start }} • {{ ticket.schedule.end }}
+            {{ ticket.schedule.date }} • {{ ticket.schedule.start }} 
+            <span v-if="ticket.schedule.end != 'None'">• {{ ticket.schedule.end }}</span>
+          </span>
+          <span>
+            {{ticket.nLimit}} tickets available
           </span>
         </div>
+
         <div class="flex flex-col gap-1">
           <span class="price text-xs"> Price</span>
           <span class="text-black font-bold"> {{ formatCurrency(ticket.price) }} </span>
@@ -66,14 +89,15 @@ import { formatCurrency, capitalize } from '~/common/utilities/index'
 })
 export default class TicketsForm extends Vue {
   @Prop() eventDetails!: EventDetailsFull
-  formatCurrency = formatCurrency
-  capitalize = capitalize
+  formatCurrency = formatCurrency;
+  capitalize = capitalize;
+  selectValue = "";
 
-  selectValue = null // should be the schedule selected
-  schedules: ISchedule[] = this.eventDetails.schedules // schedules available
+  get schedules(){
+    return this.eventDetails.schedules || []
+  }
 
   ticket: ITicket = {
-    // id: '',
     title: '',
     schedule: {
       name: '',
@@ -82,16 +106,20 @@ export default class TicketsForm extends Vue {
       end: '',
     },
     price: '',
+    nLimit: 0,
   }
 
   formFields: Partial<EventDetailsFull> = {
     tickets: [],
   }
 
+  mounted() {
+    this.formFields.tickets = this.eventDetails.tickets || [];
+  }
+
   onSelect(schedule: ISchedule) {
     console.log(schedule)
     this.ticket.schedule = schedule
-    // message.info(schedule)
   }
 
   addItem() {
@@ -99,19 +127,18 @@ export default class TicketsForm extends Vue {
 
     const hasEmptyValue = [title, price].filter((key) => !key?.length)
 
-    // console.log(hasEmptyValue)
-
     if (hasEmptyValue.length) {
       message.warning('Please enter all fields')
       return
     }
 
-    this.formFields.tickets?.push(this.ticket)
+    this.formFields.tickets?.push({...this.ticket});
 
-    // fix bug with clearing
+    this.selectValue = '';
+
+    // TODO: fix bug with clearing
 
     this.ticket = {
-      // id: '',
       title: '',
       schedule: {
         name: '',
@@ -120,8 +147,8 @@ export default class TicketsForm extends Vue {
         end: '',
       },
       price: '',
+      nLimit: 0
     }
-    console.log(this.ticket)
   }
 
   removeItem(index: Number) {

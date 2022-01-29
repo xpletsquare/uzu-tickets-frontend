@@ -1,14 +1,14 @@
 <template>
   <div>
     <h2>Summary</h2>
-    <p>
+    <p class="capitalize">
       Name : <strong>{{ eventDetails.title }}</strong>
     </p>
-    <p>
+    <p class="capitalize">
       Category : <strong>{{ eventDetails.category }}</strong>
     </p>
     <!-- show tags in tags area -->
-    <p>Tags : {{ tags }}</p>
+    <p v-if="tags.length">Tags : {{ tags }}</p>
     <!-- <p>Tags : {{ tags.join(', ') }}</p> -->
 
     <div class="flex gap-4 mt-10">
@@ -42,9 +42,9 @@
 
     <!-- loop through schedules and show each schedule with tickets associated with the schedule-->
     <div class="schedule-wrapper mt-5">
-      <div class="flex items-center justify-between py-2" v-for="(schedule, index) in schedules" :key="index">
+      <div class="border p-2 flex items-center justify-between py-2" v-for="(schedule, index) in schedules" :key="index">
         <div class="flex flex-col">
-          <span class="mb-1 font-bold text-black"> {{ schedule.name }} </span>
+          <span class="mb-1 font-bold text-black capitalize"> {{ schedule.name }} </span>
           <span class="text-black"> {{ schedule.date }} </span>
         </div>
         <div class="flex flex-col gap-1">
@@ -56,8 +56,10 @@
           <span class="text-black"> {{ schedule.end }} </span>
         </div>
       </div>
+
+
       <!-- tickets within a particular schedule-->
-      <div class="schedule-list">
+      <div class="schedule-list pl-4">
         <div class="flex items-center justify-between py-3" v-for="(ticket, index) in tickets" :key="index">
           <div class="flex flex-col">
             <span class="mb-1 font-bold text-black"
@@ -84,7 +86,8 @@ import { formatCurrency, capitalize } from '~/common/utilities/index'
 
 @Component
 export default class Summary extends Vue {
-  @Prop() eventDetails!: EventDetailsFull
+  @Prop() eventDetails!: EventDetailsFull;
+
   formatCurrency = formatCurrency
   capitalize = capitalize
 

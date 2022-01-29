@@ -22,11 +22,11 @@ export interface User {
 export type RegisterUserPayload = Partial<User> & { password: string }
 
 export interface ITicket {
-  // id: string
+  id?: string
   title: string
   price: string
-  // price: string | number
   schedule: ISchedule
+  nLimit: number
 }
 
 export interface TicketSalesBreakdown {
@@ -89,6 +89,10 @@ export interface EventDetailsFull {
   promoters: string[]
   // promoters: Promoter[]
   isPublished: boolean
+  occurrence: "single" | "multiple" | ""
+  address: string
+  author: string
+  venue: string
 }
 
 export interface Promoter {

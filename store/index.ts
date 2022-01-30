@@ -3,7 +3,8 @@ import { AppState, AuthUser, StoreMutations } from "~/common/storeHelpers"
 
 export const state = (): AppState => ({
   currentUser: new AuthUser,
-  events: []
+  events: [],
+  editEvent: false
 })
 
 export const mutations = {
@@ -13,6 +14,10 @@ export const mutations = {
 
   [StoreMutations.setEvents](state: AppState, events: EventDetailsFull[]) {
     state.events = events;
+  },
+
+  [StoreMutations.setEditMode](state: AppState, mode: boolean){
+    state.editEvent = mode;
   }
 }
 

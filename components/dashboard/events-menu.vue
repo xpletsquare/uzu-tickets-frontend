@@ -21,7 +21,7 @@
     </template>
 
     <div class="space-y-4 mt-8">
-      <div v-if="!detailsMode">
+      <div v-if="editMode">
         <div class="event-link" :class="shouldShowAsPassed(1)" @click="setEventsMode('basic', 1)">
           <i class="fas fa-check-circle pr-2"></i> Basic Information
         </div>
@@ -74,6 +74,10 @@ export default class EventsMenu extends Vue {
     return this.$route.path.includes('/dashboard/events/details')
   }
 
+  get editMode(){
+   return this.$store.state.editEvent as boolean;
+  }
+
   get detailsMode() {
     return this.$route.path.includes('/dashboard/events/details')
   }
@@ -93,7 +97,7 @@ export default class EventsMenu extends Vue {
     message.info(event.title)
 
     // get id from event and reroute to new event
-    this.$router.push(`/dashboard/events/details`) // event details id is supposed to be attached
+    this.$router.push(`/dashboard/events/details/${event.id}`) // event details id is supposed to be attached
 
     // this.setEventsMode('basic', 1)
   }
@@ -102,11 +106,11 @@ export default class EventsMenu extends Vue {
     return this.currentStage >= target ? 'passed' : ''
   }
 
-  setEventsMode(eventState: string, stage = 1) {
-    const stageAsString = stage + ''
-    const query = { ...this.$route.query, eventState, stage: stageAsString }
-    this.$router.replace({ query })
-  }
+  // setEventsMode(eventState: string, stage = 1) {
+  //   const stageAsString = stage + '';
+  //   const query = { ...this.$route.query, eventState, stage: stageAsString };
+  //   this.$router.replace({ query })
+  // }
 
   goBack() {
     this.$router.back()

@@ -13,11 +13,11 @@
         </div>
       </div>
 
-      <div v-for="event in events" :key="event.id">
+      <div v-for="event in currentEvents" :key="event.id">
         <dashboard-events-card :event="event"></dashboard-events-card>
       </div>
 
-      <div class="py-20">
+      <div class="py-20" v-if="!currentEvents.length">
         <a-empty description="You have no Events" />
       </div>
 
@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { AppState } from '~/common/storeHelpers'
+import { AppState, StoreMutations } from '~/common/storeHelpers'
 import { EventDetailsFull } from '~/common/models/interfaces'
 import { EventsApi } from '~/common/api/events.api'
 import { message } from 'ant-design-vue'
@@ -37,7 +37,7 @@ import { message } from 'ant-design-vue'
 @Component({
   layout: 'dashboard',
 })
-export default class ProfilePage extends Vue {
+export default class DashboardEventList extends Vue {
   events: EventDetailsFull[] = []
 
   openNewEventPage() {
@@ -70,38 +70,13 @@ export default class ProfilePage extends Vue {
       return;
     }
 
-    // this.events = data.data;
+    this.$store.commit(StoreMutations.setEvents, [...data.data]);
   }
 
   mounted() {
+    this.$store.commit(StoreMutations.setEditMode, false);
+    this.events = this.currentEvents; // Initial State;
     this.loadEventsFromServer();
-    
-    if (this.currentEvents.length) {
-      this.events = [...this.currentEvents];
-      console.log({events: this.events});
-      return;
-    }
-
-
-    // this.events = [
-    //   {
-    //     id: '1',
-    //     title: 'Codova hive',
-    //     images: {
-    //       landscape: 'Codova-hive.jpeg',
-    //       portrait: 'Codova-hive.jpeg',
-    //     },
-    //     description: 'Codova hive',
-    //     category: 'fashion',
-    //     location: 'Muson center, Lagos',
-    //     schedules: [],
-    //     tickets: [],
-    //     tags: [],
-    //     isPublished: true,
-    //     sales: [],
-    //     promoters: [],
-    //   },
-    // ]
   }
 }
 </script>

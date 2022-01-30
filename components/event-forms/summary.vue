@@ -16,22 +16,22 @@
         <p>Landscape photo</p>
 
         <div class="box rounded">
-          <img src="~/assets/images/Tems.png" />
+          <img :src="landscapeImage" />
         </div>
-        <div class="preview">
+        <!-- <div class="preview">
           <p>Tems.png</p>
-        </div>
+        </div> -->
       </div>
 
       <div class="portrait">
         <p>Portrait photo</p>
 
         <div class="box rounded">
-          <img src="~/assets/images/dancer.jpg" />
+          <img :src="portraitImage" />
         </div>
-        <div class="preview">
+        <!-- <div class="preview">
           <p>dancer.jpg</p>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -87,6 +87,9 @@ import { formatCurrency, capitalize } from '~/common/utilities/index'
 @Component
 export default class Summary extends Vue {
   @Prop() eventDetails!: EventDetailsFull;
+
+  landscapeImage = this.eventDetails?.images?.landscape || '';
+  portraitImage = this.eventDetails?.images?.landscape || '';
 
   formatCurrency = formatCurrency
   capitalize = capitalize

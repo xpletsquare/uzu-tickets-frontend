@@ -62,8 +62,8 @@
 
       <input-field
         label="Venue"
-        :value.sync="formFields.location"
-        :defaultValue="formFields.location"
+        :value.sync="formFields.venue"
+        :defaultValue="formFields.venue"
         class="mt-4"
       ></input-field>
 
@@ -186,7 +186,7 @@ export default class BasicForm extends Vue {
   }
 
   validate(): string {
-    const { title, category, tags, location } = this.formFields as Partial<EventDetailsFull>
+    const { title, category, tags, venue } = this.formFields as Partial<EventDetailsFull>
 
     if (!title) {
       return 'Invalid title'
@@ -196,7 +196,7 @@ export default class BasicForm extends Vue {
       return 'Invalid category'
     }
 
-    if (!location) {
+    if (!venue) {
       return 'Invalid location'
     }
 

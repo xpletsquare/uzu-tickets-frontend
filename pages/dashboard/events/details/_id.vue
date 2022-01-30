@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="event">
     <dashboard-event-details :eventDetails="event"></dashboard-event-details>
   </div>
 </template>
@@ -13,15 +13,25 @@ import { EventDetailsFull } from '~/common/models/interfaces'
   layout: 'dashboard',
 })
 export default class EventDetails extends Vue {
-  event: EventDetailsFull | {} = {}
+  event: EventDetailsFull | null = null;
 
-  get currentEvent() {
-    const { currentUser } = this.$store.state as AppState
+  mounted() {
+    const { id } = this.$route.params;
+    const { events } = this.$store.state as AppState;
 
-    // const events = currentUser?.events
-    // filter through user events based on event id in the url and return event
+    if(!events.length){
+      this.$router.push('/dashboard/events');
+      return;
+    }
 
-    return currentUser?.events
+    const details = events.find(event => event.id === id);
+
+    if(!details){
+      this.$router.push('/dashboard/events');
+      return;
+    }
+
+    this.event = details;
   }
 }
 </script>

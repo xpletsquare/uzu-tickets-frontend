@@ -85,7 +85,7 @@ export default class DashboardEventList extends Vue {
 .main {
   width: 100%;
   // height: 100%;
-  /* border: 1px solid red; */
+
   display: flex;
   margin: 1.5rem auto;
 
@@ -95,7 +95,7 @@ export default class DashboardEventList extends Vue {
 }
 
 .container {
-  width: 60%;
+  width: 100%;
   // height: 100%;
   /* border: 1px solid red; */
 
@@ -104,14 +104,16 @@ export default class DashboardEventList extends Vue {
   }
 
   @media screen and (max-width: 1200px) {
-    width: 90%;
+    width: 100%;
   }
 
   .top_label {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 30px;
+    /* border: 1px solid red; */
+    min-width: 100% !important;
 
     .right {
       display: flex;

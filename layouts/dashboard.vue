@@ -36,6 +36,10 @@ export default class DashboardLayout extends Vue {
 
 <style lang="scss" scoped>
 
+.ant-pagination-item-active{
+  border-color: red !important;
+}
+
 .menu{
   background-color: var(--dark-green);
   /* background-color: var(--dark-green); */

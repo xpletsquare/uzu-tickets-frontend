@@ -260,14 +260,14 @@ export default class WalletPage extends Vue {
 }
 
 .container {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
 
   @media (max-width: 1920px) {
-    width: 90%;
+    width: 100%;
   }
   @media (max-width: 1024px) {
-    width: 90%;
+    width: 100%;
   }
 
   @media (max-width: 768px) {
@@ -277,7 +277,7 @@ export default class WalletPage extends Vue {
 
   .header {
     margin: 2rem auto;
-    width: 90%;
+    width: 100%;
 
     @media (max-width: 768px) {
       width: 100%;
@@ -293,18 +293,18 @@ export default class WalletPage extends Vue {
       font-size: 12px;
       font-weight: normal;
       color: var(--grey);
-      width: 70%;
+      width: 100%;
     }
   }
 
   .wallet-info {
     border-radius: 10px;
-    background-color: #15b743;
+    background-color: var(--light-green);
     padding: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 59px 45px;
+    padding: 20px 20px;
     margin: 3rem 0;
 
     @media (max-width: 1024px) {
@@ -343,7 +343,7 @@ export default class WalletPage extends Vue {
       padding: 15px 30px;
       border-radius: 30px;
       font-weight: 600;
-      color: #15b743;
+      color: var(--light-green);
       background-color: #ffffff;
 
       @media (max-width: 768px) {
@@ -363,7 +363,7 @@ export default class WalletPage extends Vue {
 
   .bank-info {
     margin: 2rem auto;
-    width: 90%;
+    width: 100%;
 
     .mobile {
       display: none;
@@ -387,7 +387,7 @@ export default class WalletPage extends Vue {
 
       .link-icon {
         cursor: pointer;
-        color: #15b743;
+        color: var(--light-green);
         font-size: 20px;
       }
 
@@ -428,7 +428,7 @@ export default class WalletPage extends Vue {
     padding: 3rem 0;
     border-top: 1px solid var(--grey);
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 
     @media (max-width: 768px) {
       border-top: none;
@@ -442,7 +442,7 @@ export default class WalletPage extends Vue {
       gap: 20px;
 
       h3 {
-        color: #15b743;
+        color: var(--light-green);
         font-size: 16px;
         font-weight: bold;
       }
@@ -456,7 +456,7 @@ export default class WalletPage extends Vue {
         }
       }
     }
-
+    
     .transactions {
       margin: 2rem 0;
 
@@ -528,7 +528,7 @@ export default class WalletPage extends Vue {
 
       .status {
         font-weight: bold;
-        color: #15b743; // changes based on status
+        color: var(--light-green); // changes based on status
       }
     }
   }

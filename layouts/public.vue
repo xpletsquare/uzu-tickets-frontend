@@ -19,4 +19,7 @@ export default class extends Vue {}
 .content-wrapper{
   min-height: 70vh;
 }
+.ant-pagination-item-active{
+  border-color: red !important;
+}
 </style>

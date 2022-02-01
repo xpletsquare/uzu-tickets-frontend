@@ -32,6 +32,11 @@ export default class TotalEventSales extends Vue {
     align-items: center;
     justify-content: space-between;
     margin: 20px 0;
+    /* border: 1px solid red; */
+    padding: 20px 20px;
+    border-radius: 5px;
+    background: var(--light-grey-b);
+
 
     .label{
       color: var(--grey);
@@ -53,7 +58,7 @@ export default class TotalEventSales extends Vue {
       padding: 0 10px;
       height: 45px;
       font-size: 18pt;
-      border-radius: 50px;
+      border-radius: 10px;
       display: flex;
       justify-content: center;
       align-items: center;

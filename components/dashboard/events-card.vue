@@ -59,7 +59,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid red; */
+    /* border: .5px solid var(--light-green); */
     width: 100%;
     min-height: 50px;
     padding: 20px;

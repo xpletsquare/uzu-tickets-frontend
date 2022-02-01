@@ -11,7 +11,7 @@
           <span>352842ye623</span>
         </div>
 
-        <span class="icon">
+        <span class="icon" @click="doCopy">
           <i class="far fa-clone"></i>
         </span>
       </div>
@@ -204,23 +204,42 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { message } from 'ant-design-vue'
 import { formatCurrency } from '~/common/utilities/index'
 
 @Component({
   layout: 'dashboard',
+  methods: {
+    doCopy(){
+
+      // @ts-ignore
+      this.$copyText(this.code).then(function (e){
+        // alert('Copied')
+         message.success('Copied !')
+        console.log(e)
+        
+      }, function(e){
+        // alert('Cant copy')
+          message.warning('Code not copied !')
+        console.log(e)
+      })
+    }
+  }
 })
 export default class PromoterPage extends Vue {
-  formatCurrency = formatCurrency
+  formatCurrency = formatCurrency;
+  code = "352842ye623"
+ 
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
 
   @media (max-width: 1024px) {
-    width: 90%;
+    width: 100%;
   }
 
   @media (max-width: 768px) {
@@ -230,7 +249,7 @@ export default class PromoterPage extends Vue {
 
   .header {
     margin: 2rem auto;
-    width: 90%;
+    width: 100%;
 
     @media (max-width: 768px) {
       width: 100%;
@@ -251,8 +270,8 @@ export default class PromoterPage extends Vue {
   }
 
   .promoter-code {
-    border: 1px solid #15b743;
-    border-radius: 10px;
+    border: 1px solid var(--light-green);
+    border-radius: 5px;
     background-color: var(--pale-green);
     padding: 10px 12px;
     display: flex;
@@ -275,12 +294,12 @@ export default class PromoterPage extends Vue {
     span {
       font-size: 14px;
       font-weight: bold;
-      color: #15b743;
+      color: var(--light-green);
     }
 
     .icon {
       cursor: pointer;
-      color: #15b743;
+      color: var(--light-green);
       font-size: 20px;
     }
   }
@@ -336,7 +355,7 @@ export default class PromoterPage extends Vue {
 
         &.main {
           font-size: 36px;
-          color: #15b743;
+          color: var(--light-green);
 
           @media (max-width: 768px) {
             font-size: 24px;
@@ -386,7 +405,7 @@ export default class PromoterPage extends Vue {
       }
     }
 
-    table {
+    /* table {
       width: 100%;
     }
 
@@ -412,7 +431,7 @@ export default class PromoterPage extends Vue {
       tr {
         border-bottom: 1px solid var(--grey);
       }
-    }
+    } */
 
     .index {
       color: black;
@@ -425,7 +444,7 @@ export default class PromoterPage extends Vue {
 
     .commission {
       font-weight: bold;
-      color: #15b743;
+      color: var(--light-green);
       display: flex;
       justify-content: flex-end;
     }

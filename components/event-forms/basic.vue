@@ -13,6 +13,8 @@
         class="mt-8"
       ></input-field>
 
+      <!-- <input type="text" v-model="formFields.title" class="mt-8 p-2 rounded border"> -->
+
       <div class="md:w-2/4 mt-4 border rounded border-gray-500">
         <multiselect
           v-model="formFields.category"
@@ -120,16 +122,14 @@ export default class BasicForm extends Vue {
       title: this.eventDetails?.title || '',
       category: this.eventDetails?.category || '',
       tags: this.eventDetails?.tags || [],
-      location: this.eventDetails?.location || '',
       address: this.eventDetails?.address || '',
+      venue: this.eventDetails.venue || ''
     }
-
-    console.log({fields: this.formFields});
   }
 
   checkGoogle(){
     // @ts-ignore
-    if(window?.google){
+    if(window.google){
       this.showLocationInput = true;
       return;
     }
@@ -182,7 +182,7 @@ export default class BasicForm extends Vue {
 
   getAddressData(addressData: any, placeResultData: any, id: string){
     const location = this.formFields?.location;
-    console.log({addressData, placeResultData, id, location});
+    console.log({ addressData, placeResultData, id, location });
   }
 
   validate(): string {

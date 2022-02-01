@@ -4,7 +4,7 @@ import { AppState, AuthUser, StoreMutations } from "~/common/storeHelpers"
 export const state = (): AppState => ({
   currentUser: new AuthUser,
   events: [],
-  editEvent: false
+  editEvent: false,
 })
 
 export const mutations = {

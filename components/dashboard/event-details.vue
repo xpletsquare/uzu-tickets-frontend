@@ -67,7 +67,7 @@
         ></primary-button>
 
         <primary-button
-          v-else
+          v-else-if="editMode"
           @click="updateEvent"
           :loading="isLoading"
           label="Save Changes"
@@ -183,13 +183,12 @@ export default class EventDetails extends Vue {
   }
 
   next() {
-    console.log(this.stage);
 
     if (this.stage >= 5) {
       return
     }
 
-    if (!this.isNewEvent) {
+    if (this.editMode) {
       const ref: ElementWithValidateFunction = this.currentStageRef
 
       if (!ref) {
@@ -224,13 +223,9 @@ export default class EventDetails extends Vue {
     const author = currentUser?.id || '';
 
     const details: Partial<EventDetailsFull> = { ...this.event, author };
-    details.venue = details.location;
 
-
-    console.log({eventToPublish: details});
-
-    this.isLoading = true
-    const { error, data } = await EventsApi.createEvent(details);
+    this.isLoading = true;
+    const { error } = await EventsApi.createEvent(details);
     this.isLoading = false
 
     if (error) {
@@ -243,14 +238,10 @@ export default class EventDetails extends Vue {
   }
 
   async updateEvent(){
-    const { currentUser } = this.$store.state as AppState;
-
-    const author = currentUser?.id || '';
-
-    const details: Partial<EventDetailsFull> = { ...this.event, author };
+    const details: Partial<EventDetailsFull> = { ...this.event };
 
     this.isLoading = true
-    const { error, data } = await EventsApi.update(this.eventDetails.id, {});
+    const { error, data } = await EventsApi.update(this.eventDetails.id, {...details});
     this.isLoading = false
 
     if (error) {
@@ -259,7 +250,7 @@ export default class EventDetails extends Vue {
 
     message.success('Event Updated Successfully');
 
-    this.toggleEditMode();
+    this.$router.push('/dashboard/events');
   }
 }
 </script>

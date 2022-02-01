@@ -31,7 +31,7 @@ export default class EventDetails extends Vue {
       return;
     }
 
-    this.event = details;
+    this.event = {...details};
   }
 }
 </script>

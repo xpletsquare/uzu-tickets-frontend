@@ -50,10 +50,14 @@
       <h3> Select event</h3>
        <div class="md:w-2/4 mt-4 border rounded border-gray-500">
         <multiselect
-          v-model="formFields.category"
-          :options="events"
+          v-model="selectedEvent"
+          :options="currentEvents"
           :show-labels="false"
           placeholder="Select Event"
+          track-by="title"
+          label="title"
+          class="capitalize"
+          @select="onSelect"
         ></multiselect>
       </div>
 
@@ -88,7 +92,7 @@
        <div class="codebase">
         <pre>
         <code v-highlight class="javascript code-inner">
-          const uzuEvent = new UzuEvent("635e15aa-8dd2-4372-a024-fb2dad542c5a"); // Sample valid event id
+          const uzuEvent = new UzuEvent("{{selectedEventId}}"); // Sample valid event id
 
 			    document.querySelector("#buy").addEventListener("click", () => {
 				    uzuEvent.open(); // Open Ticket Payment Modal (takes a few seconds to load up though)
@@ -139,35 +143,34 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Multiselect from 'vue-multiselect';
 import { EventDetailsFull } from '~/common/models/interfaces';
+import { AppState } from '~/common/storeHelpers';
 
 @Component({
   layout: 'dashboard',
   components: { 
     Multiselect 
   },
-
-  
 })
-
-
-
-
 export default class DeveloperPage extends Vue {
-    @Prop() eventDetails!: EventDetailsFull
-
+  @Prop() eventDetails!: EventDetailsFull
   disabled = false
-
-  selectValue: string = ''
+  selectedEvent: EventDetailsFull | null = null;
   events: string[] = ['First Event', 'Second event', 'Last']
   tag: string = ''
+  selectedEventId = '';
 
-  formFields: Partial<EventDetailsFull> = {
-    title: '',
-    category: '',
-    tags: [],
-    // tags: ['category 1', 'category 2', 'category 3'],
-    location: '',
-    id: ''
+  get currentEvents() {
+    const { events } = this.$store.state as AppState
+    return events
+  }
+
+  mounted() {
+    this.selectedEvent = this.currentEvents[0] || null;
+    this.selectedEventId = this.selectedEvent?.id || '635e15aa-8dd2-4372-a024-fb2dad542920';
+  }
+
+  onSelect(selected: EventDetailsFull){
+    this.selectedEventId = this.selectedEvent?.id || '635e15aa-8dd2-4372-a024-fb2dad542920';
   }
 }
 </script>

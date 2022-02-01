@@ -8,8 +8,8 @@
     <template v-if="showEventName">
       <div class="md:w-3/4 mt-5 p-0 event-title-holder">
         <multiselect
-          v-model="selectValue"
-          :options="options"
+          v-model="selectedEvent"
+          :options="currentEvents"
           :show-labels="false"
           placeholder="Event title"
           @select="onSelect"
@@ -63,11 +63,8 @@ import Multiselect from 'vue-multiselect'
   components: { Multiselect },
 })
 export default class EventsMenu extends Vue {
-  selectValue = null // should be the event selected
-  options: object[] = [
-    { title: 'Event title 1', description: 'event description' },
-    { title: 'Event title 2', description: 'event description' },
-  ] // sample events
+  selectedEvent: EventDetailsFull | null = null; // should be the event selected
+  
   events: EventDetailsFull[] = [] // events available
 
   get showEventName() {
@@ -83,13 +80,21 @@ export default class EventsMenu extends Vue {
   }
 
   get currentEvents() {
-    const { currentUser } = this.$store.state as AppState
-    return currentUser?.events
+    const { events } = this.$store.state as AppState
+    return events
   }
 
   get currentStage() {
     const stage = (this.$route.query.stage as string) || '1'
     return parseInt(stage)
+  }
+
+  mounted() {
+    const eventId = this.$route.params.id;
+    
+    const event = this.currentEvents.find(event => event.id === eventId);
+
+    this.selectedEvent = event || null;
   }
 
   onSelect(event: EventDetailsFull) {
@@ -113,7 +118,7 @@ export default class EventsMenu extends Vue {
   // }
 
   goBack() {
-    this.$router.back()
+    this.$router.replace('/dashboard/events');
   }
 }
 </script>
@@ -152,10 +157,12 @@ export default class EventsMenu extends Vue {
 .event-title-holder {
   min-width: 100% !important;
 }
+
 .event-title {
   min-width: 100%;
-  border: 1px solid var(--light-green) !important;
-  border-radius: 10px !important;
+  // border: 1px solid var(--light-green) !important;
+  border-radius: 3px !important;
   // padding: 10px 0;
+  text-transform: capitalize;
 }
 </style>

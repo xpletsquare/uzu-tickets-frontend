@@ -99,7 +99,7 @@ export default class EventsMenu extends Vue {
 
   onSelect(event: EventDetailsFull) {
     // console.log(event)
-    message.info(event.title)
+    message.info('Changing Event...')
 
     // get id from event and reroute to new event
     this.$router.push(`/dashboard/events/details/${event.id}`) // event details id is supposed to be attached

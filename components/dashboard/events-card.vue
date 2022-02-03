@@ -1,3 +1,29 @@
+<template>
+  <div class="card" @click="openEvent">
+
+    <div class="desktop">
+      <div class="event-name capitalize">{{event.title}}</div>
+      <div class="event-location capitalize">{{event.venue}}</div>
+      <div class="event-ticket-sold">{{eventTicketSoldCount}}</div>
+      <div class="event-date">{{eventStartDate}}</div>
+      <div class="event-sale">{{ event.status || 'DRAFT' }}</div>
+    </div>
+
+    <div class="mobile">
+      <div class="left">
+        <div class="event-name capitalize">{{event.title}}</div>
+        <div class="event-location capitalize">{{event.venue}}</div>
+        <div class="event-date">{{eventStartDate}}</div>
+      </div>
+
+      <div class="right">
+        <div class="event-sale">{{ event.status || 'DRAFT' }}</div>
+        <div class="event-ticket-sold">{{eventTicketSoldCount}}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { formatCurrency, formatDate } from '~/common/utilities/index'
@@ -22,30 +48,6 @@ export default class DashboardEventCard extends Vue {
   }
 }
 </script>
-
-<template>
-  <div class="card" @click="openEvent">
-    <div class="desktop">
-      <div class="event-name capitalize">{{event.title}}</div>
-      <div class="event-location capitalize">{{event.venue}}</div>
-      <div class="event-ticket-sold">{{eventTicketSoldCount}}</div>
-      <div class="event-date">{{eventStartDate}}</div>
-      <div class="event-sale">{{ event.status || 'DRAFT' }}</div>
-    </div>
-
-    <div class="mobile">
-      <div class="left">
-        <div class="event-name capitalize">{{event.title}}</div>
-        <div class="event-location capitalize">{{event.venue}}</div>
-        <div class="event-date">{{eventStartDate}}</div>
-      </div>
-      <div class="right">
-        <div class="event-sale">{{ event.status || 'DRAFT' }}</div>
-        <div class="event-ticket-sold">{{eventTicketSoldCount}}</div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped>
 main {
@@ -78,6 +80,15 @@ main {
     .event-name {
       color: var(--light-green);
       font-weight: 600;
+      width: 300px;
+    }
+
+    .event-location{
+      width: 200px;
+    }
+
+    .event-ticket-sold{
+      width: 160px;
     }
 
     .event-sale {

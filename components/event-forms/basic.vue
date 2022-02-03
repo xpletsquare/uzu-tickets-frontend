@@ -138,16 +138,17 @@ export default class BasicForm extends Vue {
   }
 
   addItem() {
-    if (this.tag === '') {
-      message.warning('Add a tag')
+    
+    if (!this.formFields || this.tag === '') {
       return
     }
 
-    this.formFields?.tags?.push(this.tag)
+    const tags = [...this.formFields.tags as string[]];
 
-    // fix bug with clearing tag
+    this.formFields.tags = [...tags, this.tag];
+
     this.tag = '';
-    console.log(this.tag);
+    // console.log(this.tag);
   }
 
   removeItem(item: string) {
@@ -155,10 +156,11 @@ export default class BasicForm extends Vue {
       return;
     }
 
-    const filtered = this.formFields?.tags?.filter((eTag) => eTag !== item)
+    const tags = [...this.formFields.tags as string[]];
 
-    // console.log(filtered)
-    this.formFields.tags = filtered;
+    const filtered = tags.filter((eTag) => eTag !== item)
+
+    this.formFields.tags = [...filtered];
   }
 
   setOnlineEvent(value: string) {

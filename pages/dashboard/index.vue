@@ -10,7 +10,11 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component({
   layout: 'dashboard',
 })
-export default class DashboardHome extends Vue {}
+export default class DashboardHome extends Vue {
+  mounted() {
+    this.$router.replace('/dashboard/events'); 
+  }
+}
 </script>
 
 <style lang="scss" scoped>

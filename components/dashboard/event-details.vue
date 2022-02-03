@@ -1,8 +1,10 @@
 <template>
   <section class="max-600 mx-auto" v-if="eventInitialized">
     <div class="content">
-      <div class="text-right" v-if="!isNewEvent && !editMode">
+      <div class="text-right space-x-3 mb-6" v-if="showEditButton">
         <primary-button @click="toggleEditMode" label="Edit Event"></primary-button>
+
+        <primary-button @click="updateStatus('ACTIVE')" v-if="event.status === 'DRAFT'" label="Publish Event"></primary-button>
       </div>
 
       <div v-if="editMode">
@@ -73,7 +75,6 @@
           label="Save Changes"
         ></primary-button>
       </div>
-
     </div>
 
     <fullscreen-loader v-if="isLoading"></fullscreen-loader>
@@ -92,10 +93,20 @@ export default class EventDetails extends Vue {
   @Prop() eventDetails!: EventDetailsFull
   event: Partial<EventDetailsFull> | null = null;
 
+  placeholderImage = 'https://res.cloudinary.com/dk07kf3yl/image/upload/v1643845950/temp/placeholder_huq2kw.png';
+
   isLoading = false;
 
   get editMode(){
    return this.$store.state.editEvent as boolean;
+  }
+
+  get showEditButton(){
+    if(this.event?.status !== 'DRAFT'){
+      return false;
+    }
+
+    return !this.isNewEvent && !this.editMode;
   }
 
   get eventInitialized(){
@@ -148,6 +159,12 @@ export default class EventDetails extends Vue {
   mounted() {
     if (this.eventDetails) {
       this.event = { ...this.eventDetails };
+
+      this.event.images = {
+        landscape: this.eventDetails.images?.landscape || this.placeholderImage,
+        portrait: this.eventDetails.images?.landscape || this.placeholderImage,
+      }
+
       return
     }
 
@@ -155,8 +172,8 @@ export default class EventDetails extends Vue {
       id: '',
       title: '',
       images: {
-        landscape: '',
-        portrait: '',
+        landscape: this.placeholderImage,
+        portrait: this.placeholderImage,
       },
       description: '',
       category: '',
@@ -249,6 +266,20 @@ export default class EventDetails extends Vue {
     }
 
     message.success('Event Updated Successfully');
+
+    this.$router.push('/dashboard/events');
+  }
+
+  async updateStatus(status: string){
+    this.isLoading = true;
+    const { error, data } = await EventsApi.changeStatus(this.eventDetails?.id, status);
+    this.isLoading = false
+
+    if (error) {
+      return message.error(error as string)
+    }
+
+    message.success('Event Status Updated');
 
     this.$router.push('/dashboard/events');
   }

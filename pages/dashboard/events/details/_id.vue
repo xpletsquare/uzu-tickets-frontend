@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { AppState } from '~/common/storeHelpers'
-import { EventDetailsFull } from '~/common/models/interfaces'
+import { Component, Vue } from 'vue-property-decorator';
+import { AppState } from '~/common/storeHelpers';
+import { EventDetailsFull } from '~/common/models/interfaces';
 
 @Component({
   layout: 'dashboard',
@@ -31,7 +31,7 @@ export default class EventDetails extends Vue {
       return;
     }
 
-    this.event = {...details};
+    this.event = Object.assign({}, details); // deep clone the object 
   }
 }
 </script>

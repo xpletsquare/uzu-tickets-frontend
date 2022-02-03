@@ -162,8 +162,10 @@ export default class SchedulesForm extends Vue {
     const { occurrence, schedules } = this.formFields;
 
     if(occurrence === 'single' && schedules.length){
-      message.warning('Cannot have multiple schedules for a one-time event.')
+      message.warning('Cannot have multiple schedules for a one-time event.');
+      return;
     }
+
     let { name, date, start, end } = this.schedule;
 
     this.schedule.end = end = end || 'None';
@@ -175,9 +177,7 @@ export default class SchedulesForm extends Vue {
       return
     }
 
-    this.formFields.schedules?.push({...this.schedule});
-
-    // fix bug with clearing
+    this.formFields.schedules = [ ...schedules, {...this.schedule}];
 
     this.schedule = {
       name: '',
@@ -192,7 +192,7 @@ export default class SchedulesForm extends Vue {
       (schedule) => this.formFields.schedules?.indexOf(schedule) !== index
     )
 
-    this.formFields.schedules = filtered
+    this.formFields.schedules = [...filtered]
   }
 
   validate(): string {

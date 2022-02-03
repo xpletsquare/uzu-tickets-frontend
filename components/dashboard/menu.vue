@@ -6,10 +6,10 @@
         <!-- <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div> -->
 
         <div class="links-wrapper flex flex-col gap-1">
-          <nuxt-link exact active-class="active" to="/dashboard">
+          <!-- <nuxt-link exact active-class="active" to="/dashboard">
             <span class="icon"><i class="fas fa-home-alt"></i></span>
             <span>Dashboard</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <nuxt-link active-class="active" to="/dashboard/events">
             <span class="icon"><i class="fas fa-calendar-alt"></i></span>

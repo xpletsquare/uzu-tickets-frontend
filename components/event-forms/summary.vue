@@ -119,7 +119,7 @@ export default class Summary extends Vue {
 .box {
   height: 180pt;
   margin: 1rem 0;
-  border: 0.5pt solid #707070;
+  border: 0.5pt solid #ededed;
   display: flex;
   text-align: center;
   align-items: center;

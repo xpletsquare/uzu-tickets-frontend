@@ -45,12 +45,28 @@
             <span class="icon"><i class="fas fa-code"></i></span>
             <span>Developer</span>
           </nuxt-link>
+
+           <!-- activate event creation -->
+          <div class="activate-account-section">
+            <div>
+              <div class="activate-icon"><i class="fas fa-check-double"></i></div>
+              <p>Are you an event owner? activate our event managemnet feature to enable you create and manage events.</p>
+
+              <div class="activate-button">Activate</div>
+            </div>
+          </div>
+
         </div>
+
+       
+
       </template>
 
       <template v-if="showEventsMenu">
         <dashboard-events-menu></dashboard-events-menu>
       </template>
+
+     
 
       <div class="logout px-2">
         <button @click="logout">
@@ -138,6 +154,38 @@ a {
     background-color: var(--light-green);
     color: var(--dark-green);
     font-weight: 500;
+  }
+}
+
+.activate-account-section{
+  width: 100%;
+  color: white;
+  text-align: center;
+  font-size: 9pt;
+  margin: 20px auto;
+
+  .activate-icon{
+    color: var(--light-green);
+    font-size: 30px;
+  }
+  p{
+    color: rgba(229, 255, 223, 0.815);
+    padding: 10px 20px;
+  }
+
+  .activate-button{
+    border: 1px solid var(--light-green);
+    width: max-content;
+    color: rgba(229, 255, 223, 0.815);
+    margin: auto;
+    padding: 5px 8px;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &:hover{
+      background-color: var(--light-green);
+      color: var(--dark-green);
+    }
   }
 }
 </style>

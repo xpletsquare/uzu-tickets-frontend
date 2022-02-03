@@ -5,8 +5,6 @@ export const getAuthHeaders = () => {
   const userInSession = sessionStorage.getItem('auth') || '';
   const parsed = userInSession ? JSON.parse(userInSession) : '';
 
-  console.log('MAKING AUTH CALL', parsed?.token || 'NO token')
-
   if (!parsed || !parsed.token) {
     return {
       headers: {
@@ -22,10 +20,11 @@ export const getAuthHeaders = () => {
   }
 }
 
+export const LOCAL_API_BASE = 'http://localhost:3200/v1/api';
 export const API_BASE = 'https://uzu-dev.herokuapp.com/v1/api';
 
 export const createAxiosInstance = (base: string) => {
-  const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`;
+  const baseURL = base.startsWith('http') ? base : `${LOCAL_API_BASE}${base}`;
 
   return axios.create({
     baseURL,

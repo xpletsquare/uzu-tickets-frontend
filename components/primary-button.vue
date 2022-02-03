@@ -64,6 +64,7 @@ button {
   padding: 0 30px;
   text-transform: uppercase;
   font-weight: 600;
+  border: none;
 
   div {
     display: inline;

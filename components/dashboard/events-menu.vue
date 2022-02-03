@@ -8,8 +8,8 @@
     <template v-if="showEventName">
       <div class="md:w-3/4 mt-5 p-0 event-title-holder">
         <multiselect
-          v-model="selectValue"
-          :options="options"
+          v-model="selectedEvent"
+          :options="currentEvents"
           :show-labels="false"
           placeholder="Event title"
           @select="onSelect"
@@ -21,7 +21,7 @@
     </template>
 
     <div class="space-y-4 mt-8">
-      <div v-if="!detailsMode">
+      <div v-if="editMode">
         <div class="event-link" :class="shouldShowAsPassed(1)" @click="setEventsMode('basic', 1)">
           <i class="fas fa-check-circle pr-2"></i> Basic Information
         </div>
@@ -63,15 +63,16 @@ import Multiselect from 'vue-multiselect'
   components: { Multiselect },
 })
 export default class EventsMenu extends Vue {
-  selectValue = null // should be the event selected
-  options: object[] = [
-    { title: 'Event title 1', description: 'event description' },
-    { title: 'Event title 2', description: 'event description' },
-  ] // sample events
+  selectedEvent: EventDetailsFull | null = null; // should be the event selected
+  
   events: EventDetailsFull[] = [] // events available
 
   get showEventName() {
     return this.$route.path.includes('/dashboard/events/details')
+  }
+
+  get editMode(){
+   return this.$store.state.editEvent as boolean;
   }
 
   get detailsMode() {
@@ -79,8 +80,8 @@ export default class EventsMenu extends Vue {
   }
 
   get currentEvents() {
-    const { currentUser } = this.$store.state as AppState
-    return currentUser?.events
+    const { events } = this.$store.state as AppState
+    return events
   }
 
   get currentStage() {
@@ -88,12 +89,20 @@ export default class EventsMenu extends Vue {
     return parseInt(stage)
   }
 
+  mounted() {
+    const eventId = this.$route.params.id;
+    
+    const event = this.currentEvents.find(event => event.id === eventId);
+
+    this.selectedEvent = event || null;
+  }
+
   onSelect(event: EventDetailsFull) {
     // console.log(event)
     message.info(event.title)
 
     // get id from event and reroute to new event
-    this.$router.push(`/dashboard/events/details`) // event details id is supposed to be attached
+    this.$router.push(`/dashboard/events/details/${event.id}`) // event details id is supposed to be attached
 
     // this.setEventsMode('basic', 1)
   }
@@ -102,14 +111,14 @@ export default class EventsMenu extends Vue {
     return this.currentStage >= target ? 'passed' : ''
   }
 
-  setEventsMode(eventState: string, stage = 1) {
-    const stageAsString = stage + ''
-    const query = { ...this.$route.query, eventState, stage: stageAsString }
-    this.$router.replace({ query })
-  }
+  // setEventsMode(eventState: string, stage = 1) {
+  //   const stageAsString = stage + '';
+  //   const query = { ...this.$route.query, eventState, stage: stageAsString };
+  //   this.$router.replace({ query })
+  // }
 
   goBack() {
-    this.$router.back()
+    this.$router.replace('/dashboard/events');
   }
 }
 </script>
@@ -148,10 +157,12 @@ export default class EventsMenu extends Vue {
 .event-title-holder {
   min-width: 100% !important;
 }
+
 .event-title {
   min-width: 100%;
-  border: 1px solid var(--light-green) !important;
-  border-radius: 10px !important;
+  // border: 1px solid var(--light-green) !important;
+  border-radius: 3px !important;
   // padding: 10px 0;
+  text-transform: capitalize;
 }
 </style>

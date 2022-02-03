@@ -31,7 +31,7 @@
         </div>
 
         <div class="flex items-center gap-2 mt-2">
-          <a-date-picker placeholder="Date" :format="dateFormat" :value="date" size="large" @change="onDateChange" />
+          <a-date-picker placeholder="Date" :value="date" size="large" @change="onDateChange" />
           <a-time-picker
             :value="start"
             format="hh:mm a"
@@ -60,7 +60,7 @@
       >
         <div class="flex flex-col">
           <span class="mb-1 font-bold text-black"> {{ schedule.name }} </span>
-          <span class="text-black"> {{ schedule.date }} </span>
+          <span class="text-black"> {{ formatDate(schedule.date) }} </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="start-time text-xs text-gray"> Start time </span>
@@ -87,8 +87,8 @@
 import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { EventDetailsFull, ISchedule } from '~/common/models/interfaces'
-
 import moment from 'moment'
+import { formatDate } from '~/common/utilities'
 
 @Component({
   components: {},
@@ -97,7 +97,7 @@ export default class SchedulesForm extends Vue {
   @Prop() eventDetails!: EventDetailsFull
 
   moment = moment
-  dateFormat = 'DD/MM/YYYY'
+  // dateFormat = 'DD/MM/YYYY'
   date = null
   start = null
   end = null
@@ -113,6 +113,8 @@ export default class SchedulesForm extends Vue {
     occurrence: 'single',
     schedules: [],
   }
+
+  formatDate = formatDate
 
   mounted() {
     this.formFields = {
@@ -134,10 +136,10 @@ export default class SchedulesForm extends Vue {
     }
   }
 
-  onDateChange(date: any) {
+  onDateChange(date: any, dateString: string) {
+    console.log({ date, dateString });
     this.date = date
-    const formattedDate = moment(date).format(this.dateFormat)
-    this.schedule.date = formattedDate
+    this.schedule.date = dateString
   }
 
   onStartChange(time: any) {

@@ -13,6 +13,9 @@
         <nuxt></nuxt>
       </div>
     </section>
+
+    <!-- GOOGLE MAPS INTEGRATION -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQETAxXCxJ867hOECYndGOIIBMvRrCGsQ&libraries=places"></script>
   </section>
 </template>
 

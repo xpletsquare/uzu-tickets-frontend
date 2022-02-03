@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { formatCurrency } from '~/common/utilities/index'
+import { formatCurrency, formatDate } from '~/common/utilities/index'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
@@ -9,36 +9,42 @@ export default class DashboardEventCard extends Vue {
 
   formatCurrency = formatCurrency
 
-  openEvent(id: string) {
-    this.$router.push(`/dashboard/events/details`) // event details id is supposed to be attached
+  openEvent() {
+    this.$router.push(`/dashboard/events/details/${this.event.id}`) // event details id is supposed to be attached
+  }
+
+  get eventTicketSoldCount(){
+    return '500/2000'
+  }
+
+  get eventStartDate(){
+    return formatDate(this.event.startDate);
   }
 }
 </script>
 
 <template>
-  <main @click="openEvent">
-    <div class="container">
-      <div class="desktop">
-        <div class="event-name">Codova hive</div>
-        <div class="event-location">Muson center, Lagos</div>
-        <div class="event-ticket-sold">120/400</div>
-        <div class="event-date">01/02/2022</div>
-        <div class="event-sale">{{ formatCurrency('122450.50') }}</div>
-      </div>
+  <div class="card" @click="openEvent">
+    <div class="desktop">
+      <div class="event-name capitalize">{{event.title}}</div>
+      <div class="event-location capitalize">{{event.venue}}</div>
+      <div class="event-ticket-sold">{{eventTicketSoldCount}}</div>
+      <div class="event-date">{{eventStartDate}}</div>
+      <div class="event-sale">{{ event.status || 'DRAFT' }}</div>
+    </div>
 
-      <div class="mobile">
-        <div class="left">
-          <div class="event-name">Codova hive</div>
-          <div class="event-location">Muson center, Lagos</div>
-          <div class="event-date">01/02/2022</div>
-        </div>
-        <div class="right">
-          <div class="event-sale">{{ formatCurrency('122450.50') }}</div>
-          <div class="event-ticket-sold">120/400</div>
-        </div>
+    <div class="mobile">
+      <div class="left">
+        <div class="event-name capitalize">{{event.title}}</div>
+        <div class="event-location capitalize">{{event.venue}}</div>
+        <div class="event-date">{{eventStartDate}}</div>
+      </div>
+      <div class="right">
+        <div class="event-sale">{{ event.status || 'DRAFT' }}</div>
+        <div class="event-ticket-sold">{{eventTicketSoldCount}}</div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -46,7 +52,7 @@ main {
   width: 100%;
 }
 
-.container {
+.card {
   width: 100%;
 
   .desktop {

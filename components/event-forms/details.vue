@@ -51,7 +51,7 @@
 
     <div class="description mt-10">
       <p>Descripion</p>
-      <v-textarea class="txtarea" counter="100" filled @input="handleDescriptionChange"></v-textarea>
+      <v-textarea v-model="formFields.description" class="txtarea" counter="100" filled @input="handleDescriptionChange"></v-textarea>
     </div>
   </div>
 </template>

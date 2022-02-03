@@ -1,27 +1,36 @@
 <template>
   <section class="max-600 mx-auto" v-if="eventInitialized">
     <div class="content">
-      <div v-if="!detailsMode">
-        <event-forms-basic :eventDetails="event" ref="basic" @save="saveForm" v-if="stage === 1"></event-forms-basic>
+      <div class="text-right" v-if="!isNewEvent && !editMode">
+        <primary-button @click="toggleEditMode" label="Edit Event"></primary-button>
+      </div>
+
+      <div v-if="editMode">
+        <event-forms-basic 
+          :eventDetails="event" 
+          ref="basic" 
+          @save="updateForm" 
+          v-if="stage === 1"
+        ></event-forms-basic>
 
         <event-forms-schedules
           :eventDetails="event"
           ref="schedule"
-          @save="saveForm"
+          @save="updateForm"
           v-if="stage === 2"
         ></event-forms-schedules>
 
         <event-forms-tickets
           :eventDetails="event"
           ref="tickets"
-          @save="saveForm"
+          @save="updateForm"
           v-if="stage === 3"
         ></event-forms-tickets>
 
         <event-forms-details
           :eventDetails="event"
           ref="details"
-          @save="saveForm"
+          @save="updateForm"
           v-if="stage === 4"
         ></event-forms-details>
 
@@ -49,16 +58,25 @@
         NEXT <i class="fas fa-chevron-right"></i>
       </button>
 
-      <primary-button
-        v-else-if="!detailsMode"
-        @click="publishEvent"
-        :loading="loading"
-        label="PUBLISH"
-      ></primary-button>
+      <div v-else-if="!showNextButton">
+        <primary-button
+          v-if="isNewEvent"
+          @click="createEvent"
+          :loading="isLoading"
+          label="PUBLISH"
+        ></primary-button>
+
+        <primary-button
+          v-else-if="editMode"
+          @click="updateEvent"
+          :loading="isLoading"
+          label="Save Changes"
+        ></primary-button>
+      </div>
+
     </div>
 
-    <!-- GOOGLE MAPS INTEGRATION -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQETAxXCxJ867hOECYndGOIIBMvRrCGsQ&libraries=places"></script>
+    <fullscreen-loader v-if="isLoading"></fullscreen-loader>
   </section>
 </template>
 
@@ -67,14 +85,18 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
 import { message } from 'ant-design-vue'
 import { EventsApi } from '~/common/api/events.api';
-import { AppState } from '~/common/storeHelpers';
+import { AppState, StoreMutations } from '~/common/storeHelpers';
 
 @Component
 export default class EventDetails extends Vue {
   @Prop() eventDetails!: EventDetailsFull
   event: Partial<EventDetailsFull> | null = null;
 
-  isLoading = false
+  isLoading = false;
+
+  get editMode(){
+   return this.$store.state.editEvent as boolean;
+  }
 
   get eventInitialized(){
     return this.event !== null;
@@ -90,15 +112,15 @@ export default class EventDetails extends Vue {
   }
 
   get showNextButton() {
-    if (this.detailsMode) {
-      return this.stage < 2
+    if (this.editMode) {
+      return this.stage < 5
     }
 
-    return this.stage < 5
+    return this.stage < 2
   }
 
-  get detailsMode() {
-    return this.$route.path.includes('/dashboard/events/details')
+  get isNewEvent() {
+    return this.$route.path.includes('/dashboard/events/create');
   }
 
   get currentStageRef(): ElementWithValidateFunction & any {
@@ -118,9 +140,14 @@ export default class EventDetails extends Vue {
     }
   }
 
+  get currentUser(){
+    const { currentUser } = this.$store.state as AppState;
+    return currentUser;
+  }
+
   mounted() {
     if (this.eventDetails) {
-      this.event = { ...this.eventDetails }
+      this.event = { ...this.eventDetails };
       return
     }
 
@@ -138,21 +165,30 @@ export default class EventDetails extends Vue {
       tickets: [],
       tags: [],
       isPublished: false,
-      // sales: [],
-      // promoters: [],
+      status: 'DRAFT',
+      author: this.currentUser?.id
     }
+
+    this.toggleEditMode();
   }
 
-  saveForm(formData: any) {
+  toggleEditMode(){
+    const current = this.editMode;
+    this.$store.commit(StoreMutations.setEditMode, !current);
+    console.log('edit mode toggled');
+  }
+
+  updateForm(formData: any) {
     this.event = { ...this.event, ...formData };
   }
 
   next() {
+
     if (this.stage >= 5) {
       return
     }
 
-    if (!this.detailsMode) {
+    if (this.editMode) {
       const ref: ElementWithValidateFunction = this.currentStageRef
 
       if (!ref) {
@@ -180,27 +216,41 @@ export default class EventDetails extends Vue {
     this.$router.replace({ query })
   }
 
-  async publishEvent() {
+  async createEvent() {
     // make api call to publish event
     const { currentUser } = this.$store.state as AppState;
 
     const author = currentUser?.id || '';
 
     const details: Partial<EventDetailsFull> = { ...this.event, author };
-    details.venue = details.location;
 
-    this.isLoading = true
-    message.success('publishing event')
-    const { error, data } = await EventsApi.createEvent(details);
+    this.isLoading = true;
+    const { error } = await EventsApi.createEvent(details);
     this.isLoading = false
 
     if (error) {
       return message.error(error as string)
     }
 
-    message.success('Event published')
+    message.success('Event published');
 
-    this.$router.push('/dashboard/events')
+    this.$router.push('/dashboard/events');
+  }
+
+  async updateEvent(){
+    const details: Partial<EventDetailsFull> = { ...this.event };
+
+    this.isLoading = true
+    const { error, data } = await EventsApi.update(this.eventDetails.id, {...details});
+    this.isLoading = false
+
+    if (error) {
+      return message.error(error as string)
+    }
+
+    message.success('Event Updated Successfully');
+
+    this.$router.push('/dashboard/events');
   }
 }
 </script>

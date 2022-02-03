@@ -1,12 +1,19 @@
 <template>
   <div>
     <h2>Summary</h2>
+
     <p class="capitalize">
       Name : <strong>{{ eventDetails.title }}</strong>
     </p>
+
     <p class="capitalize">
       Category : <strong>{{ eventDetails.category }}</strong>
     </p>
+
+    <p class="capitalize" v-if="eventDetails.id">
+      Event ID : <strong>{{ eventDetails.id }}</strong> <button class="bg-gray-300 p-1 rounded">Copy</button>
+    </p>
+
     <!-- show tags in tags area -->
     <p v-if="tags.length">Tags : {{ tags }}</p>
     <!-- <p>Tags : {{ tags.join(', ') }}</p> -->
@@ -16,22 +23,22 @@
         <p>Landscape photo</p>
 
         <div class="box rounded">
-          <img src="~/assets/images/Tems.png" />
+          <img :src="landscapeImage" />
         </div>
-        <div class="preview">
+        <!-- <div class="preview">
           <p>Tems.png</p>
-        </div>
+        </div> -->
       </div>
 
       <div class="portrait">
         <p>Portrait photo</p>
 
         <div class="box rounded">
-          <img src="~/assets/images/dancer.jpg" />
+          <img :src="portraitImage" />
         </div>
-        <div class="preview">
+        <!-- <div class="preview">
           <p>dancer.jpg</p>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -45,7 +52,7 @@
       <div class="border p-2 flex items-center justify-between py-2" v-for="(schedule, index) in schedules" :key="index">
         <div class="flex flex-col">
           <span class="mb-1 font-bold text-black capitalize"> {{ schedule.name }} </span>
-          <span class="text-black"> {{ schedule.date }} </span>
+          <span class="text-black"> {{ formatDate(schedule.date) }} </span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="start-time text-xs text-gray"> Start time </span>
@@ -80,13 +87,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { EventDetailsFull, ISchedule, ITicket } from '~/common/models/interfaces'
-import { formatCurrency, capitalize } from '~/common/utilities/index'
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import { EventDetailsFull, ISchedule, ITicket } from '~/common/models/interfaces';
+import { formatCurrency, capitalize } from '~/common/utilities/index';
+import { formatDate } from '~/common/utilities'
 
 @Component
 export default class Summary extends Vue {
   @Prop() eventDetails!: EventDetailsFull;
+
+  landscapeImage = this.eventDetails?.images?.landscape || '';
+  portraitImage = this.eventDetails?.images?.landscape || '';
+
+  formatDate = formatDate;
 
   formatCurrency = formatCurrency
   capitalize = capitalize

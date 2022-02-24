@@ -83,8 +83,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
 import { message } from 'ant-design-vue'
+import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
 import { EventsApi } from '~/common/api/events.api';
 import { AppState, StoreMutations } from '~/common/storeHelpers';
 
@@ -158,6 +158,8 @@ export default class EventDetails extends Vue {
 
   mounted() {
     if (this.eventDetails) {
+      this.$store.commit(StoreMutations.setEditMode, false);
+
       this.event = { ...this.eventDetails };
 
       this.event.images = {
@@ -186,13 +188,12 @@ export default class EventDetails extends Vue {
       author: this.currentUser?.id
     }
 
-    this.toggleEditMode();
+    // this.toggleEditMode();
+    this.$store.commit(StoreMutations.setEditMode, true);
   }
 
   toggleEditMode(){
-    const current = this.editMode;
-    this.$store.commit(StoreMutations.setEditMode, !current);
-    console.log('edit mode toggled');
+    this.$store.commit(StoreMutations.setEditMode, !this.editMode);
   }
 
   updateForm(formData: any) {
@@ -258,7 +259,7 @@ export default class EventDetails extends Vue {
     const details: Partial<EventDetailsFull> = { ...this.event };
 
     this.isLoading = true
-    const { error, data } = await EventsApi.update(this.eventDetails.id, {...details});
+    const { error } = await EventsApi.update(this.eventDetails.id, {...details});
     this.isLoading = false
 
     if (error) {
@@ -272,7 +273,7 @@ export default class EventDetails extends Vue {
 
   async updateStatus(status: string){
     this.isLoading = true;
-    const { error, data } = await EventsApi.changeStatus(this.eventDetails?.id, status);
+    const { error } = await EventsApi.changeStatus(this.eventDetails?.id, status);
     this.isLoading = false
 
     if (error) {

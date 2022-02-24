@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="user" class="container">
     <section class="profile">
       <div class="main-content">
         <div>
@@ -21,37 +21,37 @@
 
       <div class="profile-form">
         <div class="wide">
-          <input-field label="Email" :defaultValue="user.email" :disabled="profileEditDisabled"></input-field>
+          <input-field label="Email" :default-value="user.email" :disabled="profileEditDisabled"></input-field>
           <span class="count"> 14/40 </span>
         </div>
         <div class="wrap">
           <input-field
             label="Firstname"
-            :defaultValue="capitalize(user.firstName)"
+            :default-value="capitalize(user.firstName)"
             :value.sync="user.firstName"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Lastname"
-            :defaultValue="capitalize(user.lastName)"
+            :default-value="capitalize(user.lastName)"
             :value.sync="user.lastName"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Date of birth"
-            :defaultValue="dob"
+            :default-value="dob"
             :value.sync="user.dob"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Phone number"
-            :defaultValue="user.phone"
+            :default-value="user.phone"
             :value.sync="user.phone"
             :disabled="profileEditDisabled"
           ></input-field>
           <input-field
             label="Gender"
-            :defaultValue="gender"
+            :default-value="gender"
             :value.sync="user.gender"
             :disabled="profileEditDisabled"
           ></input-field>
@@ -101,16 +101,16 @@
     </section>
 
     <div class="save">
-      <primary-button label="SAVE" @click="save" :loading="loading"></primary-button>
+      <primary-button label="SAVE" :loading="loading" @click="save" ></primary-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { message } from 'ant-design-vue'
-import { AuthApi } from '~/common/api/auth.api'
-import { AppState, StoreMutations, AuthUser } from '~/common/storeHelpers'
+// import { message } from 'ant-design-vue'
+// import { AuthApi } from '~/common/api/auth.api'
+import { AppState, AuthUser } from '~/common/storeHelpers'
 import { capitalize } from '~/common/utilities/index'
 
 @Component({
@@ -118,7 +118,7 @@ import { capitalize } from '~/common/utilities/index'
 })
 export default class ProfilePage extends Vue {
   capitalize = capitalize
-  user = this.activeUser
+  user: AuthUser | null = null;
 
   dob = ''
   gender = ''
@@ -133,13 +133,16 @@ export default class ProfilePage extends Vue {
   profileEditDisabled = true
   passwordEditDisabled = true
 
+  mounted() {
+    this.user = Object.assign({}, this.activeUser);
+  }
+
   get activeUser() {
     const { currentUser } = this.$store.state as AppState
     return currentUser
   }
 
   setEdit(section: string) {
-    console.log(section)
 
     if (section === 'profile') {
       this.profileEditDisabled = false
@@ -153,11 +156,7 @@ export default class ProfilePage extends Vue {
   }
 
   save() {
-    console.log('saving')
 
-    if (!this.profileEditDisabled) {
-      console.log(this.user)
-    }
   }
 }
 </script>

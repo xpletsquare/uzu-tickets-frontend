@@ -29,10 +29,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { message } from 'ant-design-vue'
 import { AppState, StoreMutations } from '~/common/storeHelpers'
 import { EventDetailsFull } from '~/common/models/interfaces'
 import { EventsApi } from '~/common/api/events.api'
-import { message } from 'ant-design-vue'
 
 @Component({
   layout: 'dashboard',
@@ -41,6 +41,7 @@ export default class DashboardEventList extends Vue {
   events: EventDetailsFull[] = []
 
   openNewEventPage() {
+    this.$store.commit(StoreMutations.setEditMode, true);
     this.$router.push('/dashboard/events/create')
   }
 
@@ -58,7 +59,6 @@ export default class DashboardEventList extends Vue {
 
     const { data, error, status} = await EventsApi.getUserEvents(currentUser?.id);
 
-    console.log({ data });
 
     if(status === 404){
       this.events = [];

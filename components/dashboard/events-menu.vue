@@ -52,12 +52,13 @@
 </template>
 
 <script lang="ts">
+import { message } from 'ant-design-vue'
+import Multiselect from 'vue-multiselect'
 import { Component, Vue } from 'vue-property-decorator'
 import { AppState } from '~/common/storeHelpers'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
-import { message } from 'ant-design-vue'
-import Multiselect from 'vue-multiselect'
+
 
 @Component({
   components: { Multiselect },
@@ -111,11 +112,11 @@ export default class EventsMenu extends Vue {
     return this.currentStage >= target ? 'passed' : ''
   }
 
-  // setEventsMode(eventState: string, stage = 1) {
-  //   const stageAsString = stage + '';
-  //   const query = { ...this.$route.query, eventState, stage: stageAsString };
-  //   this.$router.replace({ query })
-  // }
+  setEventsMode(eventState: string, stage = 1) {
+    const stageAsString = stage + '';
+    const query = { ...this.$route.query, eventState, stage: stageAsString };
+    this.$router.replace({ query })
+  }
 
   goBack() {
     this.$router.replace('/dashboard/events');

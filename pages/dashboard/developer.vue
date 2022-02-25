@@ -33,36 +33,37 @@
         </span>
       </h4>
 
-      <p>If you already own a website and want to sell tickets directly from your website and retain your web traffic, you can do that with our white label solution. 
+      <p>
+        If you already own a website and want to sell tickets directly from your website and retain your web traffic,
+        you can do that with our white label solution.
       </p>
       <p>
-        Each event has a unique event ID, from the dropdown below, select the prefered event and the code section will be updated accordingly
+        Each event has a unique event ID, from the dropdown below, select the prefered event and the code section will
+        be updated accordingly
       </p>
-
-      
     </div>
 
-     <p>
-        On your header or script file, import our CDN to your codebase so your webapp can estabish a connection with our white labeling server.
-      </p>
+    <p>
+      On your header or script file, import our CDN to your codebase so your webapp can estabish a connection with our
+      white labeling server.
+    </p>
 
-
-      <h3> Select event</h3>
-       <div class="md:w-2/4 mt-4 border rounded border-gray-500">
-        <multiselect
-          v-model="selectedEvent"
-          :options="currentEvents"
-          :show-labels="false"
-          placeholder="Select Event"
-          track-by="title"
-          label="title"
-          class="capitalize"
-          @select="onSelect"
-        ></multiselect>
-      </div>
+    <h3>Select event</h3>
+    <div class="md:w-2/4 mt-4 border rounded border-gray-500">
+      <multiselect
+        v-model="selectedEvent"
+        :options="currentEvents"
+        :show-labels="false"
+        placeholder="Select Event"
+        track-by="title"
+        label="title"
+        class="capitalize"
+        @select="onSelect"
+      ></multiselect>
+    </div>
 
     <div class="codebase">
-        <pre>
+      <pre>
         <code v-highlight class="HTML code-inner">
           	&lt;script src="https://cdn.jsdelivr.net/gh/kenovienadu/uzu-ticket-payment/main-2.js"&gt;&lt;/script&gt;
         </code>
@@ -70,13 +71,13 @@
     </div>
     <!-- end of codebase section -->
 
-     <p>
-        In your Event page, inside your body tag, create a Buy ticket button for the specific event. In the Button element, add  <code class="thecode">id="but"</code> attribute.
-      </p>
-    
+    <p>
+      In your Event page, inside your body tag, create a Buy ticket button for the specific event. In the Button
+      element, add <code class="thecode">id="buy"</code> attribute.
+    </p>
 
-       <div class="codebase">
-        <pre>
+    <div class="codebase">
+      <pre>
         <code v-highlight class="HTML code-inner">
           	&lt;button class="bg-gray-800 text-gray-50 p-3 rounded" id="buy"&gt;Buy Ticket&lt;/button&gt;
         </code>
@@ -84,13 +85,10 @@
     </div>
     <!-- end of codebase section -->
 
- 
-      <p>
-        In your script tag, Add the following code.
-      </p>
+    <p>In your script tag, Add the following code.</p>
 
-       <div class="codebase">
-        <pre>
+    <div class="codebase">
+      <pre>
         <code v-highlight class="javascript code-inner">
           const uzuEvent = new UzuEvent("{{selectedEventId}}"); // Sample valid event id
 
@@ -102,14 +100,10 @@
     </div>
     <!-- end of codebase section -->
 
+    <h3>Full Code</h3>
 
-
-    <h3>
-        Full Code
-      </h3>
-
-       <div class="codebase">
-        <pre>
+    <div class="codebase">
+      <pre>
         <code v-highlight class="HTML code-inner">
           &lt;body class="pt-20 flex justify-center items-center"&gt;
             &lt;button class="bg-gray-800 text-gray-50 p-3 rounded" id="buy">Buy Ticket&lt;/button&gt;
@@ -133,31 +127,31 @@
     <h2>Help</h2>
 
     <p>
-        If you have any difficulies implementing Uzu tickets on website, feel free to contact our technical support team via email at tech@uzutickets.com.
+      If you have any difficulies implementing Uzu tickets on website, feel free to contact our technical support team
+      via email at tech@uzutickets.com.
     </p>
-
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import Multiselect from 'vue-multiselect';
-import { EventDetailsFull } from '~/common/models/interfaces';
-import { AppState } from '~/common/storeHelpers';
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import Multiselect from 'vue-multiselect'
+import { EventDetailsFull } from '~/common/models/interfaces'
+import { AppState } from '~/common/storeHelpers'
 
 @Component({
   layout: 'dashboard',
-  components: { 
-    Multiselect 
+  components: {
+    Multiselect,
   },
 })
 export default class DeveloperPage extends Vue {
   @Prop() eventDetails!: EventDetailsFull
   disabled = false
-  selectedEvent: EventDetailsFull | null = null;
+  selectedEvent: EventDetailsFull | null = null
   events: string[] = ['First Event', 'Second event', 'Last']
   tag: string = ''
-  selectedEventId = '';
+  selectedEventId = ''
 
   get currentEvents() {
     const { events } = this.$store.state as AppState
@@ -165,22 +159,22 @@ export default class DeveloperPage extends Vue {
   }
 
   mounted() {
-    this.selectedEvent = this.currentEvents[0] || null;
-    this.selectedEventId = this.selectedEvent?.id || '635e15aa-8dd2-4372-a024-fb2dad542920';
+    this.selectedEvent = this.currentEvents[0] || null
+    this.selectedEventId = this.selectedEvent?.id || '635e15aa-8dd2-4372-a024-fb2dad542920'
   }
 
-  onSelect(selected: EventDetailsFull){
-    this.selectedEventId = this.selectedEvent?.id || '635e15aa-8dd2-4372-a024-fb2dad542920';
+  onSelect(selected: EventDetailsFull) {
+    this.selectedEventId = this.selectedEvent?.id || '635e15aa-8dd2-4372-a024-fb2dad542920'
   }
 }
 </script>
 
 <style  lang="scss" scoped>
-
-h2{
+h2 {
   font-size: 20pt;
 }
-.thecode{
+
+.thecode {
   display: inline-block;
   color: rgb(88, 88, 88);
   background-color: rgb(246, 246, 246);
@@ -190,7 +184,7 @@ h2{
   border-radius: 2px;
 }
 
-.code-inner{
+.code-inner {
   border-radius: 5px !important;
   /* padding: 10px !important; */
   flex-wrap: wrap !important;
@@ -211,7 +205,7 @@ h2{
     width: 90%;
   }
 
-@media (max-width: 1300px) {
+  @media (max-width: 1300px) {
     width: 90%;
   }
   @media (max-width: 768px) {

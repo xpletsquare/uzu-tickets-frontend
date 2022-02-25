@@ -9,20 +9,34 @@
             Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.
           </p>
         </div>
-        <div class="btn">
-          <button @click="setEdit('profile')">
+        <div class="btn-wrapper">
+          <button @click="setEdit('profile')" v-if="profileEditDisabled">
             Edit
             <span class="icon">
               <i class="fas fa-pen"></i>
             </span>
           </button>
+          <template v-else>
+            <button class="cancel" @click="resetDetails('profile')">
+              Cancel
+              <span class="icon">
+                <i class="fas fa-times"></i>
+              </span>
+            </button>
+            <button class="save" @click="saveDetails('profile')">
+              Save
+              <span class="icon">
+                <i class="far fa-save"></i>
+              </span>
+            </button>
+          </template>
         </div>
       </div>
 
       <div class="profile-form">
         <div class="wide">
-          <input-field label="Email" :default-value="user.email" :disabled="profileEditDisabled"></input-field>
-          <span class="count"> 14/40 </span>
+          <input-field label="Email" :defaultValue="user.email" :disabled="profileEditDisabled"></input-field>
+          <!-- <span class="count"> 14/40 </span> -->
         </div>
         <div class="wrap">
           <input-field
@@ -68,13 +82,27 @@
             Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.
           </p>
         </div>
-        <div class="btn">
-          <button @click="setEdit('password')">
+        <div class="btn-wrapper">
+          <button @click="setEdit('password')" v-if="passwordEditDisabled">
             Edit
             <span class="icon">
               <i class="fas fa-pen"></i>
             </span>
           </button>
+          <template v-else>
+            <button class="cancel" @click="resetDetails('password')">
+              Cancel
+              <span class="icon">
+                <i class="fas fa-times"></i>
+              </span>
+            </button>
+            <button class="save" @click="saveDetails('password')">
+              Save
+              <span class="icon">
+                <i class="far fa-save"></i>
+              </span>
+            </button>
+          </template>
         </div>
       </div>
 
@@ -100,15 +128,15 @@
       </div>
     </section>
 
-    <div class="save">
-      <primary-button label="SAVE" :loading="loading" @click="save" ></primary-button>
-    </div>
+    <!-- <div class="save">
+      <primary-button label="SAVE" :loading="loading" @click="save"></primary-button>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-// import { message } from 'ant-design-vue'
+import { message } from 'ant-design-vue'
 // import { AuthApi } from '~/common/api/auth.api'
 import { AppState, AuthUser } from '~/common/storeHelpers'
 import { capitalize } from '~/common/utilities/index'
@@ -118,11 +146,10 @@ import { capitalize } from '~/common/utilities/index'
 })
 export default class ProfilePage extends Vue {
   capitalize = capitalize
-  user: AuthUser | null = null;
+  user: AuthUser | null = null
 
   dob = ''
   gender = ''
-
   passwordInfo = {
     currentPassword: '',
     newPassword: '',
@@ -134,7 +161,7 @@ export default class ProfilePage extends Vue {
   passwordEditDisabled = true
 
   mounted() {
-    this.user = Object.assign({}, this.activeUser);
+    this.user = Object.assign({}, this.activeUser)
   }
 
   get activeUser() {
@@ -143,32 +170,47 @@ export default class ProfilePage extends Vue {
   }
 
   setEdit(section: string) {
-
     if (section === 'profile') {
       this.profileEditDisabled = false
-      // this.profileEditDisabled = !this.profileEditDisabled
     }
 
     if (section === 'password') {
       this.passwordEditDisabled = false
-      // this.passwordEditDisabled = !this.passwordEditDisabled
     }
   }
 
-  save() {
+  resetDetails(section: string) {
+    if (section === 'profile') {
+      this.profileEditDisabled = true
+      message.info('resetiing profile')
+    }
 
+    if (section === 'password') {
+      this.passwordEditDisabled = true
+      message.info('resetiing password')
+    }
+  }
+
+  saveDetails(section: string) {
+    if (section === 'profile') {
+      message.info('saving profile')
+    }
+
+    if (section === 'password') {
+      message.info('saving password')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
-  width: 100%;
+  width: 65%;
   margin: 0 auto;
 
-  @media (max-width: 1024px) {
-    width: 80%;
-  }
+  // @media (max-width: 1024px) {
+  //   width: 100%;
+  // }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -201,17 +243,50 @@ export default class ProfilePage extends Vue {
       color: var(--grey);
     }
 
-    .btn button {
-      min-width: 80px;
-      padding: 11px 16px;
-      font-size: 11px;
-      border-radius: 20px;
-      border: 1px solid var(--dark-grey);
-      color: var(--dark-grey);
-      background-color: #f2f2f2;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .btn-wrapper {
+      display: inline-flex;
+      gap: 10px;
+
+      button {
+        min-width: 80px;
+        padding: 11px 16px;
+        font-size: 12px;
+        border-radius: 20px;
+        border: 1px solid var(--dark-grey);
+        color: var(--dark-grey);
+        background-color: #f2f2f2;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-weight: 600;
+
+        &:hover {
+          background-color: var(--dark-grey);
+          color: #f2f2f2;
+        }
+
+        &.save {
+          background-color: var(--light-green);
+          color: #f2f2f2;
+          border: 1px solid var(--white);
+          text-transform: uppercase;
+
+          &:hover {
+            background-color: var(--dark-green);
+          }
+        }
+
+        &.cancel {
+          background-color: var(--grey);
+          color: #f2f2f2;
+          border: 1px solid var(--white);
+          text-transform: uppercase;
+
+          &:hover {
+            background-color: var(--dark-grey);
+          }
+        }
+      }
     }
   }
 

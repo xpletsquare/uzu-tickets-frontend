@@ -27,7 +27,7 @@
         <button>All events</button>
 
         <div class="events">
-          <event-card :image-Url="require('~/assets/images/women-seated.png')" />
+          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
           <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
           <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
           <event-card :imageUrl="require('~/assets/images/women-seated.png')" />

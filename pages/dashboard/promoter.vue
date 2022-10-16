@@ -66,123 +66,11 @@
               <span class="commission">23,000.00</span>
             </td>
           </tr>
-          <tr>
-            <td>
-              <span class="index">1</span>
-            </td>
-            <td>
-              <span class="event-name">The doyenne hangout</span>
-            </td>
-            <td>
-              <span class="ticket-sold">23 regular, 8 VIP</span>
-            </td>
-            <td>
-              <span class="total">31 tickets</span>
-            </td>
-            <td>
-              <span class="commission">23,000.00</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="index">1</span>
-            </td>
-            <td>
-              <span class="event-name">The doyenne hangout</span>
-            </td>
-            <td>
-              <span class="ticket-sold">23 regular, 8 VIP</span>
-            </td>
-            <td>
-              <span class="total">31 tickets</span>
-            </td>
-            <td>
-              <span class="commission">23,000.00</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="index">1</span>
-            </td>
-            <td>
-              <span class="event-name">The doyenne hangout</span>
-            </td>
-            <td>
-              <span class="ticket-sold">23 regular, 8 VIP</span>
-            </td>
-            <td>
-              <span class="total">31 tickets</span>
-            </td>
-            <td>
-              <span class="commission">23,000.00</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="index">1</span>
-            </td>
-            <td>
-              <span class="event-name">The doyenne hangout</span>
-            </td>
-            <td>
-              <span class="ticket-sold">23 regular, 8 VIP</span>
-            </td>
-            <td>
-              <span class="total">31 tickets</span>
-            </td>
-            <td>
-              <span class="commission">23,000.00</span>
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
 
     <div class="transactions mobile">
-      <div class="transaction">
-        <div class="left">
-          <span class="event-name">The doyenne hangout</span>
-
-          <span class="ticket-sold">23 regular, 8 VIP</span>
-        </div>
-        <div class="right">
-          <span class="commission">23,000.00</span>
-          <span class="total">31 tickets</span>
-        </div>
-      </div>
-      <div class="transaction">
-        <div class="left">
-          <span class="event-name">The doyenne hangout</span>
-
-          <span class="ticket-sold">23 regular, 8 VIP</span>
-        </div>
-        <div class="right">
-          <span class="commission">23,000.00</span>
-          <span class="total">31 tickets</span>
-        </div>
-      </div>
-      <div class="transaction">
-        <div class="left">
-          <span class="event-name">The doyenne hangout</span>
-
-          <span class="ticket-sold">23 regular, 8 VIP</span>
-        </div>
-        <div class="right">
-          <span class="commission">23,000.00</span>
-          <span class="total">31 tickets</span>
-        </div>
-      </div>
-      <div class="transaction">
-        <div class="left">
-          <span class="event-name">The doyenne hangout</span>
-
-          <span class="ticket-sold">23 regular, 8 VIP</span>
-        </div>
-        <div class="right">
-          <span class="commission">23,000.00</span>
-          <span class="total">31 tickets</span>
-        </div>
-      </div>
       <div class="transaction">
         <div class="left">
           <span class="event-name">The doyenne hangout</span>
@@ -210,26 +98,26 @@ import { formatCurrency } from '~/common/utilities/index'
 @Component({
   layout: 'dashboard',
   methods: {
-    doCopy(){
-
+    doCopy() {
       // @ts-ignore
-      this.$copyText(this.code).then(function (e){
-        // alert('Copied')
-         message.success('Copied !')
-        console.log(e)
-        
-      }, function(e){
-        // alert('Cant copy')
+      this.$copyText(this.code).then(
+        function (e) {
+          // alert('Copied')
+          message.success('Copied !')
+          console.log(e)
+        },
+        function (e) {
+          // alert('Cant copy')
           message.warning('Code not copied !')
-        console.log(e)
-      })
-    }
-  }
+          console.log(e)
+        }
+      )
+    },
+  },
 })
 export default class PromoterPage extends Vue {
-  formatCurrency = formatCurrency;
-  code = "352842ye623"
- 
+  formatCurrency = formatCurrency
+  code = '352842ye623'
 }
 </script>
 

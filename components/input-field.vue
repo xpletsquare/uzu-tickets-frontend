@@ -55,7 +55,7 @@ export default class InputField extends Vue {
 
 .no-error {
   .error-label {
-    visibility: hidden !important;
+    display: none !important;
   }
 }
 

@@ -7,8 +7,8 @@
         <div class="inline-flex lg:w-3/4 mx-auto justify-between items-start">
           <div class="text-white w-1/5">
             <div class="text-4xl mb-2"><i class="fas fa-map-marker"></i></div>
-            <div class="font-semibold text-lg">Musson Center</div>
-            <div>Victoria Island, Lagos</div>
+            <div class="font-semibold text-lg">{{event.venue}}</div>
+            <div>{{event.location}}</div>
           </div>
 
           <div class="w-1/3 text-center pt-8">
@@ -18,9 +18,9 @@
 
           <div class="text-white w-1/5 pl-20">
             <div class="text-4xl mb-2"><i class="far fa-calendar"></i></div>
-            <div class="font-semibold text-base">January</div>
-            <div class="font-semibold text-2xl">2 - 5</div>
-            <div class="font-semibold text-lg">2022</div>
+            <div class="font-semibold text-base">{{month}}</div>
+            <div class="font-semibold text-2xl">{{start}} - {{end}}</div>
+            <div class="font-semibold text-lg">{{year}}</div>
           </div>
         </div>
       </div>
@@ -38,9 +38,7 @@
 
         <div class="uppercase text-sm mt-8">Tags</div>
         <div class="tags flex gap-2 my-2">
-          <span class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400">Drama</span>
-          <span class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400">suspense</span>
-          <span class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400">comedy</span>
+          <span class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400" v-for="(item, index) in event.tags" v-bind:key="index">{{item}}</span>
         </div>
 
         <div class="text-sm text-gray-400 my-8">
@@ -55,20 +53,13 @@
       </section>
 
       <section class="right flex-auto">
-        <div class="title capitalize font-semibold text-2xl mt-20 mb-3 md:mt-3">Ada the country</div>
+        <div class="title capitalize font-semibold text-2xl mt-20 mb-3 md:mt-3">{{event.title}}</div>
 
         <div class="description mt-10">
           <div class="font-semibold capitalize mb-2">Description</div>
 
           <div class="text-gray-400 text-sm leading-6">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti eum dolorem vitae nihil hic, 
-            officia, voluptatum non accusamus soluta necessitatibus officiis a sed quas dicta deserunt voluptates 
-            ipsam alias suscipit molestias sit. Recusandae quae, inventore culpa dolorum et nihil doloribus repellendus 
-            facere necessitatibus autem, ipsa illo placeat. Magnam aspernatur itaque minus ipsam voluptatem quisquam
-             sequi incidunt quo in. Consectetur veniam commodi omnis facere voluptatem, doloremque ullam itaque sunt 
-             atque numquam consequatur aliquid, provident enim? Molestias quaerat vitae corrupti distinctio facilis 
-             nulla labore aperiam. Nihil dolores sapiente, saepe placeat impedit voluptatibus, sunt itaque cupiditate, 
-             quisquam aliquam iure incidunt nostrum? Sed, dolorem.
+           {{event.description}}
           </div>
 
           <div class="social-share flex gap-5 mt-8">
@@ -82,7 +73,7 @@
           <div class="mt-8">
             <div class="font-semibold capitalize mb-2">Ticket Categories</div>
             <div class="mb-10">
-              <ticket-selection></ticket-selection>
+              <ticket-selection :tickets="tickets"></ticket-selection>
             </div>
             <primary-button @click="toggleCheckout" buttonClass="w-full md:w-2/5" label="promote this event"></primary-button>
           </div>
@@ -96,13 +87,27 @@
 </template>
 
 <script lang="ts">
+  import { message } from 'ant-design-vue'
   import { Component, Vue } from 'vue-property-decorator';
+  import { EventsApi } from '~/common/api/events.api';
+  import { EventDetailsFull } from '~/common/models/interfaces';
+import { ITicket } from '../../common/models/interfaces';
 
   @Component({
     layout: 'public',
   })
   export default class EventDetailPage extends Vue {
-    showCheckout = true;
+    showCheckout = false;
+    event: EventDetailsFull[] = [];
+    tickets: ITicket[] = [];
+    month = '';
+    start = "";
+    end = "";
+    year = ""
+    
+    async mounted(){
+      await this.getEventDetails()
+    }
 
     toggleCheckout(){
       console.log('clicked');
@@ -111,6 +116,35 @@
 
     handleCheckoutClosed(){
       this.toggleCheckout();
+      console.log({generatedTickets: this.tickets})
+    }
+
+    // get single event details
+    async getEventDetails(){
+      console.log(this.$route.params.id)
+      console.log(this.event)
+      const {error, data} = await EventsApi.getEventDetails(this.$route.params.id);
+
+
+      console.log(this.$route)
+
+      if (error) {
+      return message.error(error as string)
+      }
+
+      const setMonth = new Date (data.data.startDate);
+      // this.month = setMonth.getMonth().toString();
+      this.month = new Intl.DateTimeFormat('en-US', { month: 'long'}).format(setMonth);
+      this.start = setMonth.getDay().toString()
+      this.year = setMonth.getFullYear().toString();
+
+      const setEndMonth = new Date (data.data.endDate);
+      this.end = setEndMonth.getDay().toString()
+      
+      this.event = data.data;
+      this.tickets = data.data.tickets
+      console.log(this.event, "event deatis all")
+      
     }
   }
 </script>
@@ -122,7 +156,7 @@
   }
 
   .hero{
-    height: 80vh;
+    height: 60vh;
 
     @media screen and (max-width: 700px) {
       display: none;

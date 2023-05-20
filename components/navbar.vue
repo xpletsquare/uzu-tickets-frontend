@@ -102,13 +102,13 @@ export default class Navbar extends Vue {
     margin: 10px auto;
   }
 
-  // .nav-logo {
-  //   display: block;
+  /* .nav-logo {
+     display: block;
 
-  //   @media (max-width: 768px) {
-  //     // display: none;
-  //   }
-  // }
+     @media (max-width: 768px) {
+        display: none;
+     }
+   } */
 
   .mobile {
     display: none;

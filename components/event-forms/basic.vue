@@ -31,7 +31,12 @@
         <div class="flex items-center">
           <!-- <input-field label="Tags" class="bi" :value.sync="tag"></input-field> -->
           <div class="input-wrapper border bi top-1">
-            <input @keyup.enter="addItem" class=" outline-none border focus:border-green-600" v-model="tag" type="text">
+            <input
+              @keyup.enter="addItem"
+              class="outline-none border focus:border-green-600"
+              v-model="tag"
+              type="text"
+            />
           </div>
 
           <primary-button class="btn" label="Add" @click="addItem" />
@@ -75,17 +80,16 @@
         :defaultValue="formFields.address"
         class="mt-4"
       ></input-field>
-      
     </section>
 
-    <section class="date-time">
+    <!-- <section class="date-time">
       <p class="mt-10 py-6 opacity-50">
         Name your event and tell event-goers why they should come. Add details that highlight what makes it unique. Name
         your event and tell event-goers why they should come. Add details that highlight what makes it unique. Name your
         event and tell event-goers why they should come. Add details that highlight what makes it unique.Name your event
         and tell event-goers why they should come. Add details that highlight what makes it unique.
       </p>
-    </section>
+    </section> -->
   </div>
 </template>
 
@@ -93,27 +97,26 @@
 import { message } from 'ant-design-vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { EventDetailsFull } from '~/common/models/interfaces'
-import Multiselect from 'vue-multiselect';
+import Multiselect from 'vue-multiselect'
 
 // @ts-ignore
-import VueGoogleAutocomplete from 'vue-google-autocomplete';
-
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 @Component({
   components: { Multiselect, VueGoogleAutocomplete },
 })
 export default class BasicForm extends Vue {
-  @Prop() eventDetails!: EventDetailsFull;
+  @Prop() eventDetails!: EventDetailsFull
 
-  showLocationInput = false;
+  showLocationInput = false
 
-  disabled = false;
+  disabled = false
 
-  selectValue: string = '';
-  categories: string[] = ['fashion', 'art', 'business'];
-  tag: string = '';
+  selectValue: string = ''
+  categories: string[] = ['Fashion', 'Art', 'Business']
+  tag: string = ''
 
-  formFields: Partial<EventDetailsFull> | null = null;
+  formFields: Partial<EventDetailsFull> | null = null
 
   mounted() {
     // this.checkGoogle();
@@ -123,72 +126,71 @@ export default class BasicForm extends Vue {
       category: this.eventDetails?.category || '',
       tags: this.eventDetails?.tags || [],
       address: this.eventDetails?.address || '',
-      venue: this.eventDetails.venue || ''
+      venue: this.eventDetails.venue || '',
     }
   }
 
-  checkGoogle(){
+  checkGoogle() {
     // @ts-ignore
-    if(window.google){
-      this.showLocationInput = true;
-      return;
+    if (window.google) {
+      this.showLocationInput = true
+      return
     }
 
-    setTimeout(() => this.checkGoogle(), 300);
+    setTimeout(() => this.checkGoogle(), 300)
   }
 
   addItem() {
-    
     if (!this.formFields || this.tag === '') {
       return
     }
 
-    const tags = [...this.formFields.tags as string[]];
+    const tags = [...(this.formFields.tags as string[])]
 
-    this.formFields.tags = [...tags, this.tag];
+    this.formFields.tags = [...tags, this.tag]
 
-    this.tag = '';
+    this.tag = ''
     // console.log(this.tag);
   }
 
   removeItem(item: string) {
-    if(!this.formFields){
-      return;
+    if (!this.formFields) {
+      return
     }
 
-    const tags = [...this.formFields.tags as string[]];
+    const tags = [...(this.formFields.tags as string[])]
 
     const filtered = tags.filter((eTag) => eTag !== item)
 
-    this.formFields.tags = [...filtered];
+    this.formFields.tags = [...filtered]
   }
 
-  setOnlineEvent(value: string) {
-    if(!this.formFields){
-      return;
-    }
-    
-    message.info('Setting online event')
-    this.formFields.location = value;
+  // setOnlineEvent(value: string) {
+  //   if (!this.formFields) {
+  //     return
+  //   }
 
-    this.disabled = value.length > 0;
-  }
+  //   message.info('Setting online event')
+  //   this.formFields.location = value
 
-  setSingleEvent() {
-    message.info('Setting single event')
-  }
+  //   this.disabled = value.length > 0
+  // }
 
-  setMultipleEvent() {
-    message.info('Setting multiple event')
-  }
+  // setSingleEvent() {
+  //   message.info('Setting single event')
+  // }
 
-  getAddressData(addressData: any, placeResultData: any, id: string){
-    const location = this.formFields?.location;
-    console.log({ addressData, placeResultData, id, location });
+  // setMultipleEvent() {
+  //   message.info('Setting multiple event')
+  // }
+
+  getAddressData(addressData: any, placeResultData: any, id: string) {
+    const location = this.formFields?.location
+    console.log({ addressData, placeResultData, id, location })
   }
 
   validate(): string {
-    const { title, category, tags, venue } = this.formFields as Partial<EventDetailsFull>
+    const { title, category, venue } = this.formFields as Partial<EventDetailsFull>
 
     if (!title) {
       return 'Invalid title'
@@ -205,7 +207,7 @@ export default class BasicForm extends Vue {
     // emit event to save data in parent
     this.$emit('save', this.formFields)
 
-    return '';
+    return ''
   }
 }
 </script>
@@ -219,34 +221,32 @@ section {
   }
 }
 
-.input-wrapper{
+.input-wrapper {
   position: relative;
 
-  label{
+  label {
     position: absolute;
     left: 20px;
     top: 5px;
     background: white;
   }
 
-  input{
+  input {
     border: 1px solid lightgray;
     padding: 0.5em;
     border-radius: 3px;
     width: 100%;
     height: 45px;
-  
-    &:focus{
+
+    &:focus {
       border: 1px solid var(--light-green);
 
-      &+label{
+      & + label {
         top: -10px;
       }
     }
-  
   }
 }
-
 
 .btn {
   float: right;
@@ -275,12 +275,12 @@ h2 {
   cursor: pointer;
 }
 
-input .border{
+input .border {
   height: 45px;
   border: 1px solid lightgray;
 }
 
-.gray-border{
+.gray-border {
   border: 1px solid gray;
   height: 45px;
   outline: none;

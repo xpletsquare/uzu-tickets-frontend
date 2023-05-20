@@ -45,7 +45,6 @@ typings/
 .npm
 
 # dist folder
-dist
 # Optional eslint cache
 .eslintcache
 

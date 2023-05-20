@@ -105,7 +105,6 @@ export default {
   },
 
 
-  buildDir: 'dist'
 
   // #31d760
 

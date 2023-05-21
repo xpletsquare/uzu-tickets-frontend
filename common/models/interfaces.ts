@@ -74,10 +74,14 @@ export interface ISchedule {
 
 export interface EventDetailsFull {
   id: string
-  startDate: string;
-  endDate: string;
+  startDate: string
+  endDate: string
   title: string
   images: {
+    landscape: string
+    portrait: string
+  }
+  image: {
     landscape: string
     portrait: string
   }
@@ -90,11 +94,11 @@ export interface EventDetailsFull {
   sales: ISalesTx[]
   promoters: string[]
   isPublished: boolean
-  occurrence: "single" | "multiple" | ""
+  occurrence: 'single' | 'multiple' | ''
   address: string
   author: string
   venue: string
-  status: "DRAFT" | "ACTIVE" | "CANCELED"
+  status: 'DRAFT' | 'ACTIVE' | 'CANCELED'
 }
 
 export interface Promoter {

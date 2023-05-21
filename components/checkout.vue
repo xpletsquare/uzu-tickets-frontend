@@ -4,44 +4,43 @@
       <button class="close-btn shadow-lg" @click="close">&times;</button>
 
       <section class="right relative bg-gray-50">
-
-        <img class="bg-gray-200" src="https://images.unsplash.com/photo-1522938974444-f12497b69347?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1709&q=80" alt="">
+        <img class="bg-gray-200" :src="singleEvent.image.portrait" />
         <div class="p-8">
           <div class="font-medium mb-8">Order Summary</div>
 
           <div class="flex justify-between gap-12 mb-3">
             <div class="w-3/5">1 x VIP Early bird entry tickets</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000)}} </div>
+            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
           </div>
 
           <div class="flex justify-between gap-12 mb-3">
             <div class="w-3/5">1 x VIP Early bird entry tickets</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000)}} </div>
+            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
           </div>
 
           <div class="flex justify-between gap-12 mb-3 border-t-2 pt-2">
             <div>Subtotal</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000)}} </div>
+            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
           </div>
 
           <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
             <div class="font-bold text-xl">Total</div>
-            <div class="font-bold w-auto text-right text-xl">{{ formatCurrency(4000)}} </div>
+            <div class="font-bold w-auto text-right text-xl">{{ formatCurrency(4000) }}</div>
           </div>
         </div>
       </section>
 
       <section class="left relative p-8 md:p-14 text-sm">
         <div class="bg-gray-100 p-4 rounded">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-          Similique ad incidunt consectetur iure in hic magni fugit sit quos explicabo 
-          laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione voluptate.
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique ad incidunt consectetur iure in hic magni
+          fugit sit quos explicabo laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione
+          voluptate.
         </div>
 
         <div class="mt-8">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-          Similique ad incidunt consectetur iure in hic magni fugit sit quos explicabo 
-          laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione voluptate.
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique ad incidunt consectetur iure in hic magni
+          fugit sit quos explicabo laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione
+          voluptate.
         </div>
 
         <div class="mt-8">
@@ -51,16 +50,16 @@
 
         <div class="mt-8">
           <div class="font-semibold mb-4">Contact Information</div>
-          <div class="font-medium my-2">Ticket 1: Jan 1, 2022</div>
+          <div class="font-medium my-2">Ticket 1: {{ singleEvent.schedules[0].name }}</div>
           <div class="contact-form">
-            <input placeholder="First Name" type="text">
-            <input placeholder="Last Name" type="text">
-            <input class="full" placeholder="Email Address" type="email">
+            <input v-model="userFirstName" placeholder="First Name" type="text" />
+            <input v-model="userLastName" placeholder="Last Name" type="text" />
+            <input v-model="userEmail" class="full" placeholder="Email Address" type="email" />
           </div>
         </div>
 
         <div class="text-right mt-10 pay-button-wrapper">
-          <primary-button buttonClass="w-full md:w-1/3" label="Pay now"></primary-button>
+          <primary-button @click="pay" buttonClass="w-full md:w-1/3" label="Pay now"></primary-button>
         </div>
       </section>
     </div>
@@ -68,22 +67,85 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import { formatCurrency } from '~/common/utilities';
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { message } from 'ant-design-vue'
+import { payNow } from '~/common/api/payment.api'
+// import { payApi, payNow } from '~/common/api/payment.api'
+import { formatCurrency } from '~/common/utilities'
+import { EventDetailsFull } from '~/common/models/interfaces'
 
+@Component
+export default class Checkout extends Vue {
+  @Prop({ type: Object, required: true }) singleEvent!: EventDetailsFull
+  @Prop({ type: Array, required: true }) purchases!: [{}]
 
-  @Component
-  export default class Checkout extends Vue {
-    formatCurrency = formatCurrency;
+  formatCurrency = formatCurrency
+  userFirstName: string = ''
+  userLastName: string = ''
+  userEmail: string = ''
 
-    close(){
-      this.$emit('close');
+  async pay() {
+    // validate input
+    // show loading spinner
+    // make api call
+    // show success message
+    // onSuccess => save token to localstorage
+    // redirect to dashboard
+
+    const payload = {
+      eventId: this.singleEvent.id,
+      userFirstName: this.userFirstName,
+      userLastName: this.userLastName,
+      userEmail: this.userEmail,
+      purchases: this.purchases,
     }
+
+    if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
+      // console.log(payload.purchases[0].count)
+      return message.warning('Please enter a valid first-name, last-name and email')
+    }
+
+    try {
+      const data = await payNow()
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+    }
+
+    // this.loading = true
+    // const { error, data } = await payApi.pay({
+    //   eventId: 'aaa807e6-8001-467b-83a9-1ce7704917da',
+    //   userEmail: 'jonesbgabriel@gmail.com',
+    //   userFirstName: 'ken',
+    //   userLastName: 'test',
+    //   purchases: [
+    //     {
+    //       ticketId: '14ec431d-023b-46b6-b1be-83cbd6f1b721',
+    //       count: 2,
+    //       labels: ['ken'],
+    //     },
+    //   ],
+    // })
+    // this.loading = false
+
+    // if (error) {
+    //   return message.error(error as string)
+    // }
+
+    // console.log(data.data)
+
+    message.success('payment successful')
+    // this.$router.push('/dashboard')
   }
+
+  close() {
+    this.$emit('close')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.wrapper{
+.wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -93,7 +155,7 @@
   backdrop-filter: blur(10px);
   overflow-y: scroll;
 
-  .checkout-card{
+  .checkout-card {
     position: relative;
     width: 100%;
     display: block;
@@ -107,18 +169,17 @@
       width: min(92vw, 1000px);
       height: 80vh;
 
-
-      >section{
+      > section {
         height: inherit;
         overflow-y: scroll;
       }
 
-      .left{
+      .left {
         grid-column: 1;
         grid-row: 1;
       }
 
-      .right{
+      .right {
         grid-column: 2;
         grid-row: 1;
       }
@@ -171,12 +232,12 @@
   //   }
   // }
 
-  img{
+  img {
     width: 100%;
     height: 240px;
   }
 
-  .contact-form{
+  .contact-form {
     display: grid;
     grid-template-columns: auto auto;
     gap: 1em;
@@ -185,18 +246,18 @@
       grid-template-columns: 100%;
     }
 
-    input{
+    input {
       border: 1px solid lightgray;
       padding: 0.7em;
       border-radius: 4px;
     }
 
-    .full{
+    .full {
       grid-column: 1/-1;
     }
   }
 
-  .close-btn{
+  .close-btn {
     width: 40px;
     height: 40px;
     display: inline-grid;
@@ -216,7 +277,7 @@
     }
   }
 
-  .pay-button-wrapper{
+  .pay-button-wrapper {
     @media screen and (max-width: 700px) {
       position: fixed;
       bottom: 0;

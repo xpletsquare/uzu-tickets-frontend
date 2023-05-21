@@ -16,13 +16,17 @@
     </div>
 
     <div class="event-details">
-      <h4 class="name"> {{ eventTitle }}</h4>
+
+      <h4 class="name">{{ eventTitle }}</h4>
+
 
       <div class="date">
         <span class="icon">
           <fa icon="calendar-check" />
         </span>
-        <p>{{startDate}}</p>
+
+        <p>{{ formattedStartDate }}</p>
+
       </div>
 
       <div class="location">
@@ -38,19 +42,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop,  } from 'vue-property-decorator'
+
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { formatTimestamp } from '~/common/utilities'
 
 @Component
 export default class FeaturedEvent extends Vue {
-  @Prop({ type: String, required: true })  imageUrl!: string
-  @Prop({ type: String, required: true })  eventTitle!: string
-  @Prop({ type: String, required: true })  startDate!: string
-  @Prop({ type: String, required: true })  eventId!: string
+  [x: string]: any
+  @Prop({ type: String, required: true }) readonly imageUrl!: string
+  @Prop({ type: String, required: true }) readonly eventTitle!: string
+  @Prop({ type: String, required: true }) readonly startDate!: string
+  @Prop({ type: String, required: true }) readonly eventId!: string
 
+  get formattedStartDate() {
+    return formatTimestamp(+this.startDate) // Call the formatDate function with startDate
+  }
 
+  openEventPage() {
+    this.$router.push(`/events/${this.eventId}`)
 
-  openEventPage(){
-    this.$router.push('/events/'+this.eventId)
   }
 }
 </script>

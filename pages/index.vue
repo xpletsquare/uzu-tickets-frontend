@@ -36,15 +36,31 @@
 
         <div class="events">
 
-          <event-card v-for="(event, index) in events" v-bind:key="index" :imageUrl="require('~/assets/images/women-seated.png')" :eventTitle="event.title" :startDate="event.startDate.toString()" :eventId="event.id" />
-          <!--  <event-card :imageUrl="require('~/assets/images/cottonbro.png')" /> -->
-          <!-- <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />  -->
+          <event-card
+            v-for="(event, index) in events"
+            :key="index"
+            :imageUrl="require('~/assets/images/cottonbro.png')"
+            event.
+            :eventTitle="event.title"
+            :startDate="event.startDate.toString()"
+            :eventId="event.id"
+          />
 
-        
+          <!-- <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
+          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
+          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
+          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
 
+          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
+          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
+          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
+          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
 
-          
+          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
+          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
+          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
+          <event-card :imageUrl="require('~/assets/images/women-seated.png')" /> -->
+
         </div>
       </section>
 
@@ -58,8 +74,11 @@
 <script lang="ts">
 import { message } from 'ant-design-vue'
 import { Component, Vue } from 'vue-property-decorator'
+
+import { message } from 'ant-design-vue'
 import { EventsApi } from '~/common/api/events.api'
-import { EventDetailsFull } from '~/common/models/interfaces';
+import { EventDetailsFull } from '~/common/models/interfaces'
+
 
 @Component({
   layout: 'public',
@@ -67,28 +86,21 @@ import { EventDetailsFull } from '~/common/models/interfaces';
 })
 export default class IndexPage extends Vue {
 
- events: EventDetailsFull[] = []
-
-
-
-async getEvents() {
-    const { error, data } = await EventsApi.listEvents();
-
+  events: EventDetailsFull[] = []
+  async getEvents() {
+    const { error, data } = await EventsApi.listEvents()
 
     if (error) {
-      return message.error(error as string)
+      message.error(error as string)
     }
 
-    this.events = data.data;
-    console.log(this.events)
+    this.events = data?.data
+    // console.log(this.events)
+  }
 
-  
-}
-
-
-mounted() {
-   this.getEvents();
-}
+  mounted() {
+    this.getEvents()
+  }
 
 }
 </script>

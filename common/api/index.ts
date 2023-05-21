@@ -19,6 +19,7 @@ export const getAuthHeaders = () => {
   }
 }
 
+
 export const LOCAL_API_BASE = 'http://localhost:3200/v1/api'
 export const API_BASE = 'https://uzu-tickets.herokuapp.com/v1/api'
 

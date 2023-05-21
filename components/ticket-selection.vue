@@ -6,6 +6,7 @@
       class="rounded shadow-lg p-3 inline-flex justify-between items-center gap-3"
     >
       <div class="border rounded-md border-green-400 bg-green-500 text-green-600 bg-opacity-20 p-3">
+
         <div class="uppercase text-sm">{{ ticket.title }}</div>
         <div class="font-semibold">{{ `N${ticket.price}.00` }}</div>
       </div>
@@ -13,6 +14,7 @@
       <div class="flex-auto text-sm">
         <div>Ticket valid for 1 day</div>
         <div class="opacity-50">{{ `${ticket.schedule.date} | ${ticket.schedule.start}` }}</div>
+
       </div>
 
       <div class="inline-flex justify-between items-center gap-3">
@@ -24,7 +26,9 @@
   </section>
 </template>
 
+
 <script lang="ts">
+
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
@@ -41,6 +45,7 @@ export default class TicketSelection extends Vue {
     this.$emit('decrease-ticket-count', ticketId)
   }
 }
+
 </script>
 
 <style scoped>

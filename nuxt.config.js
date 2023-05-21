@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Uzu Tiqets',
+    title: 'Uzu Tickets',
     htmlAttrs: {
       lang: 'en',
     },
@@ -103,6 +103,8 @@ export default {
   server: {
     port: 25001,
   },
+
+
 
   // #31d760
 

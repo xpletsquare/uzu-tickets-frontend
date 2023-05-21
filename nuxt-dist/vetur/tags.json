@@ -1,0 +1,89 @@
+{
+  "Checkout": {
+    "description": "Auto imported from components/checkout.vue"
+  },
+  "Disclaimer": {
+    "description": "Auto imported from components/disclaimer.vue"
+  },
+  "EventCard": {
+    "description": "Auto imported from components/event-card.vue"
+  },
+  "EventsSidebar": {
+    "description": "Auto imported from components/events-sidebar.vue"
+  },
+  "FeaturedEvent": {
+    "description": "Auto imported from components/featured-event.vue"
+  },
+  "FullscreenLoader": {
+    "description": "Auto imported from components/fullscreen-loader.vue"
+  },
+  "Hero": {
+    "description": "Auto imported from components/hero.vue"
+  },
+  "InputField": {
+    "description": "Auto imported from components/input-field.vue"
+  },
+  "MainFooter": {
+    "description": "Auto imported from components/main-footer.vue"
+  },
+  "Navbar": {
+    "description": "Auto imported from components/navbar.vue"
+  },
+  "Pagination": {
+    "description": "Auto imported from components/pagination.vue"
+  },
+  "PrimaryButton": {
+    "description": "Auto imported from components/primary-button.vue"
+  },
+  "Search": {
+    "description": "Auto imported from components/search.vue"
+  },
+  "SecondaryButton": {
+    "description": "Auto imported from components/secondary-button.vue"
+  },
+  "Tag": {
+    "description": "Auto imported from components/tag.vue"
+  },
+  "TicketSelection": {
+    "description": "Auto imported from components/ticket-selection.vue"
+  },
+  "DashboardEventDetails": {
+    "description": "Auto imported from components/dashboard/event-details.vue"
+  },
+  "DashboardEventsCard": {
+    "description": "Auto imported from components/dashboard/events-card.vue"
+  },
+  "DashboardEventsMenu": {
+    "description": "Auto imported from components/dashboard/events-menu.vue"
+  },
+  "DashboardMenu": {
+    "description": "Auto imported from components/dashboard/menu.vue"
+  },
+  "DashboardMobileNavmenu": {
+    "description": "Auto imported from components/dashboard/mobile-navmenu.vue"
+  },
+  "DashboardNavbar": {
+    "description": "Auto imported from components/dashboard/navbar.vue"
+  },
+  "DashboardTotalEventSales": {
+    "description": "Auto imported from components/dashboard/total-event-sales.vue"
+  },
+  "EventFormsBasic": {
+    "description": "Auto imported from components/event-forms/basic.vue"
+  },
+  "EventFormsDetails": {
+    "description": "Auto imported from components/event-forms/details.vue"
+  },
+  "EventFormsSales": {
+    "description": "Auto imported from components/event-forms/sales.vue"
+  },
+  "EventFormsSchedules": {
+    "description": "Auto imported from components/event-forms/schedules.vue"
+  },
+  "EventFormsSummary": {
+    "description": "Auto imported from components/event-forms/summary.vue"
+  },
+  "EventFormsTickets": {
+    "description": "Auto imported from components/event-forms/tickets.vue"
+  }
+}

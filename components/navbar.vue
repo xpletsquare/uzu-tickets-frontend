@@ -82,12 +82,13 @@ export default class Navbar extends Vue {
 
 <style lang="scss" scoped>
 .main {
-  max-height: 75px;
+  max-height: 120px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
 }
 
 .nav {
   width: 80%;
+  height: 120px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -10,25 +10,23 @@ export const payApi = {
   //   return catchAsync(() => pay.post('/initiate', { ...details }, getAuthHeaders()))
   // },
 }
-interface PurchasesInterface {
-  ticketId: string
-  count: number
-  labels?: string[]
-}
+// interface PurchasesInterface {
+//   ticketId: string
+//   count: number
+//   labels?: string[]
+// }
 
-interface PayReqInterface {
-  eventId: string
-  userEmail: string
-  userFirstName: string
-  userLastName: string
-  purchases: PurchasesInterface[]
-}
+// interface PayReqInterface {
+//   eventId: string
+//   userEmail: string
+//   userFirstName: string
+//   userLastName: string
+//   purchases: PurchasesInterface[]
+// }
 export const payNow = async () => {
-  const data = await axios({
-    method: 'post',
-    url: 'https://uzu-tickets.herokuapp.com/v1/api/purchase-tickets/initiate',
-    data: {
-      eventId: 'aaa807e6-8001-467b-83a9-1ce7704917da',
+
+  const {data} = await axios.post('https://uzu-tickets.herokuapp.com/v1/api/purchase-tickets/initiate', {
+    eventId: 'aaa807e6-8001-467b-83a9-1ce7704917da',
       userEmail: 'jonesbgabriel@gmail.com',
       userFirstName: 'ken',
       userLastName: 'test',
@@ -39,7 +37,10 @@ export const payNow = async () => {
           labels: ['ken'],
         },
       ],
-    },
+  }, {
+    headers: {
+      "Content-Type": "application/json"
+    }
   })
 
   console.log(data)

@@ -72,7 +72,6 @@
 </template>
 
 <script lang="ts">
-import { message } from 'ant-design-vue'
 import { Component, Vue } from 'vue-property-decorator'
 
 import { message } from 'ant-design-vue'

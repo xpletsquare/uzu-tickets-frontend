@@ -1,19 +1,20 @@
 import { createAxiosInstance } from "."
 import { AnyObject } from "../models/types";
+import { catchAsync } from "../utilities";
 
 
 const auth = createAxiosInstance('/auth');
 
 export const AuthApi = {
   login(email: string, password: string) {
-    return auth.post('/login', { email, password })
+    return catchAsync(() => auth.post('/login', { email, password }))
   },
 
   signup(details: AnyObject) {
-    return auth.post('/register', { ...details });
+    return catchAsync(() => auth.post('/register', { ...details }));
   },
 
-  verifyAccount(email: string, activationPin: number) {
-    return auth.post('/activate', { email, activationPin })
+  verifyAccount(email: string, otp: number) {
+    return catchAsync(() => auth.post('/activate', { email, otp }));
   }
 }

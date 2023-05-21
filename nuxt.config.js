@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'uzu-tickets-frontend',
+    title: 'Uzu Tickets',
     htmlAttrs: {
       lang: 'en',
     },
@@ -22,9 +22,11 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.scss'],
+  // css: ['@/assets/css/main.scss'],
+  // css: ['~/assets/variable.less'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@/plugins/antd-ui', '@/plugins/vue-clipboard'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -38,12 +40,46 @@ export default {
 
     // Simple usage
     '@nuxtjs/vuetify',
+
+    
+
+    [
+      '@nuxtjs/fontawesome',
+      {
+        component: 'fa',
+        icons: {
+          solid: [
+            'faSearch',
+            'faChevronRight',
+            'faChevronDown',
+            'faExclamation',
+            'faCalendarCheck',
+            'faMapMarkerAlt',
+            'faMoneyBillWave',
+            'faBars',
+            'faTimes',
+            'faClone',
+            'faPaperPlane',
+          ],
+          brands: ['faTwitter', 'faLinkedin', 'faInstagram', 'faFacebookF'],
+        },
+      },
+    ],
+
+    
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['nuxt-highlightjs', {
+      // Module Options
+      style: 'a11y-light'
+      // style: 'atom-one-dark'
+    }],
+
+    
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -53,5 +89,23 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: { 
+    loaders: {
+      less: {
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+     },
+   },
+
+  },
+
+  server: {
+    port: 25001,
+  },
+
+
+
+  // #31d760
+
 }

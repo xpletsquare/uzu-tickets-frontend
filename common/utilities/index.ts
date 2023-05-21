@@ -1,6 +1,6 @@
-import { AxiosError, AxiosResponse } from 'axios'
-import { AnyObject, AsyncFunction, } from '../models/types'
 import { format } from 'date-fns'
+import { AxiosError, AxiosResponse } from 'axios'
+import { AnyObject, AsyncFunction } from '../models/types'
 import { AsyncResponse, User } from '../models/interfaces'
 
 export const getErrorMessage = (error: AxiosError & Error) => {
@@ -23,7 +23,7 @@ export const getErrorMessage = (error: AxiosError & Error) => {
 
 export const catchAsync = async (asyncMethod: AsyncFunction): Promise<AsyncResponse> => {
   try {
-    const response: AxiosResponse = await asyncMethod();
+    const response: AxiosResponse = await asyncMethod()
 
     return {
       data: response.data,
@@ -63,12 +63,20 @@ export const formatDate = (dateString: string) => {
 
 export const formatCurrency = (value: string) => {
   if (!value) {
-    return 'Not Available';
+    return 'Not Available'
   }
 
-  const stringAsNumber = Number(value);
+  const stringAsNumber = Number(value)
   const formattedVAlue = new Intl.NumberFormat().format(stringAsNumber)
   return '₦' + formattedVAlue
+}
+
+export const formatPercentage = (value: string) => {
+  if (!value) {
+    return 'please provide a float value as param'
+  }
+  const stringAsFloat = parseFloat(value)
+  return stringAsFloat + '%'
 }
 
 export const truncateText = (str: string) => {
@@ -82,11 +90,31 @@ export const getUserFullName = (user: User) => {
     return 'Unknown'
   }
 
-  const { firstName, lastName, middleName } = user;
+  const { firstName, lastName, middleName } = user
 
   if (middleName) {
-    return [firstName, middleName, lastName].join(' ');
+    return [firstName, middleName, lastName].join(' ')
   }
 
-  return [firstName, lastName].join(' ');
+  return [firstName, lastName].join(' ')
+}
+
+export const capitalize = (value: string) => {
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}
+
+export const formatTimestamp = (timestamp: number) => {
+  const date = new Date(timestamp)
+
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  // const hours = date.getHours().toString().padStart(2, '0')
+  // const minutes = date.getMinutes().toString().padStart(2, '0')
+  // const seconds = date.getSeconds().toString().padStart(2, '0')
+
+  const formattedDate = `${day}-${month}-${year}`
+  // const formattedTime = `${hours}:${minutes}:${seconds}`
+
+  return formattedDate
 }

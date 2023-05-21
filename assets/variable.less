@@ -1,0 +1,80 @@
+
+// Tailwind CSS
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+@import url('vue-multiselect/dist/vue-multiselect.min.css');
+// @import '~ant-design-vue/dist/antd.less';
+@import '~ant-design-vue/dist/antd.less';
+
+@primary-color: #31d760 ;
+@border-color-base:#31d760;
+@text-color: rgb(236, 22, 22);
+// @border-radius-base: 10px;
+// @collapse-content-bg: #31d760;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.ant-pagination-item-active{
+  border-color: red !important;
+}
+:root {
+  // --light-green: #2AB743;
+  --light-green: #31d760;
+  --white: #fff;
+  --dark-green: #002c0c;
+  --pale-green: #e8ffef;
+  --ash: #f4f4f4;
+  --dark-grey: #6f6f6f;
+  --light-grey: #bbbbbb3a;
+  --light-grey-b:rgba(231, 231, 231, 0.281);
+  --grey: #a0a0a0;
+  --red: red;
+
+  // font sizes
+  --tiny: 10pt;
+}
+
+
+img {
+  object-fit: cover;
+}
+
+.debug{
+  border: 1px solid red
+}
+
+.max-800{
+  width: 800px
+}
+
+.max-600{
+  width: 600px
+}
+
+table {
+  width: 100% !important;
+}
+
+table,
+th,
+td {
+  padding: 15px 2px !important;
+}
+
+thead {
+  color: black !important;
+}
+
+tbody {
+  color: var(--grey) !important;
+  font-size: 14px !important;
+
+  tr {
+    border-bottom: 1px solid var(--light-grey) !important;
+  }
+}

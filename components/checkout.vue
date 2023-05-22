@@ -42,7 +42,7 @@
 
       <section class="left relative p-8 md:p-14 text-sm">
         <div class="bg-gray-100 p-4 rounded">
-          Each ticket admits 2 Persons and is only valid for the Dates present in the ticket. Other terms and conditions may apply for seperate tickets
+          Each ticket admits 1 and is only valid for the Dates present in the ticket. Other terms and conditions may apply for seperate tickets
         </div>
 
         <!-- <div class="mt-8">

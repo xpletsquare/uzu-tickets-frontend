@@ -60,6 +60,7 @@ export default class InputField extends Vue {
 }
 
 input {
+  font-size: 16px;
   width: 100%;
   border: 1px solid var(--grey);
   min-height: 45px;
@@ -68,6 +69,7 @@ input {
 }
 
 input:focus {
+  font-size: 16px;
   outline: none;
   border: 2px solid var(--light-green);
 }

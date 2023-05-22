@@ -175,6 +175,7 @@ export default class Checkout extends Vue {
 
     @media screen and (min-width: 700px) {
       display: inline-grid;
+      /* display: inline-grid; */
       grid-template-columns: auto 400px;
       grid-template-rows: 100%;
       width: min(92vw, 1000px);

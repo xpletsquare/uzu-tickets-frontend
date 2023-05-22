@@ -26,7 +26,7 @@
         <button class="filled">Events near you</button>
         <button>All events</button>
 
-<!-- 
+        <!-- 
           <h1>{{ person }}</h1>
           <ul>
           <li v-for="(event, index) in events" v-bind:key="index">
@@ -35,15 +35,16 @@
         </ul> -->
 
         <div class="events">
-
           <event-card
             v-for="(event, index) in events"
             :key="index"
-            :imageUrl="require('~/assets/images/cottonbro.png')"
+            :image-url="event.image.landscape"
             event.
-            :eventTitle="event.title"
-            :startDate="event.startDate.toString()"
-            :eventId="event.id"
+            :event-title="event.title"
+            :start-date="event.startDate.toString()"
+            :event-id="event.id"
+            :event-venue="event.venue"
+            :event-price="event.tickets[0].price"
           />
 
           <!-- <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
@@ -60,7 +61,6 @@
           <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
           <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
           <event-card :imageUrl="require('~/assets/images/women-seated.png')" /> -->
-
         </div>
       </section>
 
@@ -78,13 +78,10 @@ import { message } from 'ant-design-vue'
 import { EventsApi } from '~/common/api/events.api'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
-
 @Component({
   layout: 'public',
-  
 })
 export default class IndexPage extends Vue {
-
   events: EventDetailsFull[] = []
   async getEvents() {
     const { error, data } = await EventsApi.listEvents()
@@ -100,7 +97,6 @@ export default class IndexPage extends Vue {
   mounted() {
     this.getEvents()
   }
-
 }
 </script>
 

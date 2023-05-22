@@ -88,14 +88,11 @@ hero
       <section class="collapse-margin right flex-auto">
         <div class="title capitalize font-semibold text-2xl mt-20 mb-3 md:mt-3">{{ singleEvent.title }}</div>
 
-
         <div class="description mt-10">
           <div class="font-semibold capitalize mb-2">Description</div>
 
           <div class="text-gray-400 text-sm leading-6">
-
             {{ singleEvent.description }}
-
           </div>
 
           <div class="social-share flex gap-5 mt-8">
@@ -117,7 +114,6 @@ hero
           <div class="mt-8">
             <div class="font-semibold capitalize mb-2">Ticket Categories</div>
             <div class="mb-10">
-
               <ticket-selection
                 v-if="singleEvent"
                 :ticket-count="ticketCounts"
@@ -126,11 +122,9 @@ hero
                 @decrease-ticket-count="decreaseTicketCount"
               >
               </ticket-selection>
-
             </div>
             <primary-button
-              buttonClass="w-full md:w-2/5"
-              :disabled="disableButton"
+              button-class="w-full md:w-2/5"
               label="proceed to payment"
               @click="toggleCheckout"
             ></primary-button>
@@ -148,13 +142,11 @@ hero
 </template>
 
 <script lang="ts">
-
 import { Component, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
 import { EventDetailsFull } from '~/common/models/interfaces'
 import { EventsApi } from '~/common/api/events.api'
 import { formatTimestamp } from '~/common/utilities'
-import { objectExpression } from '@babel/types'
 
 @Component({
   layout: 'public',
@@ -194,17 +186,16 @@ export default class EventDetailPage extends Vue {
     status: 'DRAFT',
   } // Initialize singleEvent with default values
 
-
   get formattedStartDate() {
     return formatTimestamp(+this.singleEvent.startDate) // Call the formatDate function with startDate
   }
 
-  get disableButton() {
-    if (this.purchases.length > 0) {
-      return false
-    }
-    return true
-  }
+  // get disableButton() {
+  //   if (this.purchases.length > 0) {
+  //     return false
+  //   }
+  //   return true
+  // }
 
   async getEvents(eventid: string) {
     const { error, data } = await EventsApi.getEventDetails(eventid)
@@ -213,7 +204,6 @@ export default class EventDetailPage extends Vue {
       message.error(error as string)
     } else {
       this.singleEvent = data?.data
-
     }
     this.loading = false
   }
@@ -223,11 +213,12 @@ export default class EventDetailPage extends Vue {
     this.getEvents(this.id)
   }
 
-
   toggleCheckout() {
+    if (this.purchases.length <= 0) {
+      return message.error('number of tickets cannot be 0')
+    }
     this.showCheckout = !this.showCheckout
   }
-
 
   handleCheckoutClosed() {
     this.toggleCheckout()

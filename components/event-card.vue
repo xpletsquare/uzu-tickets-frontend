@@ -1,24 +1,21 @@
 <template>
-
   <div class="event cursor-pointer" @click="openEventPage">
     <div class="event-image">
       <img :src="imageUrl" alt="event" />
 
       <div class="event-pricing">
         <div class="pricing">
-          <span class="icon">
+          <!-- <span class="icon">
             <fa icon="money-bill-wave" />
-          </span>
-          <p >Pricing</p> 
+          </span> -->
+          <p>Price</p>
         </div>
-        <p class="amount">N10,000 - N30,000</p>
+        <p class="amount">{{ Number(eventPrice) > 0 ? formatCurrency(String(eventPrice)) : 'FREE' }}</p>
       </div>
     </div>
 
     <div class="event-details">
-
       <h4 class="name">{{ eventTitle }}</h4>
-
 
       <div class="date">
         <span class="icon">
@@ -26,25 +23,21 @@
         </span>
 
         <p>{{ formattedStartDate }}</p>
-
       </div>
 
       <div class="location">
         <span class="icon">
           <fa icon="map-marker-alt" />
         </span>
-        <p>
-          Victoria Island, Lagos.
-        </p>
+        <p>{{ eventVenue }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { formatTimestamp } from '~/common/utilities'
+import { formatTimestamp, formatCurrency } from '~/common/utilities'
 
 @Component
 export default class FeaturedEvent extends Vue {
@@ -53,6 +46,9 @@ export default class FeaturedEvent extends Vue {
   @Prop({ type: String, required: true }) readonly eventTitle!: string
   @Prop({ type: String, required: true }) readonly startDate!: string
   @Prop({ type: String, required: true }) readonly eventId!: string
+  @Prop({ type: String, required: true }) readonly eventVenue!: string
+  @Prop({ type: [String, Number], required: true }) readonly eventPrice!: string | number
+  formatCurrency = formatCurrency
 
   get formattedStartDate() {
     return formatTimestamp(+this.startDate) // Call the formatDate function with startDate
@@ -60,19 +56,16 @@ export default class FeaturedEvent extends Vue {
 
   openEventPage() {
     this.$router.push(`/events/${this.eventId}`)
-
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
- .event:hover{
-    transform : translateY(-8px);
-  }
+.event:hover {
+  transform: translateY(-8px);
+}
 .event {
   background-color: #fcfcfc;
- 
 
   .event-image {
     width: 100%;
@@ -85,8 +78,6 @@ export default class FeaturedEvent extends Vue {
       height: 100%;
       object-fit: cover;
     }
-
-   
   }
 
   .event-pricing {
@@ -171,10 +162,7 @@ export default class FeaturedEvent extends Vue {
         width: 10px;
         height: 14px;
       }
-
     }
   }
-
-   
 }
 </style>

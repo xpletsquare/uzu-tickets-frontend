@@ -26,24 +26,31 @@ hero
           </div>
         </div>
       </div> -->
+      <div class="green-box"></div>
       <div class="venue-container">
         <div class="venue-container__item-container">
-          <div class="venue-container__align"><i class="fas fa-calendar"></i></div>
-          <div class="venue-container__align--right">{{ formattedStartDate }}</div>
+          <div class="venue-container__align"><i class="fas fa-calendar venue-container__icon"></i></div>
+          <div class="venue-container__align--right">
+            <span>date</span> <span>{{ formattedStartDate }}</span>
+          </div>
         </div>
         <div class="venue-container__item-container">
-          <div class="venue-container__align"><i class="fas fa-clock"></i></div>
-          <div class="venue-container__align--right">{{ singleEvent.schedules[0].start }}</div>
+          <div class="venue-container__align"><i class="fas fa-clock venue-container__icon"></i></div>
+          <div class="venue-container__align--right">
+            <span>time</span> <span>{{ singleEvent.schedules[0].start }}</span>
+          </div>
         </div>
         <div class="venue-container__item-container">
-          <div class="venue-container__align"><i class="fas fa-map-marker"></i></div>
-          <div class="venue-container__align--right">{{ singleEvent.venue }}</div>
+          <div class="venue-container__align"><i class="fas fa-map-marker venue-container__icon"></i></div>
+          <div class="venue-container__align--right">
+            <span>venue</span> <span>{{ singleEvent.venue }}</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="lg:w-3/4 mt-8 my-8 mx-auto hidden md:block">
-      <button @click="goBack">
+      <button @click="goBack" class="show-button">
         <span><i class="fas fa-angle-left"></i></span> Back
       </button>
     </section>
@@ -114,6 +121,7 @@ hero
             </div>
             <primary-button
               buttonClass="w-full md:w-2/5"
+              :disabled="disableButton"
               label="proceed to payment"
               @click="toggleCheckout"
             ></primary-button>
@@ -136,6 +144,7 @@ import { message } from 'ant-design-vue'
 import { EventDetailsFull } from '~/common/models/interfaces'
 import { EventsApi } from '~/common/api/events.api'
 import { formatTimestamp } from '~/common/utilities'
+import { objectExpression } from '@babel/types'
 
 @Component({
   layout: 'public',
@@ -177,6 +186,13 @@ export default class EventDetailPage extends Vue {
 
   get formattedStartDate() {
     return formatTimestamp(+this.singleEvent.startDate) // Call the formatDate function with startDate
+  }
+
+  get disableButton() {
+    if (this.purchases.length > 0) {
+      return false
+    }
+    return true
   }
 
   async getEvents(eventid: string) {
@@ -256,12 +272,17 @@ main {
 }
 
 .hero {
-  height: 80vh;
+  height: 50vh;
 
   @media screen and (max-width: 700px) {
     height: 25vh;
     border-radius: 30px;
-    margin-bottom: 10em;
+    margin-bottom: 16em;
+  }
+  @media screen and (min-width: 701px) {
+    margin-top: 4em;
+    width: 78%;
+    margin-inline: auto;
   }
   img.hero-image {
     display: block;
@@ -297,7 +318,7 @@ main {
   }
 
   .tags span {
-    border-radius: 20px;
+    border-radius: 40px;
   }
 
   @media screen and (max-width: 700px) {
@@ -310,21 +331,78 @@ main {
 }
 
 .venue-container {
-  width: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 115%;
   left: 0;
+  @media screen and (min-width: 701px) {
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+    top: 108%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   &__item-container {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1em;
+    @media screen and (min-width: 701px) {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__icon {
+    color: #3fd246;
+    font-size: 1.2rem;
+    @media screen and (min-width: 701px) {
+      font-size: 2rem;
+    }
   }
 
   &__align {
     display: inline-block;
     margin-block: 0.2em;
+
     &--right {
-      margin-left: 0.6em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: 1.3em;
       color: rgba(156, 163, 175);
+      @media screen and (min-width: 701px) {
+        color: white;
+      }
+      span {
+        text-transform: capitalize;
+        &:first-child {
+          font-weight: bold;
+        }
+      }
     }
+  }
+}
+
+.green-box {
+  @media screen and (min-width: 701px) {
+    width: 100%;
+    height: 40vh;
+    background-color: #002e02;
+    border-radius: 30px;
+    position: absolute;
+    left: 0;
+    bottom: -8rem;
+    z-index: -1;
+  }
+}
+.show-button {
+  @media screen and (min-width: 701px) {
+    visibility: hidden;
   }
 }
 </style>

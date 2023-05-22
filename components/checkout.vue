@@ -8,7 +8,12 @@
         <div class="p-8">
           <div class="font-medium mb-8">Order Summary</div>
 
-          <div class="flex justify-between gap-12 mb-3">
+          <div v-for="item in ticketCartArray.ticketCart" :key="item.ticketId" class="flex justify-between gap-12 mb-3">
+            <div class="w-3/5">{{ item.count }} x {{ item.title }}</div>
+            <div class="font-semibold w-16 text-right">{{ formatCurrency(String(item.totalPrice)) }}</div>
+          </div>
+
+          <!-- <div class="flex justify-between gap-12 mb-3">
             <div class="w-3/5">1 x VIP Early bird entry tickets</div>
             <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
           </div>
@@ -26,6 +31,11 @@
           <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
             <div class="font-bold text-xl">Total</div>
             <div class="font-bold w-auto text-right text-xl">{{ formatCurrency(4000) }}</div>
+          </div> -->
+
+          <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
+            <div class="font-bold text-xl">Total</div>
+            <div class="font-bold w-auto text-right text-xl">{{ formatCurrency(String(ticketCartArray.total)) }}</div>
           </div>
         </div>
       </section>
@@ -37,19 +47,19 @@
           voluptate.
         </div>
 
-        <div class="mt-8">
+        <!-- <div class="mt-8">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique ad incidunt consectetur iure in hic magni
           fugit sit quos explicabo laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione
           voluptate.
-        </div>
+        </div> -->
 
         <div class="mt-8">
           <primary-button label="Send to Single Email"></primary-button>
-          <button class="border p-4">Send to multiple emails</button>
+          <!-- <button class="border p-4">Send to multiple emails</button> -->
         </div>
 
         <div class="mt-8">
-          <div class="font-semibold mb-4">Contact Information</div>
+          <div class="font-semibold mb-4">Complete Order</div>
           <div class="font-medium my-2">Ticket 1: {{ singleEvent.schedules[0].name }}</div>
           <div class="contact-form">
             <input v-model="userFirstName" placeholder="First Name" type="text" />
@@ -69,28 +79,47 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
-import { payNow } from '~/common/api/payment.api'
-// import { payApi, payNow } from '~/common/api/payment.api'
+import { payApi } from '~/common/api/payment.api'
 import { formatCurrency } from '~/common/utilities'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
 export default class Checkout extends Vue {
   @Prop({ type: Object, required: true }) singleEvent!: EventDetailsFull
-  @Prop({ type: Array, required: true }) purchases!: [{}]
+  @Prop({ type: Array, required: true }) purchases!: [{ ticketId: string; count: number }]
 
   formatCurrency = formatCurrency
   userFirstName: string = ''
   userLastName: string = ''
   userEmail: string = ''
 
+  get ticketCartArray() {
+    let total = 0
+
+    const ticketCart = this.purchases.map((item) => {
+      const ticket = this.singleEvent.tickets.find((t) => t.id === item.ticketId)
+      const ticketName = ticket?.title
+      const totalPrice = ticket ? Number(ticket.price) * Number(item.count) : 0
+      total += totalPrice
+
+      return {
+        ticketId: item.ticketId,
+        title: ticketName,
+        count: item.count,
+        price: ticket ? ticket.price : 0,
+        totalPrice,
+      }
+    })
+
+    return { ticketCart, total }
+  }
+
   async pay() {
     // validate input
     // show loading spinner
     // make api call
     // show success message
-    // onSuccess => save token to localstorage
-    // redirect to dashboard
+    // redirect to homepage
 
     const payload = {
       eventId: this.singleEvent.id,
@@ -101,41 +130,23 @@ export default class Checkout extends Vue {
     }
 
     if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
-      // console.log(payload.purchases[0].count)
       return message.warning('Please enter a valid first-name, last-name and email')
     }
 
-    try {
-      const data = await payNow()
-      console.log(data)
-    } catch (err) {
-      console.log(err)
-    }
-
     // this.loading = true
-    // const { error, data } = await payApi.pay({
-    //   eventId: 'aaa807e6-8001-467b-83a9-1ce7704917da',
-    //   userEmail: 'jonesbgabriel@gmail.com',
-    //   userFirstName: 'ken',
-    //   userLastName: 'test',
-    //   purchases: [
-    //     {
-    //       ticketId: '14ec431d-023b-46b6-b1be-83cbd6f1b721',
-    //       count: 2,
-    //       labels: ['ken'],
-    //     },
-    //   ],
-    // })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { error, data } = await payApi.pay(payload)
     // this.loading = false
 
-    // if (error) {
-    //   return message.error(error as string)
-    // }
-
-    // console.log(data.data)
+    if (error) {
+      return message.error(error as string)
+    }
 
     message.success('payment successful')
-    // this.$router.push('/dashboard')
+    this.userFirstName = ''
+    this.userLastName = ''
+    this.userEmail = ''
+    this.$router.push('/')
   }
 
   close() {

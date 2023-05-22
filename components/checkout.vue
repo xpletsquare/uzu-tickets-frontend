@@ -1,5 +1,5 @@
 <template>
-  <section class="wrapper md:flex justify-center items-center blur-md faint">
+  <section class="wrapper md:flex justify-center items-center">
     <div class="checkout-card rounded bg-white ">
       <button class="close-btn shadow-lg" @click="close">&times;</button>
 
@@ -162,7 +162,7 @@ export default class Checkout extends Vue {
   width: 100%;
   height: 100vh;
   z-index: 50;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   overflow-y: scroll;
   background-color: rgba(0,0,0,0.4);
 
@@ -175,6 +175,7 @@ export default class Checkout extends Vue {
 
     @media screen and (min-width: 700px) {
       display: inline-grid;
+      /* display: inline-grid; */
       grid-template-columns: auto 400px;
       grid-template-rows: 100%;
       width: min(92vw, 1000px);

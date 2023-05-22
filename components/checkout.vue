@@ -1,6 +1,6 @@
 <template>
-  <section class="wrapper md:flex justify-center items-center blur-md">
-    <div class="checkout-card rounded bg-white">
+  <section class="wrapper md:flex justify-center items-center blur-md faint">
+    <div class="checkout-card rounded bg-white ">
       <button class="close-btn shadow-lg" @click="close">&times;</button>
 
       <section class="right relative bg-gray-50">
@@ -35,16 +35,14 @@
 
           <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
             <div class="font-bold text-xl">Total</div>
-            <div class="font-bold w-auto text-right text-xl">{{ formatCurrency(String(ticketCartArray.total)) }}</div>
+            <div class="font-bold w-auto text-right text-xl">{{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : "FREE" }}</div>
           </div>
         </div>
       </section>
 
       <section class="left relative p-8 md:p-14 text-sm">
         <div class="bg-gray-100 p-4 rounded">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique ad incidunt consectetur iure in hic magni
-          fugit sit quos explicabo laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione
-          voluptate.
+          Each ticket admits 2 Persons and is only valid for the Dates present in the ticket. Other terms and conditions may apply for seperate tickets
         </div>
 
         <!-- <div class="mt-8">
@@ -58,7 +56,7 @@
           <!-- <button class="border p-4">Send to multiple emails</button> -->
         </div>
 
-        <div class="mt-8">
+        <div class="mt-8 mb-28 md:mb-8">
           <div class="font-semibold mb-4">Complete Order</div>
           <div class="font-medium my-2">Ticket 1: {{ singleEvent.schedules[0].name }}</div>
           <div class="contact-form">
@@ -68,8 +66,9 @@
           </div>
         </div>
 
-        <div class="text-right mt-10 pay-button-wrapper">
-          <primary-button @click="pay" buttonClass="w-full md:w-1/3" label="Pay now"></primary-button>
+        <div class="text-right mt-10 pay-button-wrapper bg-white">
+          <p class="text-center font-bold block md:hidden">{{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : "FREE" }}</p>
+          <primary-button @click="pay" buttonClass="w-full md:w-full" label="Get Ticket"></primary-button>
         </div>
       </section>
     </div>
@@ -165,6 +164,7 @@ export default class Checkout extends Vue {
   z-index: 50;
   backdrop-filter: blur(10px);
   overflow-y: scroll;
+  background-color: rgba(0,0,0,0.4);
 
   .checkout-card {
     position: relative;

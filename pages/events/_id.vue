@@ -1,9 +1,9 @@
 hero
 <template>
   <main v-if="loading"><h1>loading....</h1></main>
-  <main v-else-if="singleEvent" class="p-4 md:p-0">
+  <main v-else-if="singleEvent" class="p-4 md:p-0"  >
     <section class="hero relative">
-      <img :src="singleEvent.image.landscape" alt="" class="hero-image" />
+      <img :src="singleEvent.image.landscape" alt="event barner" class="hero-image" />
 
       <!-- <div class="overlay flex items-end pb-20">
         <div class="inline-flex lg:w-3/4 mx-auto justify-between items-start">
@@ -106,11 +106,11 @@ hero
             <button><i class="fas fa-envelope"></i></button>
           </div>
           <div class="uppercase text-sm mt-8">Tags</div>
-          <div class="tags flex gap-2 my-2 b-radius">
+          <div class="tags flex flex-wrap gap-2 my-2 b-radius">
             <span
               v-for="(tag, index) in singleEvent.tags"
               :key="index"
-              class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400"
+              class="bg-green-400 bg-opacity-20 rounded-full uppercase py-2 px-4 text-xs text-green-500 border border-green-400"
               >{{ tag }}</span
             >
           </div>
@@ -281,7 +281,7 @@ export default class EventDetailPage extends Vue {
 
 <style lang="scss" scoped>
 main {
-  min-height: 200vh;
+  min-height: max-content;
   margin-bottom: 100px;
 }
 

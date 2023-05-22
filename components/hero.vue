@@ -2,20 +2,20 @@
   <div class="hero">
     <div class="wrapper">
       <div class="main-contents">
-        <search placeholder="Search events" />
+        <!-- <search placeholder="Search events" /> -->
 
-        <p>Conventory event date at Lagos</p>
-        <h2 class="bold-text">
-          Conventory event <br />
-          date at <span class="alt-text">Lagos</span>
+        <!-- <p>Conventory event date at Lagos</p> -->
+        <h2 class="bold-text leading-loose">
+          Check out Jake Doe's <br />
+          Your's Unfaitlfully <span class="alt-text">This weekend</span>
         </h2>
       </div>
-      <div class="inverted-text">
+      <!-- <div class="inverted-text">
         <p>
           Conventory event <br />
           date at Lagos
         </p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -50,7 +50,7 @@ export default class Hero extends Vue {}
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/photoa.jpg') no-repeat center center/cover;
+    background: url('https://res.cloudinary.com/drof5sggk/image/upload/v1684706594/event%20banners/yours_unfaithfully_tvuvak.jpg') no-repeat center center/cover;
     opacity: 0.7;
     z-index: -1;
   }

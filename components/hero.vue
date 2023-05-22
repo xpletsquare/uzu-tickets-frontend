@@ -7,7 +7,7 @@
         <!-- <p>Conventory event date at Lagos</p> -->
         <h2 class="bold-text leading-loose">
           Check out Jake Doe's <br />
-          Your's Unfaitlfully <span class="alt-text">This weekend</span>
+          Yours Unfaithfully <span class="alt-text">This weekend</span>
         </h2>
       </div>
       <!-- <div class="inverted-text">

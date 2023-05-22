@@ -31,7 +31,7 @@ export interface ISchedule {
 export interface ITicket {
   id?: string
   title: string
-  price: string
+  price: string 
   schedule: ISchedule
   nLimit: number
 }

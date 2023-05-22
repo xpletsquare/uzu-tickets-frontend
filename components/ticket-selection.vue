@@ -8,7 +8,7 @@
       <div class="border rounded-md border-green-400 bg-green-500 text-green-600 bg-opacity-20 p-3">
 
         <div class="uppercase text-sm">{{ ticket.title }}</div>
-        <div class="font-semibold">{{ `N${ticket.price}.00` }}</div>
+        <div class="font-semibold">{{ Number(ticket.price) > 0 ? `N${ticket.price}.00` : "FREE" }}</div>
       </div>
 
       <div class="flex-auto text-sm">

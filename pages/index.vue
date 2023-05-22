@@ -14,19 +14,28 @@
       </section>
 
       <!--  disclaimer -->
-      <section class="disclaimer">
+      <!-- <section class="disclaimer">
         <disclaimer />
         <div class="icon">
           <fa icon="exclamation" />
         </div>
-      </section>
+      </section> -->
 
       <!-- events -->
       <section class="events-container">
         <button class="filled">Events near you</button>
         <button>All events</button>
 
+<!-- 
+          <h1>{{ person }}</h1>
+          <ul>
+          <li v-for="(event, index) in events" v-bind:key="index">
+            {{ event }}
+          </li>
+        </ul> -->
+
         <div class="events">
+
           <event-card
             v-for="(event, index) in events"
             :key="index"
@@ -51,6 +60,7 @@
           <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
           <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
           <event-card :imageUrl="require('~/assets/images/women-seated.png')" /> -->
+
         </div>
       </section>
 
@@ -63,14 +73,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+
 import { message } from 'ant-design-vue'
 import { EventsApi } from '~/common/api/events.api'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
+
 @Component({
   layout: 'public',
+  
 })
 export default class IndexPage extends Vue {
+
   events: EventDetailsFull[] = []
   async getEvents() {
     const { error, data } = await EventsApi.listEvents()
@@ -86,6 +100,7 @@ export default class IndexPage extends Vue {
   mounted() {
     this.getEvents()
   }
+
 }
 </script>
 
@@ -100,7 +115,7 @@ main {
   }
 
   .container {
-    width: 70%;
+    width: 80%;
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -172,6 +187,7 @@ main {
 
   .events-container {
     margin-bottom: 50px;
+    margin-top: 50px;
 
     @media (max-width: 568px) {
       margin-bottom: 30px;
@@ -197,7 +213,7 @@ main {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       column-gap: 20px;
-      row-gap: 42px;
+      row-gap: 25px;
 
       @media (max-width: 1024px) {
         grid-template-columns: repeat(3, 1fr);

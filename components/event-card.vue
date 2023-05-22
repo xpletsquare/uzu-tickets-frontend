@@ -1,4 +1,5 @@
 <template>
+
   <div class="event cursor-pointer" @click="openEventPage">
     <div class="event-image">
       <img :src="imageUrl" alt="event" />
@@ -8,21 +9,24 @@
           <span class="icon">
             <fa icon="money-bill-wave" />
           </span>
-          <p>Pricing</p>
+          <p >Pricing</p> 
         </div>
-
         <p class="amount">N10,000 - N30,000</p>
       </div>
     </div>
 
     <div class="event-details">
+
       <h4 class="name">{{ eventTitle }}</h4>
+
 
       <div class="date">
         <span class="icon">
           <fa icon="calendar-check" />
         </span>
+
         <p>{{ formattedStartDate }}</p>
+
       </div>
 
       <div class="location">
@@ -30,8 +34,7 @@
           <fa icon="map-marker-alt" />
         </span>
         <p>
-          Ada the country ejdbhbg open fhbgh bfgh Ada the country ejdbhbg open fhbgh bfgh Ada ejdbhbg open fhbgh bfgh
-          Ada
+          Victoria Island, Lagos.
         </p>
       </div>
     </div>
@@ -39,6 +42,7 @@
 </template>
 
 <script lang="ts">
+
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { formatTimestamp } from '~/common/utilities'
 
@@ -56,13 +60,19 @@ export default class FeaturedEvent extends Vue {
 
   openEventPage() {
     this.$router.push(`/events/${this.eventId}`)
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+ .event:hover{
+    transform : translateY(-8px);
+  }
 .event {
   background-color: #fcfcfc;
+ 
 
   .event-image {
     width: 100%;
@@ -75,6 +85,8 @@ export default class FeaturedEvent extends Vue {
       height: 100%;
       object-fit: cover;
     }
+
+   
   }
 
   .event-pricing {
@@ -82,7 +94,7 @@ export default class FeaturedEvent extends Vue {
     align-items: center;
     justify-content: space-between;
     position: absolute;
-    bottom: -10%;
+    bottom: 5%;
     left: 8%;
     padding: 6px 10px;
     background-color: #ffffff;
@@ -121,16 +133,16 @@ export default class FeaturedEvent extends Vue {
   }
 
   .event-details {
-    padding: 30px 18px;
-    border: 0.5px solid lightgray;
-    border-radius: 2px;
+    padding: 0px 18px;
+    border: 0.5px solid rgb(230, 230, 230);
+    border-radius: 0px;
     overflow: hidden;
 
     .name {
       font-weight: bold;
       font-size: 18px;
       color: #0a0a0a;
-      margin: 14px 0;
+      margin: 5px 0;
     }
 
     .icon {
@@ -142,7 +154,7 @@ export default class FeaturedEvent extends Vue {
       font-weight: 600;
       font-size: 14px;
       color: #15b743;
-      margin: 14px 0;
+      margin: 0px 0;
 
       .icon {
         color: #979797;
@@ -159,7 +171,10 @@ export default class FeaturedEvent extends Vue {
         width: 10px;
         height: 14px;
       }
+
     }
   }
+
+   
 }
 </style>

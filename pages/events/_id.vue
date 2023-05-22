@@ -9,8 +9,10 @@ hero
         <div class="inline-flex lg:w-3/4 mx-auto justify-between items-start">
           <div class="text-white w-1/5">
             <div class="text-4xl mb-2"><i class="fas fa-map-marker"></i></div>
+
             <div class="font-semibold text-lg">{{ singleEvent.venue }}</div>
             <div>{{ formattedStartDate }}</div>
+
           </div>
 
            <div class="w-1/3 text-center pt-8">
@@ -20,9 +22,9 @@ hero
 
           <div class="text-white w-1/5 pl-20">
             <div class="text-4xl mb-2"><i class="far fa-calendar"></i></div>
-            <div class="font-semibold text-base">January</div>
-            <div class="font-semibold text-2xl">2 - 5</div>
-            <div class="font-semibold text-lg">2022</div>
+            <div class="font-semibold text-base">{{month}}</div>
+            <div class="font-semibold text-2xl">{{start}} - {{end}}</div>
+            <div class="font-semibold text-lg">{{year}}</div>
           </div>
         </div>
       </div> -->
@@ -62,12 +64,14 @@ hero
 
         <div class="uppercase text-sm mt-8">Tags</div>
         <div class="tags flex gap-2 my-2">
+
           <span
             v-for="(tag, index) in singleEvent.tags"
             :key="index"
             class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400"
             >{{ tag }}</span
           >
+
         </div>
 
         <div class="text-sm text-gray-400 my-8">
@@ -84,11 +88,14 @@ hero
       <section class="collapse-margin right flex-auto">
         <div class="title capitalize font-semibold text-2xl mt-20 mb-3 md:mt-3">{{ singleEvent.title }}</div>
 
+
         <div class="description mt-10">
           <div class="font-semibold capitalize mb-2">Description</div>
 
           <div class="text-gray-400 text-sm leading-6">
+
             {{ singleEvent.description }}
+
           </div>
 
           <div class="social-share flex gap-5 mt-8">
@@ -110,6 +117,7 @@ hero
           <div class="mt-8">
             <div class="font-semibold capitalize mb-2">Ticket Categories</div>
             <div class="mb-10">
+
               <ticket-selection
                 v-if="singleEvent"
                 :ticket-count="ticketCounts"
@@ -118,6 +126,7 @@ hero
                 @decrease-ticket-count="decreaseTicketCount"
               >
               </ticket-selection>
+
             </div>
             <primary-button
               buttonClass="w-full md:w-2/5"
@@ -139,6 +148,7 @@ hero
 </template>
 
 <script lang="ts">
+
 import { Component, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
 import { EventDetailsFull } from '~/common/models/interfaces'
@@ -184,6 +194,7 @@ export default class EventDetailPage extends Vue {
     status: 'DRAFT',
   } // Initialize singleEvent with default values
 
+
   get formattedStartDate() {
     return formatTimestamp(+this.singleEvent.startDate) // Call the formatDate function with startDate
   }
@@ -202,6 +213,7 @@ export default class EventDetailPage extends Vue {
       message.error(error as string)
     } else {
       this.singleEvent = data?.data
+
     }
     this.loading = false
   }
@@ -211,9 +223,11 @@ export default class EventDetailPage extends Vue {
     this.getEvents(this.id)
   }
 
+
   toggleCheckout() {
     this.showCheckout = !this.showCheckout
   }
+
 
   handleCheckoutClosed() {
     this.toggleCheckout()

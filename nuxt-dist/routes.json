@@ -1,0 +1,116 @@
+[
+  {
+    "name": "about",
+    "path": "/about",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/about.vue",
+    "chunkName": "pages/about"
+  },
+  {
+    "name": "activate-account",
+    "path": "/activate-account",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/activate-account.vue",
+    "chunkName": "pages/activate-account"
+  },
+  {
+    "name": "dashboard",
+    "path": "/dashboard",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/index.vue",
+    "chunkName": "pages/dashboard/index"
+  },
+  {
+    "name": "events",
+    "path": "/events",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/events/index.vue",
+    "chunkName": "pages/events/index"
+  },
+  {
+    "name": "forgot-password",
+    "path": "/forgot-password",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/forgot-password.vue",
+    "chunkName": "pages/forgot-password"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/login.vue",
+    "chunkName": "pages/login"
+  },
+  {
+    "name": "register",
+    "path": "/register",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/register.vue",
+    "chunkName": "pages/register"
+  },
+  {
+    "name": "terms-and-conditions",
+    "path": "/terms-and-conditions",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/terms-and-conditions.vue",
+    "chunkName": "pages/terms-and-conditions"
+  },
+  {
+    "name": "verify-account",
+    "path": "/verify-account",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/verify-account.vue",
+    "chunkName": "pages/verify-account"
+  },
+  {
+    "name": "dashboard-developer",
+    "path": "/dashboard/developer",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/developer.vue",
+    "chunkName": "pages/dashboard/developer"
+  },
+  {
+    "name": "dashboard-events",
+    "path": "/dashboard/events",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/events/index.vue",
+    "chunkName": "pages/dashboard/events/index"
+  },
+  {
+    "name": "dashboard-profile",
+    "path": "/dashboard/profile",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/profile.vue",
+    "chunkName": "pages/dashboard/profile"
+  },
+  {
+    "name": "dashboard-promoter",
+    "path": "/dashboard/promoter",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/promoter.vue",
+    "chunkName": "pages/dashboard/promoter"
+  },
+  {
+    "name": "dashboard-transactions",
+    "path": "/dashboard/transactions",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/transactions.vue",
+    "chunkName": "pages/dashboard/transactions"
+  },
+  {
+    "name": "dashboard-wallet",
+    "path": "/dashboard/wallet",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/wallet.vue",
+    "chunkName": "pages/dashboard/wallet"
+  },
+  {
+    "name": "dashboard-events-create",
+    "path": "/dashboard/events/create",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/events/create.vue",
+    "chunkName": "pages/dashboard/events/create"
+  },
+  {
+    "name": "dashboard-events-details-id",
+    "path": "/dashboard/events/details/:id?",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/dashboard/events/details/_id.vue",
+    "chunkName": "pages/dashboard/events/details/_id"
+  },
+  {
+    "name": "events-id",
+    "path": "/events/:id",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/events/_id.vue",
+    "chunkName": "pages/events/_id"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/mac/Documents/uzutickets/uzu-tickets-frontend/pages/index.vue",
+    "chunkName": "pages/index"
+  }
+]

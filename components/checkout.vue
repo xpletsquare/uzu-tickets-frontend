@@ -56,7 +56,7 @@
           <!-- <button class="border p-4">Send to multiple emails</button> -->
         </div>
 
-        <div class="mt-8 mb-28 md:mb-8">
+        <div class="mt-8 mb-40 md:mb-8">
           <div class="font-semibold mb-4">Complete Order</div>
           <div class="font-medium my-2">Ticket 1: {{ singleEvent.schedules[0].name }}</div>
           <div class="contact-form">

@@ -4,14 +4,14 @@
 
     <div class="container">
       <!-- featured events -->
-      <section class="featured-events">
+      <!-- <section class="featured-events">
         <featured-event :imageUrl="require('~/assets/images/anete-lusina.png')" />
         <featured-event :imageUrl="require('~/assets/images/davido.png')" />
         <featured-event :imageUrl="require('~/assets/images/Tems.png')" />
         <div class="arrow">
           <fa icon="chevron-right" />
         </div>
-      </section>
+      </section> -->
 
       <!--  disclaimer -->
       <!-- <section class="disclaimer">
@@ -23,8 +23,8 @@
 
       <!-- events -->
       <section class="events-container">
-        <button class="filled">Events near you</button>
-        <button>All events</button>
+        <button class="filled">All events</button>
+        <button class="">Events near you</button>
 
         <!-- 
           <h1>{{ person }}</h1>
@@ -64,9 +64,9 @@
         </div>
       </section>
 
-      <div class="view-all">
+      <!-- <div class="view-all">
         <primary-button :disabled="true" label="VIEW ALL" link_to="/events"></primary-button>
-      </div>
+      </div> -->
     </div>
   </main>
 </template>

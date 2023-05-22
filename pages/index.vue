@@ -65,7 +65,7 @@
       </section>
 
       <div class="view-all">
-        <primary-button label="VIEW ALL" link_to="/events"></primary-button>
+        <primary-button :disabled="true" label="VIEW ALL" link_to="/events"></primary-button>
       </div>
     </div>
   </main>

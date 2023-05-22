@@ -21,6 +21,13 @@ export interface User {
 
 export type RegisterUserPayload = Partial<User> & { password: string }
 
+export interface ISchedule {
+  name: string
+  date: string
+  start: string
+  end: string
+}
+
 export interface ITicket {
   id?: string
   title: string
@@ -63,13 +70,6 @@ export interface Wallet {
   ledger_balance: number | string
   main_balance: number | string
   transactions: Transaction[]
-}
-
-export interface ISchedule {
-  name: string
-  date: string
-  start: string
-  end: string
 }
 
 export interface EventDetailsFull {

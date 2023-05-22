@@ -1,7 +1,9 @@
 hero
 <template>
-  <main v-if="loading"><h1>loading....</h1></main>
-  <main v-else-if="singleEvent" class="p-4 md:p-0"  >
+  <main v-if="loading">
+    <div class="loader-container"><loader /></div>
+  </main>
+  <main v-else-if="singleEvent" class="p-4 md:p-0">
     <section class="hero relative">
       <img :src="singleEvent.image.landscape" alt="event barner" class="hero-image" />
 
@@ -409,5 +411,12 @@ main {
   @media screen and (min-width: 701px) {
     visibility: hidden;
   }
+}
+.loader-container {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

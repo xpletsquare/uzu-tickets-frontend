@@ -4,14 +4,14 @@
 
     <div class="container">
       <!-- featured events -->
-      <section class="featured-events">
+      <!-- <section class="featured-events">
         <featured-event :imageUrl="require('~/assets/images/anete-lusina.png')" />
         <featured-event :imageUrl="require('~/assets/images/davido.png')" />
         <featured-event :imageUrl="require('~/assets/images/Tems.png')" />
         <div class="arrow">
           <fa icon="chevron-right" />
         </div>
-      </section>
+      </section> -->
 
       <!--  disclaimer -->
       <!-- <section class="disclaimer">
@@ -23,10 +23,10 @@
 
       <!-- events -->
       <section class="events-container">
-        <button class="filled">Events near you</button>
-        <button>All events</button>
+        <button class="filled">All events</button>
+        <button class="">Events near you</button>
 
-<!-- 
+        <!-- 
           <h1>{{ person }}</h1>
           <ul>
           <li v-for="(event, index) in events" v-bind:key="index">
@@ -35,15 +35,16 @@
         </ul> -->
 
         <div class="events">
-
           <event-card
             v-for="(event, index) in events"
             :key="index"
-            :imageUrl="require('~/assets/images/cottonbro.png')"
+            :image-url="event.image.landscape"
             event.
-            :eventTitle="event.title"
-            :startDate="event.startDate.toString()"
-            :eventId="event.id"
+            :event-title="event.title"
+            :start-date="event.startDate.toString()"
+            :event-id="event.id"
+            :event-venue="event.venue"
+            :event-price="event.tickets[0].price"
           />
 
           <!-- <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
@@ -60,13 +61,12 @@
           <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
           <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
           <event-card :imageUrl="require('~/assets/images/women-seated.png')" /> -->
-
         </div>
       </section>
 
-      <div class="view-all">
-        <primary-button label="VIEW ALL" link_to="/events"></primary-button>
-      </div>
+      <!-- <div class="view-all">
+        <primary-button :disabled="true" label="VIEW ALL" link_to="/events"></primary-button>
+      </div> -->
     </div>
   </main>
 </template>
@@ -78,13 +78,10 @@ import { message } from 'ant-design-vue'
 import { EventsApi } from '~/common/api/events.api'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
-
 @Component({
   layout: 'public',
-  
 })
 export default class IndexPage extends Vue {
-
   events: EventDetailsFull[] = []
   async getEvents() {
     const { error, data } = await EventsApi.listEvents()
@@ -100,7 +97,6 @@ export default class IndexPage extends Vue {
   mounted() {
     this.getEvents()
   }
-
 }
 </script>
 

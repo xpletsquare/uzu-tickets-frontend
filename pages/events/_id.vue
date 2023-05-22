@@ -1,9 +1,9 @@
 hero
 <template>
   <main v-if="loading"><h1>loading....</h1></main>
-  <main v-else-if="singleEvent" class="p-4 md:p-0">
+  <main v-else-if="singleEvent" class="p-4 md:p-0"  >
     <section class="hero relative">
-      <img :src="singleEvent.image.landscape" alt="" class="hero-image" />
+      <img :src="singleEvent.image.landscape" alt="event barner" class="hero-image" />
 
       <!-- <div class="overlay flex items-end pb-20">
         <div class="inline-flex lg:w-3/4 mx-auto justify-between items-start">
@@ -28,24 +28,31 @@ hero
           </div>
         </div>
       </div> -->
+      <div class="green-box"></div>
       <div class="venue-container">
         <div class="venue-container__item-container">
-          <div class="venue-container__align"><i class="fas fa-calendar"></i></div>
-          <div class="venue-container__align--right">{{ formattedStartDate }}</div>
+          <div class="venue-container__align"><i class="fas fa-calendar venue-container__icon"></i></div>
+          <div class="venue-container__align--right">
+            <span>date</span> <span>{{ formattedStartDate }}</span>
+          </div>
         </div>
         <div class="venue-container__item-container">
-          <div class="venue-container__align"><i class="fas fa-clock"></i></div>
-          <div class="venue-container__align--right">{{ singleEvent.schedules[0].start }}</div>
+          <div class="venue-container__align"><i class="fas fa-clock venue-container__icon"></i></div>
+          <div class="venue-container__align--right">
+            <span>time</span> <span>{{ singleEvent.schedules[0].start }}</span>
+          </div>
         </div>
         <div class="venue-container__item-container">
-          <div class="venue-container__align"><i class="fas fa-map-marker"></i></div>
-          <div class="venue-container__align--right">{{ singleEvent.venue }}</div>
+          <div class="venue-container__align"><i class="fas fa-map-marker venue-container__icon"></i></div>
+          <div class="venue-container__align--right">
+            <span>venue</span> <span>{{ singleEvent.venue }}</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="lg:w-3/4 mt-8 my-8 mx-auto hidden md:block">
-      <button @click="goBack">
+      <button @click="goBack" class="show-button">
         <span><i class="fas fa-angle-left"></i></span> Back
       </button>
     </section>
@@ -81,14 +88,11 @@ hero
       <section class="collapse-margin right flex-auto">
         <div class="title capitalize font-semibold text-2xl mt-20 mb-3 md:mt-3">{{ singleEvent.title }}</div>
 
-
         <div class="description mt-10">
           <div class="font-semibold capitalize mb-2">Description</div>
 
           <div class="text-gray-400 text-sm leading-6">
-
             {{ singleEvent.description }}
-
           </div>
 
           <div class="social-share flex gap-5 mt-8">
@@ -99,18 +103,17 @@ hero
             <button><i class="fas fa-envelope"></i></button>
           </div>
           <div class="uppercase text-sm mt-8">Tags</div>
-          <div class="tags flex gap-2 my-2 b-radius">
+          <div class="tags flex flex-wrap gap-2 my-2 b-radius">
             <span
               v-for="(tag, index) in singleEvent.tags"
               :key="index"
-              class="bg-green-400 bg-opacity-20 uppercase py-2 px-4 text-xs text-green-500 border border-green-400"
+              class="bg-green-400 bg-opacity-20 rounded-full uppercase py-2 px-4 text-xs text-green-500 border border-green-400"
               >{{ tag }}</span
             >
           </div>
           <div class="mt-8">
             <div class="font-semibold capitalize mb-2">Ticket Categories</div>
             <div class="mb-10">
-
               <ticket-selection
                 v-if="singleEvent"
                 :ticket-count="ticketCounts"
@@ -119,10 +122,9 @@ hero
                 @decrease-ticket-count="decreaseTicketCount"
               >
               </ticket-selection>
-
             </div>
             <primary-button
-              buttonClass="w-full md:w-2/5"
+              button-class="w-full md:w-2/5"
               label="proceed to payment"
               @click="toggleCheckout"
             ></primary-button>
@@ -140,7 +142,6 @@ hero
 </template>
 
 <script lang="ts">
-
 import { Component, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
 import { EventDetailsFull } from '~/common/models/interfaces'
@@ -185,10 +186,16 @@ export default class EventDetailPage extends Vue {
     status: 'DRAFT',
   } // Initialize singleEvent with default values
 
-
   get formattedStartDate() {
     return formatTimestamp(+this.singleEvent.startDate) // Call the formatDate function with startDate
   }
+
+  // get disableButton() {
+  //   if (this.purchases.length > 0) {
+  //     return false
+  //   }
+  //   return true
+  // }
 
   async getEvents(eventid: string) {
     const { error, data } = await EventsApi.getEventDetails(eventid)
@@ -197,7 +204,6 @@ export default class EventDetailPage extends Vue {
       message.error(error as string)
     } else {
       this.singleEvent = data?.data
-
     }
     this.loading = false
   }
@@ -207,11 +213,12 @@ export default class EventDetailPage extends Vue {
     this.getEvents(this.id)
   }
 
-
   toggleCheckout() {
+    if (this.purchases.length <= 0) {
+      return message.error('number of tickets cannot be 0')
+    }
     this.showCheckout = !this.showCheckout
   }
-
 
   handleCheckoutClosed() {
     this.toggleCheckout()
@@ -265,17 +272,22 @@ export default class EventDetailPage extends Vue {
 
 <style lang="scss" scoped>
 main {
-  min-height: 200vh;
+  min-height: max-content;
   margin-bottom: 100px;
 }
 
 .hero {
-  height: 80vh;
+  height: 50vh;
 
   @media screen and (max-width: 700px) {
     height: 25vh;
     border-radius: 30px;
-    margin-bottom: 10em;
+    margin-bottom: 16em;
+  }
+  @media screen and (min-width: 701px) {
+    margin-top: 4em;
+    width: 78%;
+    margin-inline: auto;
   }
   img.hero-image {
     display: block;
@@ -311,7 +323,7 @@ main {
   }
 
   .tags span {
-    border-radius: 20px;
+    border-radius: 40px;
   }
 
   @media screen and (max-width: 700px) {
@@ -324,21 +336,78 @@ main {
 }
 
 .venue-container {
-  width: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 115%;
   left: 0;
+  @media screen and (min-width: 701px) {
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+    top: 108%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   &__item-container {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1em;
+    @media screen and (min-width: 701px) {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__icon {
+    color: #3fd246;
+    font-size: 1.2rem;
+    @media screen and (min-width: 701px) {
+      font-size: 2rem;
+    }
   }
 
   &__align {
     display: inline-block;
     margin-block: 0.2em;
+
     &--right {
-      margin-left: 0.6em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: 1.3em;
       color: rgba(156, 163, 175);
+      @media screen and (min-width: 701px) {
+        color: white;
+      }
+      span {
+        text-transform: capitalize;
+        &:first-child {
+          font-weight: bold;
+        }
+      }
     }
+  }
+}
+
+.green-box {
+  @media screen and (min-width: 701px) {
+    width: 100%;
+    height: 40vh;
+    background-color: #002e02;
+    border-radius: 30px;
+    position: absolute;
+    left: 0;
+    bottom: -8rem;
+    z-index: -1;
+  }
+}
+.show-button {
+  @media screen and (min-width: 701px) {
+    visibility: hidden;
   }
 }
 </style>

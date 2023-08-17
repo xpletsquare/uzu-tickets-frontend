@@ -1,29 +1,50 @@
-<script lang="ts" setup>
-import {Vue, Component} from 'vue-property-decorator';
-import { formatCurrency, formatPercentage } from '~/common/utilities/index';
 
-@Component
-export default class TotalEventSales extends Vue {
-  formatCurrency = formatCurrency;
-  formatPercentage = formatPercentage;
-}
-</script>
 
 <template>
   <main>
     <div class="gross">
-      <div class="label">Gross sales</div>
-      <div class="amount gross">{{ formatCurrency('20500000') }}</div>
+      <div class="label">Gross sales </div>
+      <div class="amount gross">{{ formatCurrency( gross.toString() ) }}</div>
     </div>
     <div class="net">
       <div class="label">Net sales</div>
-      <div class="amount net">{{ formatCurrency('20500000') }}</div>
+      <div class="amount net">{{ formatCurrency( net.toString() ) }}</div>
     </div>
     <div class="percent-section">
-      <div class="percent">{{ formatPercentage('90.2') }}</div>
+      <div class="percent">{{ formatPercentage('96') }}</div>
     </div>
   </main>
 </template>
+
+<script lang="ts" setup>
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { formatCurrency, formatPercentage } from '~/common/utilities/index';
+
+@Component
+export default class TotalEventSales extends Vue {
+
+  formatCurrency = formatCurrency;
+  formatPercentage = formatPercentage;
+  @Prop() eventDetails!: any
+
+  gross:any = 0
+  net = 0
+  tickets:any = []
+  mounted(){
+    this.tickets = this.eventDetails.tickets;
+
+
+
+    const money = this.tickets.map( (ticket:any) => ticket.price * ticket.nSold);
+
+    this.gross = money.reduce( (acc:number, currVal:number) => acc + currVal, 0 );
+    this.net = this.gross * 0.96
+
+    // this.gross = total;
+  }
+ 
+}
+</script>
 
 
 <style lang="scss" scoped>

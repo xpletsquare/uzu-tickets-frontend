@@ -88,6 +88,7 @@ button {
   border-radius: 50%;
   width: 17px;
   height: 17px;
+  z-index: 1 !important;
   animation: spin 1s linear infinite;
 }
 

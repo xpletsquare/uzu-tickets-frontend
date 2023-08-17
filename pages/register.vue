@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="right">
+      <!-- <div class="right">
         <div class="inner">
           <div class="right-left">
             <div class="image-r-l-top">
@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </main>
 </template>
@@ -48,7 +48,7 @@
 import { message } from 'ant-design-vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { AuthApi } from '~/common/api/auth.api'
-import { RegisterUserPayload, User } from '~/common/models/interfaces'
+import { RegisterUserPayload } from '~/common/models/interfaces'
 
 @Component
 export default class RegistrationPage extends Vue {
@@ -134,10 +134,11 @@ export default class RegistrationPage extends Vue {
 }
 
 .left {
-  width: 40%;
+  width: 45%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-inline: auto;
 
   div {
     width: 70%;

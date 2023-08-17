@@ -4,8 +4,8 @@
       <div class="nav">
         <div class="nav-logo">
           <NuxtLink to="/">
-            <img class="w-24 hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg" />
-            <img class="w-12 inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
+            <img class="w-20 h-auto hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg"  />
+            <img class="w-12 h-auto inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
           </NuxtLink>
         </div>
 
@@ -32,16 +32,16 @@
             <NuxtLink to="/">BLOG</NuxtLink>
           </li>
 
-          <li @click="showMessage" v-show="activeUser.email === ''">
-            <NuxtLink to="/">REGISTER</NuxtLink>
+          <li v-show="activeUser.email === ''">
+            <NuxtLink to="/register">REGISTER</NuxtLink>
           </li>
-          <li @click="showMessage" v-show="activeUser.email === ''">
-            <primary-button class="w-full" label="LOGIN" link_to="/"></primary-button>
+          <li v-show="activeUser.email === ''">
+            <primary-button class="w-full" label="LOGIN" link_to="/login"></primary-button>
           </li>
 
           <NuxtLink
-            to="/dashboard"
-            v-show="activeUser.email !== ''"
+          v-show="activeUser.email !== ''"
+          to="/dashboard"
             class="inline-flex rounded items-center gap-4 md:p-3 cursor-pointer hover:bg-gray-100 text-black hover:text-black"
           >
             <span class="font-medium uppercase">Dashboard</span>
@@ -83,6 +83,7 @@ export default class Navbar extends Vue {
 <style lang="scss" scoped>
 .main {
   height: max-content !important;
+  padding-block: 20px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
   @media (max-width: 768px) {
     width: 100%;

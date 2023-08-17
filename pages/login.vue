@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="right">
+      <!-- <div class="right">
         <div class="inner">
           <div class="right-left">
             <div class="image-r-l-top">
@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </main>
 </template>
@@ -132,10 +132,11 @@ export default class LoginPage extends Vue {
 }
 
 .left {
-  width: 40%;
+  width: 45%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-inline: auto;
 
   div {
     width: 70%;

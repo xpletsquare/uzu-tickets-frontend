@@ -1,13 +1,15 @@
 <template>
-  <a-pagination :current="current" :total="50" show-less-items />
+  <a-pagination :current="current" :total="total" show-less-items />
 </template>
 
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class Pagination extends Vue {
-  current = 2
+
+  @Prop() current: any
+  @Prop() total: any
 }
 </script>

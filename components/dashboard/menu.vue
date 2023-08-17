@@ -16,11 +16,7 @@
             <span>Events</span>
           </nuxt-link>
 
-          <nuxt-link active-class="active" to="/dashboard/profile">
-            <span class="icon"><i class="fas fa-user-alt"></i></span>
-            <span>Profile</span>
-          </nuxt-link>
-
+         
           <!-- <nuxt-link exact active-class="active" to="/dashboard/sales">
             <span class="icon"><i class="fas fa-money-check-alt"></i></span>
             <span>Sales</span>
@@ -28,33 +24,49 @@
 
           <nuxt-link exact active-class="active" to="/dashboard/transactions">
             <span class="icon"><i class="fas fa-address-book"></i></span>
-            <span>Transactions</span>
+            <span>Ticket Sales</span>
           </nuxt-link>
 
-          <nuxt-link exact active-class="active" to="/dashboard/promoter">
+          <!-- <nuxt-link exact active-class="active" to="/dashboard/promoter">
             <span class="icon"><i class="fas fa-check-circle"></i></span>
             <span>Promoter</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <nuxt-link exact active-class="active" to="/dashboard/wallet">
             <span class="icon"><i class="fas fa-wallet"></i></span>
             <span>Wallet</span>
           </nuxt-link>
 
+          <nuxt-link active-class="active" to="/dashboard/profile">
+            <span class="icon"><i class="fas fa-user-alt"></i></span>
+            <span>Profile</span>
+          </nuxt-link>
+
+<!-- 
           <nuxt-link exact active-class="active" to="/dashboard/developer">
             <span class="icon"><i class="fas fa-code"></i></span>
             <span>Developer</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
            <!-- activate event creation -->
           <div class="activate-account-section">
+            <div>
+              <div class="activate-icon"><i class="fas fa-solid fa-paper-plane"></i></div>
+              <p>If you are having any troubles using uzu tickets, contact our support and be sure to get feedback within 3 hours. <br> <br> <br>Version 1.0 </p>
+
+              <div class="activate-button">Support</div>
+            </div>
+          </div>
+
+            <!-- activate event creation -->
+            <!-- <div class="activate-account-section">
             <div>
               <div class="activate-icon"><i class="fas fa-check-double"></i></div>
               <p>Are you an event owner? activate our event managemnet feature to enable you create and manage events.</p>
 
               <div class="activate-button">Activate</div>
             </div>
-          </div>
+          </div> -->
 
         </div>
 

@@ -5,7 +5,7 @@
         <!-- <search placeholder="Search events" /> -->
 
         <!-- <p>Conventory event date at Lagos</p> -->
-        <h2 class="bold-text leading-loose">
+        <h2 class="bold-text title leading-loose">
           Check out Jake Doe's <br />
           Yours Unfaithfully <span class="alt-text">This weekend</span>
         </h2>
@@ -28,6 +28,17 @@ export default class Hero extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+
+.title {
+  font-size: 80px !important;
+  line-height: 120% !important;
+  width: 70%;
+
+  @media (max-width: 568px) {
+    font-size: 30px !important;
+    width: 100% !important;
+  }
+}
 .hero {
   position: relative;
   display: flex;
@@ -35,12 +46,12 @@ export default class Hero extends Vue {}
   width: 100vw;
   margin: 0px auto 20px;
   // height: 70vh;
-  height: 600px;
-  background: transparent linear-gradient(180deg, #00000013 0%, #000000cb 100%);
+  height: 550px;
+  background: transparent linear-gradient(180deg, #0000004a 0%, #00000093 100%);
   box-shadow: inset 0px 3px 6px #17000029;
 
   @media (max-width: 568px) {
-    height: 500px;
+    height: 300px;
   }
 
   &::before {

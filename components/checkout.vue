@@ -4,6 +4,7 @@
       <button class="close-btn shadow-lg" @click="close">&times;</button>
 
       <section class="right relative bg-gray-50">
+     
         <img class="bg-gray-200" :src="singleEvent.image.portrait" />
         <div class="p-8">
           <div class="font-medium mb-8">Order Summary</div>
@@ -41,6 +42,15 @@
       </section>
 
       <section class="left relative p-8 md:p-14 text-sm">
+
+           <!-- paystack payment screen -->
+
+           <section id="payment-frame" :class="{ hidden: isVisible }">
+            <iframe id="paystack-frame" :src="pay_link" width="100%"></iframe>
+          </section>
+          <!-- end of pays tack -->
+
+
         <div class="bg-gray-100 p-4 rounded">
           Each ticket admits 1 and is only valid for the Dates present in the ticket. Other terms and conditions may apply for seperate tickets
         </div>
@@ -68,11 +78,15 @@
 
         <div class="text-right mt-10 pay-button-wrapper bg-white">
           <p class="text-center font-bold block md:hidden">{{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : "FREE" }}</p>
-          <primary-button @click="pay" buttonClass="w-full md:w-full" label="Get Ticket"></primary-button>
+          <primary-button :loading="loading"  button-class="w-full md:w-full" label="Get Ticket" @click="pay"></primary-button>
         </div>
+
       </section>
     </div>
+
+    
   </section>
+
 </template>
 
 <script lang="ts">
@@ -91,6 +105,29 @@ export default class Checkout extends Vue {
   userFirstName: string = ''
   userLastName: string = ''
   userEmail: string = ''
+  loading = false
+  pay_link = ""
+  isVisible = true
+
+
+  closeIFrame(){
+    console.log('closing iframe now')
+
+    this.isVisible = true
+    this.pay_link = ""
+    this.loading = false
+    this.close()
+  }
+
+  mounted(){
+    window.addEventListener("message", (event)=> {
+      console.log({event: event.data})
+
+      if(event.data === "closePaymentModal"){
+        this.closeIFrame()
+      }
+    })
+  }
 
   get ticketCartArray() {
     let total = 0
@@ -128,24 +165,29 @@ export default class Checkout extends Vue {
       purchases: this.purchases,
     }
 
+    this.isVisible = false
+
     if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
       return message.warning('Please enter a valid first-name, last-name and email')
     }
 
-    // this.loading = true
+    this.loading = true
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { error, data } = await payApi.pay(payload)
     // this.loading = false
+    const url = data?.data?.payment?.data?.authorization_url
+    console.log(url)
+    this.pay_link = url
 
     if (error) {
       return message.error(error as string)
     }
 
-    message.success('payment successful')
+    // message.success('payment successful')
     this.userFirstName = ''
     this.userLastName = ''
     this.userEmail = ''
-    this.$router.push('/')
+    // this.$router.push('/')
   }
 
   close() {
@@ -161,10 +203,39 @@ export default class Checkout extends Vue {
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 50;
   /* backdrop-filter: blur(10px); */
   overflow-y: scroll;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.7);
+
+  .hidden {
+    display: none !important;
+    z-index: 2 !important;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  #payment-frame {
+    position: absolute;
+    width: 100% !important;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+
+    .paystack-frame{
+      width: 100%;
+      height: 100%;
+    }
+
+    @media screen and (min-width: 700px) {
+      margin-bottom: 200px;
+    }
+  }
 
   .checkout-card {
     position: relative;
@@ -189,11 +260,13 @@ export default class Checkout extends Vue {
       .left {
         grid-column: 1;
         grid-row: 1;
+        position: relative;
       }
 
       .right {
         grid-column: 2;
         grid-row: 1;
+        position: relative;
       }
     }
   }
@@ -244,6 +317,7 @@ export default class Checkout extends Vue {
   //   }
   // }
 
+  
   img {
     width: 100%;
     height: 240px;

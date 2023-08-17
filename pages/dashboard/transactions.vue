@@ -14,6 +14,9 @@
 
       <search placeholder="Search transactions" />
     </div>
+   <div v-if="sales.length < 0">
+    <loader></loader>
+   </div>
 
     <div class="customers">
       <table>
@@ -27,89 +30,30 @@
             <th>Amount</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-for="sale in sales" :key="sale.id">
           <tr>
             <td>
-              <span class="firstname">Jones</span>
+              <span class="firstname"> {{sale.userFirstName }} </span>
             </td>
             <td>
-              <span class="lastname">Gabriel</span>
+              <span class="lastname"> {{ sale.userLastName }}</span>
             </td>
             <td>
-              <span class="email">jonesbgabriel@gmail.com</span>
+              <span class="email"> {{ sale.userEmail }} </span>
             </td>
             <td>
-              <span class="email">Cavemen Live</span>
+              <span class="email">{{ sale.tickets[0].event.title }}</span>
             </td>
             <td>
               <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
             </td>
             <td>
-              <span class="amount">N 84,000</span>
+              <span class="amount"> {{ sale.cost == 0 ? 'FREE' : formatCurrency(sale.cost.toString())  }}</span>
             </td>
           </tr>
           
 
-           <tr>
-            <td>
-              <span class="firstname">Jones</span>
-            </td>
-            <td>
-              <span class="lastname">Gabriel</span>
-            </td>
-            <td>
-              <span class="email">jonesbgabriel@gmail.com</span>
-            </td>
-            <td>
-              <span class="email">Cavemen Live</span>
-            </td>
-            <td>
-              <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
-            </td>
-            <td>
-              <span class="amount">N 84,000</span>
-            </td>
-          </tr>
-           <tr>
-            <td>
-              <span class="firstname">Jones</span>
-            </td>
-            <td>
-              <span class="lastname">Gabriel</span>
-            </td>
-            <td>
-              <span class="email">jonesbgabriel@gmail.com</span>
-            </td>
-            <td>
-              <span class="email">Cavemen Live</span>
-            </td>
-            <td>
-              <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
-            </td>
-            <td>
-              <span class="amount">N 84,000</span>
-            </td>
-          </tr>
-           <tr>
-            <td>
-              <span class="firstname">Jones</span>
-            </td>
-            <td>
-              <span class="lastname">Gabriel</span>
-            </td>
-            <td>
-              <span class="email">jonesbgabriel@gmail.com</span>
-            </td>
-            <td>
-              <span class="email">Cavemen Live</span>
-            </td>
-            <td>
-              <span class="description">Schedule 1 • 21/12/2022 • 03:00 PM Regular x 3</span>
-            </td>
-            <td>
-              <span class="amount">N 84,000</span>
-            </td>
-          </tr>
+          
         </tbody>
       </table>
     </div>
@@ -196,18 +140,37 @@
           <i class="fas fa-cloud-download-alt"></i>
         </span>
       </button>
-      <pagination />
+      <pagination current="3" :total="total"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component,  Vue } from 'vue-property-decorator'
+import { TicketsApi } from '../../common/api/ticket.api';
+import { formatCurrency } from '../../common/utilities/index';
 
 @Component({
   layout: 'dashboard',
 })
-export default class CustomersPage extends Vue {}
+
+export default class CustomersPage extends Vue {
+
+ 
+
+  sales:any = [];
+  total = 1
+  formatCurrency = formatCurrency
+
+  async mounted() {
+    const { error, data } = await TicketsApi.getTicketsSold('4c2f89bd-760a-406a-a7a3-809ca736f604');
+    if(error) console.log(error)
+    this.total = data.length
+    this.sales = [...this.sales, ...data]
+  }
+
+  
+}
 </script>
 
 <style lang="scss" scoped>

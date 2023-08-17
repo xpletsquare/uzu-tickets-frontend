@@ -40,6 +40,8 @@ import { EventsApi } from '~/common/api/events.api'
 export default class DashboardEventList extends Vue {
   events: EventDetailsFull[] = []
 
+  
+
   openNewEventPage() {
     this.$store.commit(StoreMutations.setEditMode, true);
     this.$router.push('/dashboard/events/create')
@@ -77,7 +79,16 @@ export default class DashboardEventList extends Vue {
     this.$store.commit(StoreMutations.setEditMode, false);
     this.events = this.currentEvents; // Initial State;
     this.loadEventsFromServer();
+    // const {error, data } = await EventsApi.getEventDetails(this.$route.params.id)
+
+    // if(error) console.log(error)
+    // this.EVENT_DETAILS = {...data}
   }
+
+
+ 
+
+
 }
 </script>
 

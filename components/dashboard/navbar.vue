@@ -3,8 +3,8 @@
     <div class="nav pt-3">
       <div class="nav-logo">
         <NuxtLink to="/">
-          <img class="w-24 hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg" />
-          <img class="w-12 inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
+          <img class="w-16 h-auto hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg" />
+          <img class="w-12 h-auto inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
         </NuxtLink>
       </div>
 

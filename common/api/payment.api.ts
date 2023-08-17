@@ -8,5 +8,10 @@ export const payApi = {
   pay(details: AnyObject) {
     return catchAsync(() => pay.post('/initiate', { ...details }))
   },
+
+  verify( txref: AnyObject ) {
+    return catchAsync(() => pay.get('/webhook', { params: { txref }}))
+  }
 }
 //
+

@@ -6,28 +6,28 @@
       <p>Name your event and tell event-goers why they should come. Add details that highlight what makes it unique.</p>
     </div>
 
-    <dashboard-total-event-sales />
+    <dashboard-total-event-sales :event-details="eventDetails" />
 
     <div class="sales">
       <table>
         <thead>
           <tr class="sales-header">
             <th>Sales by tickets</th>
-            <!-- <th></th> -->
+            <th>Units sold</th>
             <th>Amount sold</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(sale, index) in sales" :key="index">
+          <tr v-for="(ticket, index) in tickets" :key="index">
             <td>
-              <span class="name">{{ sale.title }}</span>
-              <span class="total">{{ sale.total }}</span>
+              <span class="name">{{ ticket.title }} - {{ ticket.schedule.name }}</span>
+             
             </td>
-            <!-- <td>
-              <span class="total">41/100</span>
-            </td> -->
             <td>
-              <span class="amount">{{ sale.amount }}</span>
+              <span class="total">{{ `${ticket.nSold} / ${ticket.nLimit}` }}</span>
+            </td>
+            <td>
+              <span class="amount">{{ formatCurrency((ticket.price * ticket.nSold).toString()) }}</span>
             </td>
           </tr>
         </tbody>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="sales mobile">
-      <div class="sale" v-for="(sale, index) in sales" :key="index">
+      <div v-for="(sale, index) in sales" :key="index" class="sale">
         <div class="left">
           <span class="type">Regular</span>
           <span class="name">
@@ -55,14 +55,18 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { formatCurrency } from '../../common/utilities/index';
 import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
 export default class SalesPage extends Vue {
+
   @Prop() eventDetails!: EventDetailsFull
 
   // sales = []
 
+  formatCurrency = formatCurrency
+  tickets:any = []
   sales = [
     {
       title: 'Schedule 1 • 21/12/2022 • 03:00 PM',
@@ -70,6 +74,11 @@ export default class SalesPage extends Vue {
       amount: 'N 2,300,000',
     },
   ]
+
+  mounted(){
+    console.log({mine: this.eventDetails.tickets})
+    this.tickets = this.eventDetails.tickets
+  }
 }
 </script>
 

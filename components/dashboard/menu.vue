@@ -32,10 +32,10 @@
             <span>Promoter</span>
           </nuxt-link> -->
 
-          <nuxt-link exact active-class="active" to="/dashboard/wallet">
+          <!-- <nuxt-link exact active-class="active" to="/dashboard/wallet">
             <span class="icon"><i class="fas fa-wallet"></i></span>
             <span>Wallet</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <nuxt-link active-class="active" to="/dashboard/profile">
             <span class="icon"><i class="fas fa-user-alt"></i></span>

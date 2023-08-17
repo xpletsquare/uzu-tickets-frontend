@@ -149,6 +149,7 @@
 import { Component,  Vue } from 'vue-property-decorator'
 import { TicketsApi } from '../../common/api/ticket.api';
 import { formatCurrency } from '../../common/utilities/index';
+import { AppState } from '~/common/storeHelpers';
 
 @Component({
   layout: 'dashboard',
@@ -156,14 +157,18 @@ import { formatCurrency } from '../../common/utilities/index';
 
 export default class CustomersPage extends Vue {
 
- 
+  get userId() {
+    const state = this.$store.state as AppState
+    return state.currentUser?.id || ''
+  }
 
   sales:any = [];
   total = 1
   formatCurrency = formatCurrency
 
   async mounted() {
-    const { error, data } = await TicketsApi.getTicketsSold('4c2f89bd-760a-406a-a7a3-809ca736f604');
+ 
+    const { error, data } = await TicketsApi.getTicketsSold(this.userId);
     if(error) console.log(error)
     this.total = data.length
     this.sales = [...this.sales, ...data]

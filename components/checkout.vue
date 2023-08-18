@@ -126,6 +126,10 @@ export default class Checkout extends Vue {
       if(event.data === "closePaymentModal"){
         this.closeIFrame()
       }
+      
+      if(event.data === "exploreMore"){
+        this.$router.push('/')
+      }
     })
   }
 
@@ -165,19 +169,29 @@ export default class Checkout extends Vue {
       purchases: this.purchases,
     }
 
-    this.isVisible = false
+   
 
     if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
       return message.warning('Please enter a valid first-name, last-name and email')
     }
 
     this.loading = true
+
+    
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { error, data } = await payApi.pay(payload)
     // this.loading = false
+    // if ticket is free, run this code
+    if ( data?.data?.purchase?.paid ) {
+      this.pay_link = `/payment-success?paid=${data?.data?.purchase?.paid}`;
+      this.isVisible = false
+      return 
+    }
+
     const url = data?.data?.payment?.data?.authorization_url
     console.log(url)
     this.pay_link = url
+    this.isVisible = false
 
     if (error) {
       return message.error(error as string)

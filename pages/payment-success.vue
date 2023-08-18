@@ -13,7 +13,7 @@
               <h2>Success!</h2>
               <p>Your ticket purchase was successful! if you have any challenges, please contact support at support@uzuticket.com  </p>
               
-              <primary-button label="Explore more events" link_to="/" ></primary-button>
+              <primary-button label="Explore more events"  @click="emitExploreMore" ></primary-button>
 
               <a class="mt-5" @click="close()">Close window</a>
           </div>
@@ -35,9 +35,10 @@ export default class LoginPage extends Vue {
   password = ''
   loading = false
   txref = this.$route.query?.trxref
+  paid = this.$route.query?.paid
   ref = this.$route.query?.reference || null
   IsSuccess = false
-
+  base = window.location.origin
 
 
   async mounted() {
@@ -45,6 +46,11 @@ export default class LoginPage extends Vue {
 
     console.log({ txref : this.txref, ref: this.ref })
 
+    if(this.paid) {
+      setTimeout( () => {
+        this.IsSuccess = true
+      }, 2000)
+    }
     if(this.txref) {
       const payCheck = await payApi.verify( this.txref );
 
@@ -78,7 +84,11 @@ export default class LoginPage extends Vue {
   }
 
   close() {
-    window.parent?.postMessage("closePaymentModal", "http://localhost:25001")
+    window.parent?.postMessage("closePaymentModal", this.base)
+  }
+  
+  emitExploreMore(){
+    window.parent?.postMessage("exploreMore", this.base)
   }
 
   async login() {

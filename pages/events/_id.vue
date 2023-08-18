@@ -135,7 +135,7 @@ hero
       </section>
     </section>
 
-    <checkout v-if="showCheckout" :single-event="singleEvent" :purchases="purchases" @close="handleCheckoutClosed">
+    <checkout v-if="showCheckout" :single-event="singleEvent" :purchases="purchases"  @close="handleCheckoutClosed">
     </checkout>
   </main>
   <main v-else>
@@ -214,6 +214,7 @@ export default class EventDetailPage extends Vue {
     this.id = this.$route.params.id
     this.getEvents(this.id)
   }
+
 
   toggleCheckout() {
     if (this.purchases.length <= 0) {

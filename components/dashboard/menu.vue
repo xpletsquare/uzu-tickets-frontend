@@ -42,11 +42,12 @@
             <span>Profile</span>
           </nuxt-link>
 
-<!-- 
+
           <nuxt-link exact active-class="active" to="/dashboard/developer">
             <span class="icon"><i class="fas fa-code"></i></span>
             <span>Developer</span>
-          </nuxt-link> -->
+          </nuxt-link> 
+ 
 
            <!-- activate event creation -->
           <div class="activate-account-section">

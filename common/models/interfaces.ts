@@ -29,11 +29,13 @@ export interface ISchedule {
 }
 
 export interface ITicket {
+[x: string]: any
   id?: string
   title: string
   price: string 
   schedule: ISchedule
   nLimit: number
+  maxPurchases?: number
 }
 
 export interface TicketSalesBreakdown {

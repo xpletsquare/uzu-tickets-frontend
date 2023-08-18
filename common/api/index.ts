@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { } from 'axios'
 
 export const getAuthHeaders = () => {
   const userInSession = sessionStorage.getItem('auth') || ''

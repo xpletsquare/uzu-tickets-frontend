@@ -206,6 +206,7 @@ export default class EventDetailPage extends Vue {
       message.error(error as string)
     } else {
       this.singleEvent = data?.data
+      
     }
     this.loading = false
   }
@@ -213,6 +214,7 @@ export default class EventDetailPage extends Vue {
   mounted() {
     this.id = this.$route.params.id
     this.getEvents(this.id)
+
   }
 
 
@@ -251,9 +253,11 @@ export default class EventDetailPage extends Vue {
     }
   }
 
+ 
+
   increaseTicketCount(ticketId: string) {
     const currentCount = this.ticketCounts[ticketId] || 0
-    if (currentCount < 1) {
+    if (currentCount < (this.singleEvent?.tickets[0]?.maxPurchases ? this.singleEvent?.tickets[0]?.maxPurchases  : 1) ) {
       this.$set(this.ticketCounts, ticketId, currentCount + 1) // in this method, we use this.$set to add or update the property ticketId in the ticketCounts object. This ensures that the changes are properly tracked and trigger reactivity.
       this.updatePurchases(ticketId, currentCount + 1)
     }

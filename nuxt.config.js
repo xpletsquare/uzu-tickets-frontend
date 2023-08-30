@@ -104,6 +104,10 @@ export default {
     port: 25001,
   },
 
+  env: {
+    apiBASE: process.env.VUE_APP_API_BASE
+  },
+
 
 
   // #31d760

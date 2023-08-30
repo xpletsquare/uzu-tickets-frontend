@@ -130,6 +130,7 @@ export default class NewHero extends Vue {
 
 
   mounted(){
+    
       setInterval( ()=> {
 
       // if(this.current >= this.images.length){

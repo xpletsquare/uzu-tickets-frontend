@@ -1,6 +1,7 @@
 <template>
   <main>
-    <hero />
+    <!-- <hero /> -->
+    <new-hero />
 
     <div class="container">
       <!-- featured events -->
@@ -102,8 +103,7 @@ export default class IndexPage extends Vue {
 
 <style lang="scss" scoped>
 main {
-  height: 100%;
-  width: 100vw;
+  max-width: 100vw;
   margin-bottom: 100px;
 
   @media (max-width: 568px) {
@@ -182,8 +182,7 @@ main {
   }
 
   .events-container {
-    margin-bottom: 50px;
-    margin-top: 50px;
+
 
     @media (max-width: 568px) {
       margin-bottom: 30px;

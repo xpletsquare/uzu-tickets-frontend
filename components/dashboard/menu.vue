@@ -6,10 +6,10 @@
         <!-- <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div> -->
 
         <div class="links-wrapper flex flex-col gap-1">
-          <!-- <nuxt-link exact active-class="active" to="/dashboard">
+          <nuxt-link exact active-class="active" to="/dashboard">
             <span class="icon"><i class="fas fa-home-alt"></i></span>
             <span>Dashboard</span>
-          </nuxt-link> -->
+          </nuxt-link>
 
           <nuxt-link active-class="active" to="/dashboard/events">
             <span class="icon"><i class="fas fa-calendar-alt"></i></span>
@@ -17,25 +17,25 @@
           </nuxt-link>
 
          
-          <!-- <nuxt-link exact active-class="active" to="/dashboard/sales">
+          <nuxt-link exact active-class="active" to="/dashboard/sales">
             <span class="icon"><i class="fas fa-money-check-alt"></i></span>
             <span>Sales</span>
-          </nuxt-link> -->
+          </nuxt-link>
 
           <nuxt-link exact active-class="active" to="/dashboard/transactions">
             <span class="icon"><i class="fas fa-address-book"></i></span>
             <span>Ticket Sales</span>
           </nuxt-link>
 
-          <!-- <nuxt-link exact active-class="active" to="/dashboard/promoter">
+          <nuxt-link exact active-class="active" to="/dashboard/promoter">
             <span class="icon"><i class="fas fa-check-circle"></i></span>
             <span>Promoter</span>
-          </nuxt-link> -->
+          </nuxt-link>
 
-          <!-- <nuxt-link exact active-class="active" to="/dashboard/wallet">
+          <nuxt-link exact active-class="active" to="/dashboard/wallet">
             <span class="icon"><i class="fas fa-wallet"></i></span>
             <span>Wallet</span>
-          </nuxt-link> -->
+          </nuxt-link>
 
           <nuxt-link active-class="active" to="/dashboard/profile">
             <span class="icon"><i class="fas fa-user-alt"></i></span>
@@ -45,7 +45,7 @@
 
           <nuxt-link exact active-class="active" to="/dashboard/developer">
             <span class="icon"><i class="fas fa-code"></i></span>
-            <span>Developer</span>
+            <span>Web integration</span>
           </nuxt-link> 
  
 

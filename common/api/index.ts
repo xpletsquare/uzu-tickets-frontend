@@ -20,12 +20,14 @@ export const getAuthHeaders = () => {
 }
 
 
-export const LOCAL_API_BASE = 'http://localhost:3200/v1/api'
-export const API_BASE = 'https://uzu-tickets.herokuapp.com/v1/api'
+// export const LOCAL_API_BASE = 'http://localhost:3200/v1/api'
+export const API_BASE = process.env.API_BASE || 'http://localhost:3200/v1/api'
+// export const API_BASE = process.env.API_BASE || 'https://uzu-tickets.herokuapp.com/v1/api'
 
 export const createAxiosInstance = (base: string) => {
+  
+  // const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`
   const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`
-  // const baseURL = base.startsWith('http') ? base : `${LOCAL_API_BASE}${base}`
 
   return axios.create({
     baseURL,

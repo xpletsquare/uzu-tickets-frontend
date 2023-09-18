@@ -35,9 +35,11 @@
           </li>
         </ul> -->
 
-        <div class="events">
-          <event-card
-            v-for="(event, index) in events"
+        <div v-if="loading" class="loader"><loader></loader></div>
+
+        <div v-if="events.length > 0 && !loading" class="events">
+          <event-card2
+            v-for="(event, index) in events.slice(0, 16)"
             :key="index"
             :image-url="event.image.landscape"
             event.
@@ -48,20 +50,17 @@
             :event-price="event.tickets[0].price"
           />
 
-          <!-- <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
-          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
-          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" />
-          <event-card :imageUrl="require('~/assets/images/cottonbro.png')" />
-          <event-card :imageUrl="require('~/assets/images/anete-lusina.png')" />
-          <event-card :imageUrl="require('~/assets/images/women-seated.png')" /> -->
+          <!-- <event-card
+            v-for="(event, index) in events"
+            :key="index"
+            :image-url="event.image.landscape"
+            event.
+            :event-title="event.title"
+            :start-date="event.startDate.toString()"
+            :event-id="event.id"
+            :event-venue="event.venue"
+            :event-price="event.tickets[0].price"
+          /> -->
         </div>
       </section>
 
@@ -83,16 +82,18 @@ import { EventDetailsFull } from '~/common/models/interfaces'
   layout: 'public',
 })
 export default class IndexPage extends Vue {
+  loading = true
   events: EventDetailsFull[] = []
   async getEvents() {
+    this.loading = true
     const { error, data } = await EventsApi.listEvents()
 
     if (error) {
       message.error(error as string)
+      this.loading = false
     }
-
     this.events = data?.data
-    // console.log(this.events)
+    this.loading = false
   }
 
   mounted() {
@@ -182,8 +183,7 @@ main {
   }
 
   .events-container {
-
-
+    position: relative;
     @media (max-width: 568px) {
       margin-bottom: 30px;
     }
@@ -233,6 +233,13 @@ main {
     // font-weight: 600;
     // // width: 138px;
     margin: 0 auto;
+  }
+
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

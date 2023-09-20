@@ -31,7 +31,7 @@ export default class InputField extends Vue {
     <label class="main-input">
       <span class="secondary-label"> </span>
 
-      <input v-model="value" :type="type ? type : 'text'" @keyup="onInputChange" :disabled="disabled" />
+      <input v-model="value" :type="type ? type : 'text'" :disabled="disabled" @keyup="onInputChange" />
       <span :class="isEmpty ? 'primary-label' : 'primary-label active'"> {{ label }}</span>
     </label>
 
@@ -43,7 +43,6 @@ export default class InputField extends Vue {
     <!-- <p>{{isEmpty + ""}}</p> -->
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 .main-input {

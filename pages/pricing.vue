@@ -1,5 +1,5 @@
 <template>
-    <div class="desktop-only">
+    <div class="">
         <navbar />
         <section class="dual-background-section">
             <div class="centered-div">
@@ -14,8 +14,8 @@
         </section>
         <div class="see-pricing">
             <div >
-                <p style="font-weight: 600; font-size: 58px;line-height: 66.99px;color: #03161C;width: 577px;">See our <br /> pricing model</p>
-                <p style="font-weight: 500;line-height: 24px;font-size: 16px; width: 615px;">Who says it has to be 5? We do four days of full productivity and finish expected deliverables with no adjustments, theWho says it has to be 5? We do four days of full productivity and finish expected deliverables with no adjustments, the</p>
+                <p class="see-pricing2">See our <br /> pricing model</p>
+                <p class="see-pricing-text">Who says it has to be 5? We do four days of full productivity and finish expected deliverables with no adjustments, theWho says it has to be 5? We do four days of full productivity and finish expected deliverables with no adjustments, the</p>
             </div>
             <div class="second-table">
                 <PricingTable :items="tableItems" :darkMode="true" :checkmarkSrc="darkCheckmarkSrc"/>
@@ -23,7 +23,7 @@
         </div>
         <div style="background-color: #03161C; color: #fff;">
             <div class="events">
-                <div>
+                <div class="event-text">
                     <p style="font-weight: 600;font-size: 36px; line-height: 53.13px; color: #DADADA;">Top 5 must attend<br /> events in <span style="color: #3FD246;">Lagos</span></p>
                     <p style="font-weight: 500;font-size: 16px; line-height: 30px; color: #DADADA;">The marketing masterclass 2.0</p>
                     <p style="font-weight: 500;font-size: 16px; line-height: 30px; color: #3FD246;">Tickets from NGN 30,000</p>
@@ -124,10 +124,9 @@
         padding-top: 0;
         padding-bottom: 2%;
     }
-
     .second-table {
-        width: 606px;
-        height: 502px;
+        width: auto;
+        height: auto;
         border-radius: 16px;
         background-color: #03161C;
         color: #fff;
@@ -145,9 +144,85 @@
         padding: 10%;
         justify-content: space-between;
     }
+    .see-pricing2{
+        font-weight: 600; 
+        font-size: 58px;
+        line-height: 66.99px;
+        color: #03161C;
+        width: 577px;
+    }
+    .see-pricing-text{
+        font-weight: 500;
+        line-height: 24px;
+        font-size: 16px; 
+        width: 615px;
+    }
     @media (max-width: 1023px) {
     .desktop-only {
         display: none; /* Hide the section on smaller screens */
+    }
+    .headline {
+        text-align: left; /* Hide the section on smaller screens */
+        font-size: 30px;
+        line-height: 42px;
+    }
+    .centered-text {
+        text-align: left; /* Hide the section on smaller screens */
+        width: auto;
+    }
+    .big-span {
+        text-align: left; /* Hide the section on smaller screens */
+        margin-left: 0;
+        font-size: 40px;
+        line-height: 60.41px;
+    }
+    .dual-background-section  {
+        background-image: none; /* Hide the section on smaller screens */
+    }
+    .see-pricing{
+        display: grid;
+        grid-template-columns: 1fr; /* Two equal columns */
+        grid-gap: 10px;
+        margin: 5%;
+        align-items: center;
+    }
+    .pricing-table {
+        padding: 5%;
+        padding-top: 0;
+        padding-bottom: 2%;
+    }
+    .see-pricing2{
+        font-size: 30px;
+        line-height: 42px;
+        color: #03161C;
+        width: auto;
+    }
+    .see-pricing-text{
+        font-weight: 400;
+        line-height: 24px;
+        font-size: 16px; 
+        width: auto;
+    }
+    .second-table {
+        width: auto;
+        height: auto;
+        border-radius: 16px;
+        background-color: #03161C;
+        color: #fff;
+        padding: 30px;
+    }
+    .centered-div {
+        padding: 40px 20px;
+    }
+    .events {
+        display: grid;
+        grid-template-columns: 1fr; /* Two equal columns */
+        grid-gap: 20px;
+        justify-content: space-between;
+        padding: 0;
+    }
+    .event-text{
+        margin: 5%;
     }
 }
 </style>

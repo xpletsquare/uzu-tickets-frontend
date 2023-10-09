@@ -24,7 +24,7 @@ export default {
     },
     checkmarkSrc: {
       type: String,
-      default: "_nuxt/assets/images/greencheck.png", // Default checkmark source
+      default: require("~/assets/images/greencheck.png"), // Default checkmark source
     },
   },
 };
@@ -53,6 +53,24 @@ export default {
   font-size: 18px; 
   font-weight: 400;
   line-height: 20.79px;
+}
+@media (max-width: 1023px) {
+  .text {
+  color: #03161C; 
+  font-size: 14px; 
+  font-weight: 400;
+  line-height: 18.48px;
+  text-align: center;
+}
+.table-entry {
+  display: flex;
+  align-items: center;
+  padding: 10px ;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 30px;
+  border-bottom: 0.5px solid #787878;
+}
 }
 
 .dark-mode {

@@ -4,13 +4,13 @@
       <div class="nav">
         <div class="nav-logo">
           <NuxtLink to="/">
-            <img class="w-20 h-auto hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg"  />
+            <img class="w-14 h-auto hidden md:inline-block" alt="logo" src="~/assets/images/logo.svg" />
             <img class="w-12 h-auto inline-block md:hidden" alt="logo" src="~/assets/images/mobile-logo.svg" />
           </NuxtLink>
         </div>
 
         <!-- ============= Mobile Nav Icon =========== -->
-        <div @click="showMobileNav" class="mobile">
+        <div class="mobile" @click="showMobileNav">
           <div class="icon">
             <fa icon="bars" />
           </div>
@@ -32,16 +32,16 @@
             <NuxtLink to="/">BLOG</NuxtLink>
           </li>
 
-          <li v-show="activeUser.email === ''">
+          <li v-show="!isLoggedIn">
             <NuxtLink to="/register">REGISTER</NuxtLink>
           </li>
-          <li v-show="activeUser.email === ''">
-            <primary-button class="w-full" label="LOGIN" link_to="/login"></primary-button>
+          <li v-show="!activeUser.email">
+            <primary-button class="w-full" label="Create Event" link_to="/login"></primary-button>
           </li>
 
           <NuxtLink
-          v-show="activeUser.email !== ''"
-          to="/dashboard"
+            v-show="isLoggedIn"
+            to="/dashboard"
             class="inline-flex rounded items-center gap-4 md:p-3 cursor-pointer hover:bg-gray-100 text-black hover:text-black"
           >
             <span class="font-medium uppercase">Dashboard</span>
@@ -59,15 +59,18 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
-import { AppState } from '~/common/storeHelpers'
+// import { AppState } from '~/common/storeHelpers'
 
 @Component
 export default class Navbar extends Vue {
   showNav = false
 
+  get isLoggedIn() {
+    return this.$store.getters.isLoggedIn
+  }
+
   get activeUser() {
-    const { currentUser } = this.$store.state as AppState
-    return currentUser
+    return this.$store.getters.currentUser
   }
 
   showMobileNav() {
@@ -84,7 +87,7 @@ export default class Navbar extends Vue {
 .main {
   height: max-content !important;
   padding-block: 20px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
+  /*box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05); */
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -185,7 +188,7 @@ export default class Navbar extends Vue {
   }
 
   li {
-    padding: 14px 24px;
+    padding: 4px 24px;
 
     a {
       display: inline-block;

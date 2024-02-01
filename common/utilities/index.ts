@@ -79,9 +79,9 @@ export const formatPercentage = (value: string) => {
   return stringAsFloat + '%'
 }
 
-export const truncateText = (str: string) => {
-  if (str && str.length > 15) {
-    return str.substring(0, 15) + '...'
+export const truncateText = (str: string, len:number) => {
+  if (str && str.length > len) {
+    return str.substring(0, len) + '...'
   } else return str
 }
 

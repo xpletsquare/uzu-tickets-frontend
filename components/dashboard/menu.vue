@@ -6,10 +6,10 @@
         <!-- <div class="greeting text-green-500 px-2 font-semibold capitalize">Hi {{name}}</div> -->
 
         <div class="links-wrapper flex flex-col gap-1">
-          <!-- <nuxt-link exact active-class="active" to="/dashboard">
+          <nuxt-link exact active-class="active" to="/dashboard">
             <span class="icon"><i class="fas fa-home-alt"></i></span>
             <span>Dashboard</span>
-          </nuxt-link> -->
+          </nuxt-link>
 
           <nuxt-link active-class="active" to="/dashboard/events">
             <span class="icon"><i class="fas fa-calendar-alt"></i></span>
@@ -18,13 +18,18 @@
 
          
           <!-- <nuxt-link exact active-class="active" to="/dashboard/sales">
-            <span class="icon"><i class="fas fa-money-check-alt"></i></span>
+            <span class="icon"><i class="fas fa-pie-chart"></i></span>
             <span>Sales</span>
           </nuxt-link> -->
 
           <nuxt-link exact active-class="active" to="/dashboard/transactions">
-            <span class="icon"><i class="fas fa-address-book"></i></span>
+            <span class="icon"><i class="fas fa-bar-chart"></i></span>
             <span>Ticket Sales</span>
+          </nuxt-link>
+
+          <nuxt-link exact active-class="active" to="/dashboard/promoter">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span>Broadcast</span>
           </nuxt-link>
 
           <!-- <nuxt-link exact active-class="active" to="/dashboard/promoter">
@@ -32,10 +37,10 @@
             <span>Promoter</span>
           </nuxt-link> -->
 
-          <!-- <nuxt-link exact active-class="active" to="/dashboard/wallet">
+          <nuxt-link exact active-class="active" to="/dashboard/wallet">
             <span class="icon"><i class="fas fa-wallet"></i></span>
             <span>Wallet</span>
-          </nuxt-link> -->
+          </nuxt-link>
 
           <nuxt-link active-class="active" to="/dashboard/profile">
             <span class="icon"><i class="fas fa-user-alt"></i></span>
@@ -45,7 +50,7 @@
 
           <nuxt-link exact active-class="active" to="/dashboard/developer">
             <span class="icon"><i class="fas fa-code"></i></span>
-            <span>Developer</span>
+            <span>Web integration</span>
           </nuxt-link> 
  
 
@@ -53,7 +58,7 @@
           <div class="activate-account-section">
             <div>
               <div class="activate-icon"><i class="fas fa-solid fa-paper-plane"></i></div>
-              <p>If you are having any troubles using uzu tickets, contact our support and be sure to get feedback within 3 hours. <br> <br> <br>Version 1.0 </p>
+              <p>If you are having any troubles using uzu tickets, contact our support and be sure to get feedback within 3 hours. <br> <br> <br>Version 1.1.0 </p>
 
               <div class="activate-button">Support</div>
             </div>
@@ -144,22 +149,23 @@ export default class DashboardMenu extends Vue {
 }
 
 a {
-  padding: 0.6em 1.5em;
+  padding: 0.6em 1em;
   font-size: 12pt;
-  transition: all .1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
   /* color: var(--light-green); */
-  color: #dbdbdb;
+  color: #f5fff5;
   /* background: rgba(255, 255, 255, 0.277); */
   background: none;
-  border: 1px solid var(--light-green);
+  /*border: 1px solid var(--light-green); */
   /* border: 1px solid var(--light-green); */
-  border-radius: 5px;
+  border-radius: 8px;
   margin-bottom: 12px;
 
   span.icon {
     display: inline-block;
     font-size: 14px;
-    width: 40px;
+    width: max-content;
+    padding-right: 15px
   }
 
   &:hover,
@@ -167,6 +173,7 @@ a {
     background-color: var(--light-green);
     color: var(--dark-green);
     font-weight: 500;
+    transform: translateX(5px);
   }
 }
 

@@ -135,7 +135,7 @@ hero
       </section>
     </section>
 
-    <checkout v-if="showCheckout" :single-event="singleEvent" :purchases="purchases"  @close="handleCheckoutClosed">
+    <checkout v-if="showCheckout" :single-event="singleEvent" :purchases="purchases" @close="handleCheckoutClosed">
     </checkout>
   </main>
   <main v-else>
@@ -188,6 +188,8 @@ export default class EventDetailPage extends Vue {
     status: 'DRAFT',
   } // Initialize singleEvent with default values
 
+
+
   get formattedStartDate() {
     return formatTimestamp(+this.singleEvent.startDate) // Call the formatDate function with startDate
   }
@@ -225,6 +227,7 @@ export default class EventDetailPage extends Vue {
     this.showCheckout = !this.showCheckout
   }
 
+
   handleCheckoutClosed() {
     this.toggleCheckout()
   }
@@ -253,9 +256,9 @@ export default class EventDetailPage extends Vue {
     }
   }
 
- 
 
   increaseTicketCount(ticketId: string) {
+
     const currentCount = this.ticketCounts[ticketId] || 0
     if (currentCount < (this.singleEvent?.tickets[0]?.maxPurchases ? this.singleEvent?.tickets[0]?.maxPurchases  : 1) ) {
       this.$set(this.ticketCounts, ticketId, currentCount + 1) // in this method, we use this.$set to add or update the property ticketId in the ticketCounts object. This ensures that the changes are properly tracked and trigger reactivity.
@@ -264,6 +267,7 @@ export default class EventDetailPage extends Vue {
   }
 
   decreaseTicketCount(ticketId: string) {
+
     const currentCount = this.ticketCounts[ticketId] || 0
     if (currentCount > 0) {
       this.ticketCounts[ticketId] = currentCount - 1 // assign the updated value currentCount - 1 directly to this.ticketCounts[ticketId] without using this.$set, Both the this.$set approach and the direct assignment approach should work fine

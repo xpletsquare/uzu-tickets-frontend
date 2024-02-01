@@ -49,7 +49,7 @@
 
     <!-- loop through schedules and show each schedule with tickets associated with the schedule-->
     <div class="schedule-wrapper mt-5">
-      <div class="border p-2 flex items-center justify-between py-2" v-for="(schedule, index) in schedules" :key="index">
+      <div class="border rounded-2xl p-4 flex items-center justify-between py-6" v-for="(schedule, index) in schedules" :key="index">
         <div class="flex flex-col">
           <span class="mb-1 font-bold text-black capitalize"> {{ schedule.name }} </span>
           <span class="text-black"> {{ formatDate(schedule.date) }} </span>
@@ -96,13 +96,18 @@ import { formatDate } from '~/common/utilities'
 export default class Summary extends Vue {
   @Prop() eventDetails!: EventDetailsFull;
 
-  landscapeImage = this.eventDetails?.images?.landscape || '';
-  portraitImage = this.eventDetails?.images?.landscape || '';
+
+  landscapeImage = this.eventDetails?.image?.landscape || this.eventDetails?.images?.landscape  || '' ;
+  portraitImage = this.eventDetails?.image?.landscape || this.eventDetails?.images?.landscape || '';
 
   formatDate = formatDate;
 
   formatCurrency = formatCurrency
   capitalize = capitalize
+  
+  mounted() {
+    console.log(this.eventDetails)
+  }
 
   schedules: ISchedule[] = this.eventDetails.schedules // schedules available
   tickets: ITicket[] = this.eventDetails.tickets // tickets available

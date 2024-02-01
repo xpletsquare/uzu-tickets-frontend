@@ -1,24 +1,24 @@
-import { EventDetailsFull } from "~/common/models/interfaces";
-import { AppState, AuthUser, StoreMutations } from "~/common/storeHelpers"
+import { EventDetailsFull } from '~/common/models/interfaces'
+import { AppState, AuthUser, StoreMutations } from '~/common/storeHelpers'
 
 export const state = (): AppState => ({
-  currentUser: new AuthUser,
+  currentUser: new AuthUser(),
   events: [],
   editEvent: false,
 })
 
 export const mutations = {
   [StoreMutations.setUser](state: AppState, authUser: AuthUser | null) {
-    state.currentUser = authUser;
+    state.currentUser = authUser
   },
 
   [StoreMutations.setEvents](state: AppState, events: EventDetailsFull[]) {
-    state.events = events;
+    state.events = events
   },
 
-  [StoreMutations.setEditMode](state: AppState, mode: boolean){
-    state.editEvent = mode;
-  }
+  [StoreMutations.setEditMode](state: AppState, mode: boolean) {
+    state.editEvent = mode
+  },
 }
 
 export const getters = {
@@ -27,6 +27,6 @@ export const getters = {
   },
 
   isLoggedIn({ currentUser }: AppState) {
-    return currentUser?.token ? true : false;
-  }
+    return currentUser?.token ? true : false
+  },
 }

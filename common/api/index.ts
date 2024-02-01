@@ -24,8 +24,8 @@ export const getAuthHeaders = (ct?: string) => {
 // export const API_BASE = process.env.API_BASE ?? 'https://uzu-dev-server-0d8c885a022e.herokuapp.com/v1/api'
 // export const API_BASE = 'http://localhost:3200/v1/api';
 
-export const API_BASE = 'http://localhost:3200/v1/api'
-// export const API_BASE = process.env.apiBASE || 'http://localhost:3200/v1/api';
+// export const API_BASE = 'http://localhost:3200/v1/api'
+export const API_BASE = process.env.apiBASE || 'http://localhost:3200/v1/api'
 
 export const createAxiosInstance = (base: string) => {
   // const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`

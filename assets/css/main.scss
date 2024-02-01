@@ -10,6 +10,17 @@
 // @border-radius-base: 10px;
 // @collapse-content-bg: #31d760;
 
+
+
+// @primary-color: #31d760 ;
+// @switch-color: #31d760 ;
+// @border-color-base:#31d760;
+// @text-color: rgb(236, 22, 22);
+
+.ant-switch-checked{
+  background-color: #31d760 !important;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

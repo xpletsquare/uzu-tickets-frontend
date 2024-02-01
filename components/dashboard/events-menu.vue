@@ -135,16 +135,18 @@ export default class EventsMenu extends Vue {
 .event-link {
   padding: 0.6em 1.5em;
   font-size: 12pt;
-  color: var(--light-green);
+  color: rgb(243, 255, 242) ;
   background: none;
-  border: 1px solid var(--light-green);
+  /* border: 1px solid var(--light-green); */
   border-radius: 5px;
   margin-bottom: 12px;
   cursor: pointer;
 
   &.passed {
-    background-color: var(--light-green);
-    color: var(--dark-green);
+   /* background-color: var(--light-green);
+    color: var(--dark-green); 
+    background-color: var(--light-green);*/
+    color: var(--light-green);
     font-weight: 500;
   }
 

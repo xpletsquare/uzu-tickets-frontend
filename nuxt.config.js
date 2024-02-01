@@ -94,6 +94,12 @@ export default {
       less: {
         lessOptions: {
           javascriptEnabled: true,
+          modifyVars: {
+            'primary-color': 'red',
+            'switch-color': 'red',
+            'link-color': '#1DA57A',
+            'border-radius-base': '2px',
+          },
         },
      },
    },
@@ -108,7 +114,7 @@ export default {
     apiBASE: process.env.VUE_APP_API_BASE
   },
 
-
+  
 
   // #31d760
 

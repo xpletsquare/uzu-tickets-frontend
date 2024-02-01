@@ -60,7 +60,7 @@ button {
   min-width: 150px;
   background-color: var(--light-green);
   height: 54px;
-  border-radius: 2.5px;
+  border-radius: 16px;
   color: var(--white);
   padding: 0 30px;
   text-transform: uppercase;

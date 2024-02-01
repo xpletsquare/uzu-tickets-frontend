@@ -1,6 +1,14 @@
 <template>
+  <a-config-provider
+    :theme="{
+      token: {
+        colorPrimary: 'red',
+      },
+    }"
+  >
   <section class="wrapper md:flex justify-center items-center">
-    <div class="checkout-card rounded bg-white ">
+    
+    <div class="checkout-card rounded-2xl bg-white ">
       <button class="close-btn shadow-lg" @click="close">&times;</button>
 
       <section class="right relative bg-gray-50">
@@ -13,26 +21,6 @@
             <div class="w-3/5">{{ item.count }} x {{ item.title }}</div>
             <div class="font-semibold w-16 text-right">{{ formatCurrency(String(item.totalPrice)) }}</div>
           </div>
-
-          <!-- <div class="flex justify-between gap-12 mb-3">
-            <div class="w-3/5">1 x VIP Early bird entry tickets</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
-          </div>
-
-          <div class="flex justify-between gap-12 mb-3">
-            <div class="w-3/5">1 x VIP Early bird entry tickets</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
-          </div>
-
-          <div class="flex justify-between gap-12 mb-3 border-t-2 pt-2">
-            <div>Subtotal</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(4000) }}</div>
-          </div>
-
-          <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
-            <div class="font-bold text-xl">Total</div>
-            <div class="font-bold w-auto text-right text-xl">{{ formatCurrency(4000) }}</div>
-          </div> -->
 
           <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
             <div class="font-bold text-xl">Total</div>
@@ -55,25 +43,40 @@
           Each ticket admits 1 and is only valid for the Dates present in the ticket. Other terms and conditions may apply for seperate tickets
         </div>
 
-        <!-- <div class="mt-8">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique ad incidunt consectetur iure in hic magni
-          fugit sit quos explicabo laboriosam voluptatibus ex doloribus eligendi maiores, facilis, perspiciatis ratione
-          voluptate.
-        </div> -->
-
-        <div class="mt-8">
-          <primary-button label="Send to Single Email"></primary-button>
+        <div class="mt-8 flex items-between justify-between">
+          <!-- <primary-button label="Send to Single Email"></primary-button> -->
+          <p class="font-bold">Send tickets to multiple Emails</p>
+          <a-switch :checked="sendToMany" @click="toggleCheck" />
           <!-- <button class="border p-4">Send to multiple emails</button> -->
         </div>
 
         <div class="mt-8 mb-40 md:mb-8">
           <div class="font-semibold mb-4">Complete Order</div>
-          <div class="font-medium my-2">Ticket 1: {{ singleEvent.schedules[0].name }}</div>
-          <div class="contact-form">
-            <input v-model="userFirstName" placeholder="First Name" type="text" />
-            <input v-model="userLastName" placeholder="Last Name" type="text" />
-            <input v-model="userEmail" class="full" placeholder="Email Address" type="email" />
+
+          <!-- send ticket to multiple recipients -->
+          <div v-if="sendToMany">
+          <!-- email section -->
+          <div  v-for="(purchase, index) in ticketCartArray.fullTix" :key="index">
+            
+            <div class="font-medium my-2">Recipient {{  index +1}}: {{ purchase.ticketName }}</div>
+            <div class="contact-form">
+              <input v-model="purchase.userFirstName" placeholder="First Name" type="text" />
+              <input v-model="purchase.userLastName" placeholder="Last Name" type="text" />
+              <input v-model.trim="purchase.userEmail" class="full" placeholder="Email Address" type="email" />
+            </div>
+
           </div>
+          <!-- end of email section -->
+        </div>
+        <!-- single recipient -->
+        <div v-else>
+          <div class="font-medium my-2">Recipient </div>
+          <div class="contact-form">
+            <input v-model="userFirstName" name="" placeholder="First Name" type="text" />
+            <input v-model="userLastName" name="" placeholder="Last Name" type="text" />
+            <input v-model.trim="userEmail" name="" class="full" placeholder="Email Address" type="email" />
+          </div>
+        </div>
         </div>
 
         <div class="text-right mt-10 pay-button-wrapper bg-white">
@@ -86,15 +89,22 @@
 
     
   </section>
+</a-config-provider>
 
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { message } from 'ant-design-vue'
+import { message} from 'ant-design-vue'
 import { payApi } from '~/common/api/payment.api'
 import { formatCurrency } from '~/common/utilities'
 import { EventDetailsFull } from '~/common/models/interfaces'
+
+// interface emd {
+//   userFirstName: string,
+//   userLastName: string,
+//   userEmail: string,
+// }
 
 @Component
 export default class Checkout extends Vue {
@@ -105,9 +115,18 @@ export default class Checkout extends Vue {
   userFirstName: string = ''
   userLastName: string = ''
   userEmail: string = ''
-  loading = false
+  loading: boolean = false
   pay_link = ""
   isVisible = true
+  sendToMany = false
+
+  dataset = [];
+
+
+  toggleCheck() {
+    this.sendToMany = !this.sendToMany;
+    // console.log({dataset:this.ticketCartArray.fullTix})
+  }
 
 
   closeIFrame(){
@@ -120,6 +139,9 @@ export default class Checkout extends Vue {
   }
 
   mounted(){
+    
+    console.log({purchase: this.purchases})
+    
     window.addEventListener("message", (event)=> {
       console.log({event: event.data})
 
@@ -131,16 +153,29 @@ export default class Checkout extends Vue {
         this.$router.push('/')
       }
     })
+
   }
 
   get ticketCartArray() {
     let total = 0
+    const fullTix:any = [];
 
     const ticketCart = this.purchases.map((item) => {
       const ticket = this.singleEvent.tickets.find((t) => t.id === item.ticketId)
       const ticketName = ticket?.title
       const totalPrice = ticket ? Number(ticket.price) * Number(item.count) : 0
       total += totalPrice
+
+      for (let i = 1; i <= item.count; i++ ) {
+        fullTix.push({
+          ticketName, 
+          ticketId: item.ticketId, 
+          count: 1,
+          userFirstName: '',
+          userLastName: '',
+          userEmail: ''
+        })
+      }
 
       return {
         ticketId: item.ticketId,
@@ -151,8 +186,11 @@ export default class Checkout extends Vue {
       }
     })
 
-    return { ticketCart, total }
+    
+
+    return { ticketCart, total, fullTix }
   }
+
 
   async pay() {
     // validate input
@@ -161,22 +199,26 @@ export default class Checkout extends Vue {
     // show success message
     // redirect to homepage
 
+
     const payload = {
       eventId: this.singleEvent.id,
-      userFirstName: this.userFirstName,
-      userLastName: this.userLastName,
-      userEmail: this.userEmail,
-      purchases: this.purchases,
+      userFirstName: this.userFirstName || this.ticketCartArray.fullTix[0].userFirstName,
+      userLastName: this.userLastName || this.ticketCartArray.fullTix[0].userLastName,
+      userEmail: this.userEmail || this.ticketCartArray.fullTix[0].userEmail,
+      purchases: this.sendToMany ? this.ticketCartArray.fullTix : this.purchases,
     }
 
    
 
-    if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
-      return message.warning('Please enter a valid first-name, last-name and email')
-    }
+    // if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
+    //   return message.warning('Please enter a valid first-name, last-name and email')
+    // }
 
+    // set the button state to loading
     this.loading = true
 
+
+  
     
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { error, data } = await payApi.pay(payload)
@@ -189,7 +231,6 @@ export default class Checkout extends Vue {
     }
 
     const url = data?.data?.payment?.data?.authorization_url
-    console.log(url)
     this.pay_link = url
     this.isVisible = false
 

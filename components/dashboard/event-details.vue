@@ -4,7 +4,7 @@
       <div class="text-right space-x-3 mb-6" v-if="showEditButton">
         <primary-button @click="toggleEditMode" label="Edit Event"></primary-button>
 
-        <primary-button @click="updateStatus('ACTIVE')" v-if="event.status === 'DRAFT'" label="Publish Event"></primary-button>
+        <primary-button v-if="event.status === 'DRAFT'" @click="updateStatus('ACTIVE')"  label="Publish Event"></primary-button>
       </div>
 
       <div v-if="editMode">
@@ -65,7 +65,7 @@
           v-if="isNewEvent"
           @click="createEvent"
           :loading="isLoading"
-          label="PUBLISH"
+          label="CREATE EVENT"
         ></primary-button>
 
         <primary-button
@@ -157,25 +157,28 @@ export default class EventDetails extends Vue {
   }
 
   mounted() {
-    if (this.eventDetails) {
+
+    console.log({summary: this.eventDetails})
+
+    if (this.eventDetails) { // This checks if event details have been passed in from the local store or API
       this.$store.commit(StoreMutations.setEditMode, false);
 
       this.event = { ...this.eventDetails };
 
       this.event.images = {
-        landscape: this.eventDetails.images?.landscape || this.placeholderImage,
-        portrait: this.eventDetails.images?.landscape || this.placeholderImage,
+        landscape: this.eventDetails.image?.landscape,
+        portrait: this.eventDetails.image?.landscape
       }
-
       return
     }
+
 
     this.event = {
       id: '',
       title: '',
       images: {
-        landscape: this.placeholderImage,
-        portrait: this.placeholderImage,
+        landscape: '',
+        portrait: '',
       },
       description: '',
       category: '',
@@ -235,15 +238,32 @@ export default class EventDetails extends Vue {
   }
 
   async createEvent() {
+
+    
     // make api call to publish event
     const { currentUser } = this.$store.state as AppState;
 
     const author = currentUser?.id || '';
-
+   
     const details: Partial<EventDetailsFull> = { ...this.event, author };
 
     this.isLoading = true;
-    const { error } = await EventsApi.createEvent(details);
+    
+    // send details to backend for processing
+
+    
+    const { image, ...rest } = details; // seperate object data and files
+    const { landscape, portrait }:any = image; // get the landscape and portrait image files
+    
+    const restSyrialized = JSON.stringify(rest) // serialize the rest of the data
+    // prepare formdata
+    const formData = new FormData();
+    formData.append('rest', restSyrialized ); // set the rest of the data here
+    formData.append('landscape', new Blob([landscape], {type: 'image/jpeg'}), 'landscape'); // set the landscape image
+    formData.append('portrait', new Blob([portrait], {type: 'image/jpeg'}), 'portrait'); // set the portrait image
+
+    formData.forEach( d => console.log(d))
+    const { error } = await EventsApi.createEvent(formData);
     this.isLoading = false
 
     if (error) {
@@ -251,8 +271,7 @@ export default class EventDetails extends Vue {
     }
 
     message.success('Event published');
-
-    this.$router.push('/dashboard/events');
+    // this.$router.push('/dashboard/events'); // Redirect user to events page in the dashbaord
   }
 
   async updateEvent(){

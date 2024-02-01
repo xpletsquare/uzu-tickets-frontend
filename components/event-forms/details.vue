@@ -12,11 +12,11 @@
       <div class="landscape">
         <label for="landscape-photo">Landscape photo</label>
 
-        <div class="box rounded">
-          <div class="center">
+        <div class="box rounded overflow-hidden">
+          <div class="center ">
             <label for="landscape">
-              <div class="flex justify-center">
-                <img src="~/assets/images/imgup.png" height="35pt" width="35pt" />
+              <div class="flex justify-center overflow-hidden">
+                <img class="object-cover" :src="lan" height="" width="100%" />
               </div>
               Upload Image
             </label>
@@ -25,18 +25,18 @@
         </div>
 
         <div class="preview">
-          <p id="file-chosen">{{ landscape }}</p>
+          <p id="file-chosen">{{ truncateText(landscape, 30) }}</p>
         </div>
       </div>
 
       <div class="portrait">
         <label for="Portrait-photo">Portrait photo</label>
 
-        <div class="box rounded">
-          <div class="center">
+        <div class="box rounded overflow-hidden">
+          <div class="center ">
             <label for="portrait">
-              <div class="flex justify-center">
-                <img src="~/assets/images/imgup.png" height="35pt" width="35pt" />
+              <div class="flex justify-center overflow-hidden">
+                <img class="object-cover" :src="pot" height="100%" width="" />
               </div>
               Upload Image
             </label>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="preview">
-          <p id="file-chosen">{{ portrait }}</p>
+          <p id="file-chosen">{{ truncateText(portrait, 20) }}</p>
         </div>
       </div>
     </div>
@@ -59,44 +59,61 @@
 <script lang="ts">
 import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { truncateText } from '../../common/utilities/index';
 import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
 export default class DetailsForm extends Vue {
   @Prop() eventDetails!: EventDetailsFull
 
+  truncateText = truncateText
   landscape: string = 'No file chosen'
   portrait: string = 'No file chosen'
+  lan:File | string = '';
+  pot:File | string = ''
 
   formFields: Partial<EventDetailsFull> = {
-    images: {
+    image: {
       landscape: '',
       portrait: '',
     },
     description: '',
   }
 
+  url:string = '';
+
+
   mounted() {
-    this.formFields.images = this.eventDetails.images || this.eventDetails.images;
+    // this.formFields.image = this.eventDetails.image || this.eventDetails.images;
     this.formFields.description = this.eventDetails.description || ''; 
   }
 
-  onPortraitChange(event: any) {
-    const file = event.target.files[0]
-    console.log(file)
+  async onPortraitChange(event: any) {
+    const file = await event.target.files[0]
+    // console.log(file)
     this.portrait = file.name
 
     // this.url = URL.createObjectURL(file)
+
+    // console.log({img: URL.createObjectURL(file)})
+    this.formFields = {...this.formFields, image : { landscape: this.formFields.image?.landscape, portrait: file }} 
+  
     message.info('upload image')
+    // this.pot =  URL.createObjectURL(this.formFields.image?.portrait);
   }
 
-  onLandscapeChange(event: any) {
-    const file = event.target.files[0]
-    console.log(file)
+  async onLandscapeChange(event: any) {
+  
+    const [file] = await event.target.files  // Get the file from the upload
+    // console.log(file)
     this.landscape = file.name
+    
+    this.formFields = { ...this.formFields, image: { portrait: this.formFields.image?.portrait, landscape: file}}
 
     // this.url = URL.createObjectURL(file)
-    message.info('upload image')
+    // this.formFields = {...this.formFields, image: {...this.formFields.image, landscape: file}} 
+    message.info('upload image');
+    // this.lan =  URL.createObjectURL(this.formFields.image?.landscape);
   }
 
   handleDescriptionChange(value: string) {
@@ -111,7 +128,7 @@ export default class DetailsForm extends Vue {
     }
 
     // emit event to save data in parent
-    this.$emit('save', this.formFields)
+    this.$emit('save', this.formFields);
 
     return ''
   }

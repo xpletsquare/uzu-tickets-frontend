@@ -79,13 +79,13 @@ export interface EventDetailsFull {
   startDate: string
   endDate: string
   title: string
-  images: {
-    landscape: string
-    portrait: string
+  images?: {
+    landscape: string | File | undefined
+    portrait: string | File | undefined
   }
-  image: {
-    landscape: string
-    portrait: string
+  image?: {
+    landscape: File | string | undefined 
+    portrait: File | string | undefined
   }
   description: string
   category: string

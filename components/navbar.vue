@@ -36,7 +36,7 @@
             <NuxtLink to="/register">REGISTER</NuxtLink>
           </li>
           <li v-show="!activeUser.email">
-            <primary-button class="w-full" label="LOGIN" link_to="/login"></primary-button>
+            <primary-button class="w-full" label="Create Event" link_to="/login"></primary-button>
           </li>
 
           <NuxtLink

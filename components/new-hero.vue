@@ -92,8 +92,9 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component
 export default class NewHero extends Vue {
 
- 
-  
+
+
+
 
   translate = 0;
   current = 0
@@ -275,7 +276,7 @@ export default class NewHero extends Vue {
     overflow: hidden !important;
     margin-inline: auto;
     /*border-radius: 80px 80px 0 0 ; */
-    border-radius: 80px;
+    /* border-radius: 80px; */
     position: absolute !important;
     object-fit: cover;
 

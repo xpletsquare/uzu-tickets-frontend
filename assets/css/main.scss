@@ -1,11 +1,9 @@
-
 // Tailwind CSS
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
 @import url('vue-multiselect/dist/vue-multiselect.min.css');
 // @import '~ant-design-vue/dist/antd.less';
 // @import '~ant-design-vue/dist/antd.less';
-
 
 // @border-radius-base: 10px;
 // @collapse-content-bg: #31d760;
@@ -28,75 +26,83 @@
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-
 :root {
   // --light-green: #2AB743;
   --light-green: #31d760;
+  --main-green: #3fd246;
+  --disabled-green: #3fd2464f;
+
   --white: #fff;
-  --dark-green: #001D26;
+  --dark-green: #001d26;
+  --dark-green2: #03161c;
   // --dark-green: #002c0c;
   --pale-green: #e8ffef;
   --ash: #f4f4f4;
   --dark-grey: #6f6f6f;
   --light-grey: #bbbbbb3a;
-  --light-grey-b:rgba(231, 231, 231, 0.281);
+  --light-grey-b: rgba(231, 231, 231, 0.281);
   --grey: #a0a0a0;
   --red: red;
 
   // font sizes
   --tiny: 10pt;
+
+  // font weight
+  --medium-fontWeight: 600;
+
+  // max width
+  --max-width: 1250px;
 }
 
 // ant design pagination code global override
-.ant-pagination{
- li{
-  &:hover{
-    border-color: var(--light-green) !important;
-    a{
-      color: var(--light-green) !important;
+.ant-pagination {
+  li {
+    &:hover {
       border-color: var(--light-green) !important;
-
-      &:focus{
+      a {
         color: var(--light-green) !important;
         border-color: var(--light-green) !important;
+
+        &:focus {
+          color: var(--light-green) !important;
+          border-color: var(--light-green) !important;
+        }
+      }
+    }
+
+    &:focus {
+      border-color: var(--light-green) !important;
+      a {
+        color: var(--light-green) !important;
+        border-color: var(--light-green) !important;
+
+        &:focus {
+          color: var(--light-green) !important;
+          border-color: var(--light-green) !important;
+        }
       }
     }
   }
-
-  &:focus{
-    border-color: var(--light-green) !important;
-    a{
-      color: var(--light-green) !important;
-      border-color: var(--light-green) !important;
-
-      &:focus{
-        color: var(--light-green) !important;
-        border-color: var(--light-green) !important;
-      }
-    }
-  }
-
- }
 }
 
-.ant-pagination-item-active{
+.ant-pagination-item-active {
   border-color: var(--light-green) !important;
-  a{
+  a {
     color: var(--light-green) !important;
   }
 }
 
 .ant-pagination-item {
-  &:hover{
+  &:hover {
     border-color: var(--light-green) !important;
-    a{
+    a {
       color: var(--light-green) !important;
     }
   }
 
-  &:focus{
+  &:focus {
     border-color: var(--light-green) !important;
-    a{
+    a {
       color: var(--light-green) !important;
     }
   }
@@ -104,31 +110,57 @@
 
 // end of ant design pagination code global override
 
-// .multiselect__element{
-//   background-color: var(--light-green) !important;
-//   &:hover{
-//     background-color: var(--light-green) !important;
-//   }
-// }
+//  ant date range picker code global override
+.ant-calendar-picker-input.ant-input,
+.ant-calendar-picker,
+.ant-calendar-picker > div {
+  height: 100% !important;
+}
 
+.ant-calendar-picker-input.ant-input {
+  padding-inline: 1rem !important;
+}
 
-.multiselect__option--highlight{
+.ant-input {
+  border: 1px solid var(--main-green) !important;
+  &:hover,
+  &:focus {
+    outline: none !important;
+    border: 1px solid var(--main-green) !important;
+  }
+}
+.ant-input-disabled {
+  border: 1px solid var(--disabled-green) !important;
+  &:hover {
+    border: 1px solid var(--disabled-green) !important;
+  }
+}
+//end of ant date range picker code global override
+
+.multiselect__element {
+  background-color: var(--light-green) !important;
+  &:hover {
+    background-color: var(--light-green) !important;
+  }
+}
+
+.multiselect__option--highlight {
   background-color: var(--light-green) !important;
 }
 img {
   object-fit: cover;
 }
 
-.debug{
-  border: 1px solid red
+.debug {
+  border: 1px solid red;
 }
 
-.max-800{
-  width: 800px
+.max-800 {
+  width: 800px;
 }
 
-.max-600{
-  width: 600px
+.max-600 {
+  width: 600px;
 }
 
 table {

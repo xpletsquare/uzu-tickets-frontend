@@ -41,8 +41,6 @@ export default {
     // Simple usage
     '@nuxtjs/vuetify',
 
-    
-
     [
       '@nuxtjs/fontawesome',
       {
@@ -65,21 +63,20 @@ export default {
         },
       },
     ],
-
-    
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    ['nuxt-highlightjs', {
-      // Module Options
-      style: 'a11y-light'
-      // style: 'atom-one-dark'
-    }],
-
-    
+    [
+      'nuxt-highlightjs',
+      {
+        // Module Options
+        style: 'a11y-light',
+        // style: 'atom-one-dark'
+      },
+    ],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -89,7 +86,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: { 
+  build: {
     loaders: {
       less: {
         lessOptions: {
@@ -101,9 +98,8 @@ export default {
             'border-radius-base': '2px',
           },
         },
-     },
-   },
-
+      },
+    },
   },
 
   server: {
@@ -111,11 +107,6 @@ export default {
   },
 
   env: {
-    apiBASE: process.env.VUE_APP_API_BASE
+    apiBASE: process.env.VUE_APP_API_BASE,
   },
-
-  
-
-  // #31d760
-
 }

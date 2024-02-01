@@ -30,7 +30,7 @@ export const EventsApi = {
     return catchAsync(() => events.get(`/${eventid}`))
   },
 
-  changeStatus(id: string, status: string){
+  changeStatus(id: string, status: string) {
     return catchAsync(() => events.put(`${id}/status`, { status }, getAuthHeaders()))
-  }
+  },
 }

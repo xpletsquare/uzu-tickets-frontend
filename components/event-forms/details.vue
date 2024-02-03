@@ -13,7 +13,7 @@
         <label for="landscape-photo">Landscape photo</label>
 
         <div class="box rounded overflow-hidden">
-          <div class="center ">
+          <div class="center">
             <label for="landscape">
               <div class="flex justify-center overflow-hidden">
                 <img class="object-cover" :src="lan" height="" width="100%" />
@@ -33,7 +33,7 @@
         <label for="Portrait-photo">Portrait photo</label>
 
         <div class="box rounded overflow-hidden">
-          <div class="center ">
+          <div class="center">
             <label for="portrait">
               <div class="flex justify-center overflow-hidden">
                 <img class="object-cover" :src="pot" height="100%" width="" />
@@ -51,7 +51,13 @@
 
     <div class="description mt-10">
       <p>Descripion</p>
-      <v-textarea v-model="formFields.description" class="txtarea" counter="100" filled @input="handleDescriptionChange"></v-textarea>
+      <v-textarea
+        v-model="formFields.description"
+        class="txtarea"
+        counter="100"
+        filled
+        @input="handleDescriptionChange"
+      ></v-textarea>
     </div>
   </div>
 </template>
@@ -59,7 +65,7 @@
 <script lang="ts">
 import { message } from 'ant-design-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { truncateText } from '../../common/utilities/index';
+import { truncateText } from '../../common/utilities/index'
 import { EventDetailsFull } from '~/common/models/interfaces'
 
 @Component
@@ -69,8 +75,8 @@ export default class DetailsForm extends Vue {
   truncateText = truncateText
   landscape: string = 'No file chosen'
   portrait: string = 'No file chosen'
-  lan:File | string = '';
-  pot:File | string = ''
+  lan: File | string = ''
+  pot: File | string = ''
 
   formFields: Partial<EventDetailsFull> = {
     image: {
@@ -80,39 +86,39 @@ export default class DetailsForm extends Vue {
     description: '',
   }
 
-  url:string = '';
-
+  url: string = ''
 
   mounted() {
     // this.formFields.image = this.eventDetails.image || this.eventDetails.images;
-    this.formFields.description = this.eventDetails.description || ''; 
+    this.formFields.description = this.eventDetails.description || ''
   }
 
   async onPortraitChange(event: any) {
     const file = await event.target.files[0]
-    // console.log(file)
+
     this.portrait = file.name
+    this.pot = URL.createObjectURL(file)
 
     // this.url = URL.createObjectURL(file)
 
     // console.log({img: URL.createObjectURL(file)})
-    this.formFields = {...this.formFields, image : { landscape: this.formFields.image?.landscape, portrait: file }} 
-  
+    this.formFields = { ...this.formFields, image: { landscape: this.formFields.image?.landscape, portrait: file } }
+
     message.info('upload image')
     // this.pot =  URL.createObjectURL(this.formFields.image?.portrait);
   }
 
   async onLandscapeChange(event: any) {
-  
-    const [file] = await event.target.files  // Get the file from the upload
+    const [file] = await event.target.files // Get the file from the upload
     // console.log(file)
     this.landscape = file.name
-    
-    this.formFields = { ...this.formFields, image: { portrait: this.formFields.image?.portrait, landscape: file}}
+    this.lan = URL.createObjectURL(file)
+
+    this.formFields = { ...this.formFields, image: { portrait: this.formFields.image?.portrait, landscape: file } }
 
     // this.url = URL.createObjectURL(file)
-    // this.formFields = {...this.formFields, image: {...this.formFields.image, landscape: file}} 
-    message.info('upload image');
+    // this.formFields = {...this.formFields, image: {...this.formFields.image, landscape: file}}
+    message.info('upload image')
     // this.lan =  URL.createObjectURL(this.formFields.image?.landscape);
   }
 
@@ -128,7 +134,7 @@ export default class DetailsForm extends Vue {
     }
 
     // emit event to save data in parent
-    this.$emit('save', this.formFields);
+    this.$emit('save', this.formFields)
 
     return ''
   }

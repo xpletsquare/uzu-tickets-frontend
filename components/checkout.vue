@@ -6,96 +6,100 @@
       },
     }"
   >
-  <section class="wrapper md:flex justify-center items-center">
-    
-    <div class="checkout-card rounded-2xl bg-white ">
-      <button class="close-btn shadow-lg" @click="close">&times;</button>
+    <section class="wrapper md:flex justify-center items-center">
+      <div class="checkout-card rounded-2xl bg-white">
+        <button class="close-btn shadow-lg" @click="close">&times;</button>
 
-      <section class="right relative bg-gray-50">
-     
-        <img class="bg-gray-200" :src="singleEvent.image.portrait" />
-        <div class="p-8">
-          <div class="font-medium mb-8">Order Summary</div>
+        <section class="right relative bg-gray-50">
+          <img class="bg-gray-200" :src="singleEvent.image.portrait" />
+          <div class="p-8">
+            <div class="font-medium mb-8">Order Summary</div>
 
-          <div v-for="item in ticketCartArray.ticketCart" :key="item.ticketId" class="flex justify-between gap-12 mb-3">
-            <div class="w-3/5">{{ item.count }} x {{ item.title }}</div>
-            <div class="font-semibold w-16 text-right">{{ formatCurrency(String(item.totalPrice)) }}</div>
+            <div
+              v-for="item in ticketCartArray.ticketCart"
+              :key="item.ticketId"
+              class="flex justify-between gap-12 mb-3"
+            >
+              <div class="w-3/5">{{ item.count }} x {{ item.title }}</div>
+              <div class="font-semibold w-16 text-right">{{ formatCurrency(String(item.totalPrice)) }}</div>
+            </div>
+
+            <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
+              <div class="font-bold text-xl">Total</div>
+              <div class="font-bold w-auto text-right text-xl">
+                {{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : 'FREE' }}
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div class="flex justify-between gap-12 mb-3 border-t-2 border-black pt-3">
-            <div class="font-bold text-xl">Total</div>
-            <div class="font-bold w-auto text-right text-xl">{{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : "FREE" }}</div>
-          </div>
-        </div>
-      </section>
+        <section class="left relative p-8 md:p-14 text-sm">
+          <!-- paystack payment screen -->
 
-      <section class="left relative p-8 md:p-14 text-sm">
-
-           <!-- paystack payment screen -->
-
-           <section id="payment-frame" :class="{ hidden: isVisible }">
+          <section id="payment-frame" :class="{ hidden: isVisible }">
             <iframe id="paystack-frame" :src="pay_link" width="100%"></iframe>
           </section>
           <!-- end of pays tack -->
 
+          <div class="bg-gray-100 p-4 rounded">
+            Each ticket admits 1 and is only valid for the Dates present in the ticket. Other terms and conditions may
+            apply for seperate tickets
+          </div>
 
-        <div class="bg-gray-100 p-4 rounded">
-          Each ticket admits 1 and is only valid for the Dates present in the ticket. Other terms and conditions may apply for seperate tickets
-        </div>
+          <div class="mt-8 flex items-between justify-between">
+            <!-- <primary-button label="Send to Single Email"></primary-button> -->
+            <p class="font-bold">Send tickets to multiple Emails</p>
+            <a-switch :checked="sendToMany" @click="toggleCheck" />
+            <!-- <button class="border p-4">Send to multiple emails</button> -->
+          </div>
 
-        <div class="mt-8 flex items-between justify-between">
-          <!-- <primary-button label="Send to Single Email"></primary-button> -->
-          <p class="font-bold">Send tickets to multiple Emails</p>
-          <a-switch :checked="sendToMany" @click="toggleCheck" />
-          <!-- <button class="border p-4">Send to multiple emails</button> -->
-        </div>
+          <div class="mt-8 mb-40 md:mb-8">
+            <div class="font-semibold mb-4">Complete Order</div>
 
-        <div class="mt-8 mb-40 md:mb-8">
-          <div class="font-semibold mb-4">Complete Order</div>
-
-          <!-- send ticket to multiple recipients -->
-          <div v-if="sendToMany">
-          <!-- email section -->
-          <div  v-for="(purchase, index) in ticketCartArray.fullTix" :key="index">
-            
-            <div class="font-medium my-2">Recipient {{  index +1}}: {{ purchase.ticketName }}</div>
-            <div class="contact-form">
-              <input v-model="purchase.userFirstName" placeholder="First Name" type="text" />
-              <input v-model="purchase.userLastName" placeholder="Last Name" type="text" />
-              <input v-model.trim="purchase.userEmail" class="full" placeholder="Email Address" type="email" />
+            <!-- send ticket to multiple recipients -->
+            <div v-if="sendToMany">
+              <!-- email section -->
+              <div v-for="(purchase, index) in ticketCartArray.fullTix" :key="index">
+                <div class="font-medium my-2">Recipient {{ index + 1 }}: {{ purchase.ticketName }}</div>
+                <div class="contact-form">
+                  <input v-model="purchase.userFirstName" placeholder="First Name" type="text" />
+                  <input v-model="purchase.userLastName" placeholder="Last Name" type="text" />
+                  <input v-model.trim="purchase.userEmail" class="full" placeholder="Email Address" type="email" />
+                </div>
+              </div>
+              <!-- end of email section -->
             </div>
-
+            <!-- single recipient -->
+            <div v-else>
+              <div class="font-medium my-2">Recipient</div>
+              <div class="contact-form">
+                <input v-model="userFirstName" name="" placeholder="First Name" type="text" />
+                <input v-model="userLastName" name="" placeholder="Last Name" type="text" />
+                <input v-model.trim="userEmail" name="" class="full" placeholder="Email Address" type="email" />
+              </div>
+            </div>
           </div>
-          <!-- end of email section -->
-        </div>
-        <!-- single recipient -->
-        <div v-else>
-          <div class="font-medium my-2">Recipient </div>
-          <div class="contact-form">
-            <input v-model="userFirstName" name="" placeholder="First Name" type="text" />
-            <input v-model="userLastName" name="" placeholder="Last Name" type="text" />
-            <input v-model.trim="userEmail" name="" class="full" placeholder="Email Address" type="email" />
+
+          <div class="text-right mt-10 pay-button-wrapper bg-white">
+            <p class="text-center font-bold block md:hidden">
+              {{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : 'FREE' }}
+            </p>
+            <primary-button
+              :loading="loading"
+              button-class="w-full md:w-full"
+              label="Get Ticket"
+              @click="pay"
+            ></primary-button>
           </div>
-        </div>
-        </div>
-
-        <div class="text-right mt-10 pay-button-wrapper bg-white">
-          <p class="text-center font-bold block md:hidden">{{ Number(ticketCartArray.total) > 0 ? formatCurrency(String(ticketCartArray.total)) : "FREE" }}</p>
-          <primary-button :loading="loading"  button-class="w-full md:w-full" label="Get Ticket" @click="pay"></primary-button>
-        </div>
-
-      </section>
-    </div>
-
-    
-  </section>
-</a-config-provider>
-
+        </section>
+      </div>
+    </section>
+  </a-config-provider>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { message} from 'ant-design-vue'
+import { message } from 'ant-design-vue'
 import { payApi } from '~/common/api/payment.api'
 import { formatCurrency } from '~/common/utilities'
 import { EventDetailsFull } from '~/common/models/interfaces'
@@ -116,49 +120,46 @@ export default class Checkout extends Vue {
   userLastName: string = ''
   userEmail: string = ''
   loading: boolean = false
-  pay_link = ""
+  pay_link = ''
   isVisible = true
   sendToMany = false
 
-  dataset = [];
-
+  dataset = []
 
   toggleCheck() {
-    this.sendToMany = !this.sendToMany;
+    this.sendToMany = !this.sendToMany
     // console.log({dataset:this.ticketCartArray.fullTix})
   }
 
-
-  closeIFrame(){
+  closeIFrame() {
     console.log('closing iframe now')
 
     this.isVisible = true
-    this.pay_link = ""
+    this.pay_link = ''
     this.loading = false
     this.close()
   }
 
-  mounted(){
-    
-    console.log({purchase: this.purchases})
-    
-    window.addEventListener("message", (event)=> {
-      console.log({event: event.data})
+  mounted() {
+    console.log({ purchase: this.purchases })
 
-      if(event.data === "closePaymentModal"){
+    window.addEventListener('message', (event) => {
+      if (event.data === 'closePaymentModal') {
         this.closeIFrame()
       }
-      
-      if(event.data === "exploreMore"){
+
+      if (event.data === 'exploreMore') {
+        window.removeEventListener('message', (event) => {
+          return event
+        })
         this.$router.push('/')
       }
     })
-
   }
 
   get ticketCartArray() {
     let total = 0
-    const fullTix:any = [];
+    const fullTix: any = []
 
     const ticketCart = this.purchases.map((item) => {
       const ticket = this.singleEvent.tickets.find((t) => t.id === item.ticketId)
@@ -166,14 +167,14 @@ export default class Checkout extends Vue {
       const totalPrice = ticket ? Number(ticket.price) * Number(item.count) : 0
       total += totalPrice
 
-      for (let i = 1; i <= item.count; i++ ) {
+      for (let i = 1; i <= item.count; i++) {
         fullTix.push({
-          ticketName, 
-          ticketId: item.ticketId, 
+          ticketName,
+          ticketId: item.ticketId,
           count: 1,
           userFirstName: '',
           userLastName: '',
-          userEmail: ''
+          userEmail: '',
         })
       }
 
@@ -186,11 +187,8 @@ export default class Checkout extends Vue {
       }
     })
 
-    
-
     return { ticketCart, total, fullTix }
   }
-
 
   async pay() {
     // validate input
@@ -198,7 +196,6 @@ export default class Checkout extends Vue {
     // make api call
     // show success message
     // redirect to homepage
-
 
     const payload = {
       eventId: this.singleEvent.id,
@@ -208,8 +205,6 @@ export default class Checkout extends Vue {
       purchases: this.sendToMany ? this.ticketCartArray.fullTix : this.purchases,
     }
 
-   
-
     // if (!payload.userFirstName.length || !payload.userLastName.length || !payload.userEmail) {
     //   return message.warning('Please enter a valid first-name, last-name and email')
     // }
@@ -217,17 +212,14 @@ export default class Checkout extends Vue {
     // set the button state to loading
     this.loading = true
 
-
-  
-    
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { error, data } = await payApi.pay(payload)
     // this.loading = false
     // if ticket is free, run this code
-    if ( data?.data?.purchase?.paid ) {
-      this.pay_link = `/payment-success?paid=${data?.data?.purchase?.paid}`;
+    if (data?.data?.purchase?.paid) {
+      this.pay_link = `/payment-success?paid=${data?.data?.purchase?.paid}`
       this.isVisible = false
-      return 
+      return
     }
 
     const url = data?.data?.payment?.data?.authorization_url
@@ -260,7 +252,7 @@ export default class Checkout extends Vue {
   height: 100vh;
   /* backdrop-filter: blur(10px); */
   overflow-y: scroll;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 
   .hidden {
     display: none !important;
@@ -282,7 +274,7 @@ export default class Checkout extends Vue {
     justify-content: center;
     z-index: 2;
 
-    .paystack-frame{
+    .paystack-frame {
       width: 100%;
       height: 100%;
     }
@@ -372,7 +364,6 @@ export default class Checkout extends Vue {
   //   }
   // }
 
-  
   img {
     width: 100%;
     height: 240px;

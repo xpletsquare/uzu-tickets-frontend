@@ -24,8 +24,8 @@
 
       <!-- events -->
       <section class="events-container">
-        <button class="filled">All events</button>
-        <button class="">Events near you</button>
+        <!-- <button class="filled">All events</button>
+        <button class="">Events near you</button> -->
 
         <!-- 
           <h1>{{ person }}</h1>
@@ -42,7 +42,6 @@
             v-for="(event, index) in events.slice(0, 16)"
             :key="index"
             :image-url="event.image.landscape"
-            event.
             :event-title="event.title"
             :start-date="event.startDate.toString()"
             :event-id="event.id"
@@ -204,7 +203,7 @@ main {
     }
 
     .events {
-      margin: 42px 0;
+      margin: 0px 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       column-gap: 20px;

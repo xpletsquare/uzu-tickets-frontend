@@ -59,7 +59,7 @@ export default {
             'faClone',
             'faPaperPlane',
           ],
-          brands: ['faTwitter', 'faLinkedin', 'faInstagram', 'faFacebookF'],
+          brands: ['faTwitter', 'faLinkedin', 'faInstagram', 'faFacebookF '],
         },
       },
     ],

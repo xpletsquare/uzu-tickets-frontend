@@ -1,36 +1,67 @@
-
 <template>
   <div class="footer">
     <div class="wrapper">
-      <ul class="footer-links">
-        <li>
-          <NuxtLink to="/">FAQ</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/">CONTACT US</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/about">ABOUT US</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/terms-and-conditions">TERMS & CONDITIONS</NuxtLink>
-        </li>
-      </ul>
+      <div class="inner flex md:flex-row flex-col items-end md:gap-40 gap-20 border-b-[0.2px] border-[#062a35] pb-10">
+        <div class="footer-left md:w-2/3 w-full">
+          <div class="logo">
+            <NuxtLink to="/">
+              <img class="md:w-20 h-auto md:inline-block" alt="logo" src="~/assets/images/logo-white.svg" />
+            </NuxtLink>
+          </div>
 
-      <ul class="footer-socials">
-        <li>
-          <NuxtLink to="/"><fa :icon="['fab', 'twitter']" /></NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/"><fa :icon="['fab', 'instagram']" /></NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/"><fa :icon="['fab', 'facebook-f']" /></NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/"><fa :icon="['fab', 'linkedin']" /></NuxtLink>
-        </li>
-      </ul>
+          <p class="about my-10 text-white">
+            creating a seamless ticketing experience for African event managers and attendees
+          </p>
+
+          <ul class="footer-links mt-5">
+            <li class="hover:text-red">
+              <NuxtLink to="/">CHANGELOG</NuxtLink>
+            </li>
+            <li class="hover:text-red">
+              <NuxtLink to="/">FAQ</NuxtLink>
+            </li>
+
+            <li>
+              <NuxtLink to="/terms-and-conditions">TERMS OF SERVICE</NuxtLink>
+            </li>
+
+            <li>
+              <NuxtLink to="/about">MEET US</NuxtLink>
+            </li>
+
+            <li>
+              <NuxtLink to="/pricing">PRICING</NuxtLink>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-right md:w-1/3 w-full">
+          <h4 class="text-white my-5">Follow us on socials</h4>
+
+          <ul class="footer-socials">
+            <li>
+              <a href="https://twitter.com/uzu_ticket" target="_blank"><fa :icon="['fab', 'twitter']" /></a>
+            </li>
+
+            <li>
+              <a href="https://instagram.com/uzu_ticket" target="_blank"><fa :icon="['fab', 'instagram']" /></a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/uzuticket" target="_blank"><fa :icon="['fab', 'facebook-f']" /></a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/company/uzu-ticket" target="_blank"
+                ><fa :icon="['fab', 'linkedin']"
+              /></a>
+            </li>
+            <!-- <li>
+              <NuxtLink to="/"><fa :icon="['fab', 'linkedin']" /></NuxtLink>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+
+      <p class="text-[#3fd246] my-10">Copyright © Uzu Ticket 2023</p>
     </div>
   </div>
 </template>
@@ -44,13 +75,13 @@ export default class Footer extends Vue {}
 
 <style lang="scss" scoped>
 .footer {
-  background-color: #f5f5f5;
+  background-color: #03161c;
   width: 100%;
   padding: 55px auto;
 
   .wrapper {
     width: 70%;
-    display: flex;
+
     justify-content: space-between;
     align-items: center;
     margin: 0px auto;
@@ -69,9 +100,8 @@ export default class Footer extends Vue {}
 
   .footer-links {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+    align-items: start;
+    gap: 30px;
 
     @media (max-width: 568px) {
       justify-content: space-evenly;
@@ -79,17 +109,21 @@ export default class Footer extends Vue {}
     }
 
     li {
-      padding: 0px 20px;
+      padding: 0px 0px;
+
+      :hover {
+        color: #3fd246 !important;
+      }
 
       @media (max-width: 768px) {
-        padding: 0 10px;
+        padding: 0 0px;
       }
 
       a {
         text-transform: uppercase;
-        font-size: 15px;
-        font-weight: bold;
-        color: #707070;
+        font-size: 12px;
+        font-weight: 500;
+        color: #f1f1f1;
 
         @media (max-width: 768px) {
           font-size: 12px;
@@ -106,12 +140,15 @@ export default class Footer extends Vue {}
 
     li {
       padding: 0px 10px;
+      :hover {
+        color: #3fd246 !important;
+      }
 
       a {
         text-transform: uppercase;
         font-size: 22px;
         font-weight: bold;
-        color: #000000;
+        color: #f1f1f1;
 
         @media (max-width: 768px) {
           font-size: 15px;

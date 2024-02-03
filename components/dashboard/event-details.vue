@@ -4,16 +4,15 @@
       <div class="text-right space-x-3 mb-6" v-if="showEditButton">
         <primary-button @click="toggleEditMode" label="Edit Event"></primary-button>
 
-        <primary-button v-if="event.status === 'DRAFT'" @click="updateStatus('ACTIVE')"  label="Publish Event"></primary-button>
+        <primary-button
+          v-if="event.status === 'DRAFT'"
+          @click="updateStatus('ACTIVE')"
+          label="Publish Event"
+        ></primary-button>
       </div>
 
       <div v-if="editMode">
-        <event-forms-basic 
-          :eventDetails="event" 
-          ref="basic" 
-          @save="updateForm" 
-          v-if="stage === 1"
-        ></event-forms-basic>
+        <event-forms-basic :eventDetails="event" ref="basic" @save="updateForm" v-if="stage === 1"></event-forms-basic>
 
         <event-forms-schedules
           :eventDetails="event"
@@ -36,11 +35,7 @@
           v-if="stage === 4"
         ></event-forms-details>
 
-        <event-forms-summary 
-          :eventDetails="event" 
-          ref="summary" 
-          v-if="stage === 5"
-        ></event-forms-summary>
+        <event-forms-summary :eventDetails="event" ref="summary" v-if="stage === 5"></event-forms-summary>
       </div>
 
       <div v-else>
@@ -85,32 +80,32 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { message } from 'ant-design-vue'
 import { ElementWithValidateFunction, EventDetailsFull } from '~/common/models/interfaces'
-import { EventsApi } from '~/common/api/events.api';
-import { AppState, StoreMutations } from '~/common/storeHelpers';
+import { EventsApi } from '~/common/api/events.api'
+import { AppState, StoreMutations } from '~/common/storeHelpers'
 
 @Component
 export default class EventDetails extends Vue {
   @Prop() eventDetails!: EventDetailsFull
-  event: Partial<EventDetailsFull> | null = null;
+  event: Partial<EventDetailsFull> | null = null
 
-  placeholderImage = 'https://res.cloudinary.com/dk07kf3yl/image/upload/v1643845950/temp/placeholder_huq2kw.png';
+  placeholderImage = 'https://res.cloudinary.com/dk07kf3yl/image/upload/v1643845950/temp/placeholder_huq2kw.png'
 
-  isLoading = false;
+  isLoading = false
 
-  get editMode(){
-   return this.$store.state.editEvent as boolean;
+  get editMode() {
+    return this.$store.state.editEvent as boolean
   }
 
-  get showEditButton(){
-    if(this.event?.status !== 'DRAFT'){
-      return false;
+  get showEditButton() {
+    if (this.event?.status !== 'DRAFT') {
+      return false
     }
 
-    return !this.isNewEvent && !this.editMode;
+    return !this.isNewEvent && !this.editMode
   }
 
-  get eventInitialized(){
-    return this.event !== null;
+  get eventInitialized() {
+    return this.event !== null
   }
 
   get stage() {
@@ -118,8 +113,8 @@ export default class EventDetails extends Vue {
     return parseInt(stage)
   }
 
-  get showBackButton(){
-    return this.stage > 1;
+  get showBackButton() {
+    return this.stage > 1
   }
 
   get showNextButton() {
@@ -131,7 +126,7 @@ export default class EventDetails extends Vue {
   }
 
   get isNewEvent() {
-    return this.$route.path.includes('/dashboard/events/create');
+    return this.$route.path.includes('/dashboard/events/create')
   }
 
   get currentStageRef(): ElementWithValidateFunction & any {
@@ -151,27 +146,26 @@ export default class EventDetails extends Vue {
     }
   }
 
-  get currentUser(){
-    const { currentUser } = this.$store.state as AppState;
-    return currentUser;
+  get currentUser() {
+    const { currentUser } = this.$store.state as AppState
+    return currentUser
   }
 
   mounted() {
+    console.log({ summary: this.eventDetails })
 
-    console.log({summary: this.eventDetails})
+    if (this.eventDetails) {
+      // This checks if event details have been passed in from the local store or API
+      this.$store.commit(StoreMutations.setEditMode, false)
 
-    if (this.eventDetails) { // This checks if event details have been passed in from the local store or API
-      this.$store.commit(StoreMutations.setEditMode, false);
-
-      this.event = { ...this.eventDetails };
+      this.event = { ...this.eventDetails }
 
       this.event.images = {
         landscape: this.eventDetails.image?.landscape,
-        portrait: this.eventDetails.image?.landscape
+        portrait: this.eventDetails.image?.landscape,
       }
       return
     }
-
 
     this.event = {
       id: '',
@@ -188,23 +182,22 @@ export default class EventDetails extends Vue {
       tags: [],
       isPublished: false,
       status: 'DRAFT',
-      author: this.currentUser?.id
+      author: this.currentUser?.id,
     }
 
     // this.toggleEditMode();
-    this.$store.commit(StoreMutations.setEditMode, true);
+    this.$store.commit(StoreMutations.setEditMode, true)
   }
 
-  toggleEditMode(){
-    this.$store.commit(StoreMutations.setEditMode, !this.editMode);
+  toggleEditMode() {
+    this.$store.commit(StoreMutations.setEditMode, !this.editMode)
   }
 
   updateForm(formData: any) {
-    this.event = { ...this.event, ...formData };
+    this.event = { ...this.event, ...formData }
   }
 
   next() {
-
     if (this.stage >= 5) {
       return
     }
@@ -230,7 +223,7 @@ export default class EventDetails extends Vue {
     this.$router.replace({ query })
   }
 
-  back(){
+  back() {
     const prevStage = this.stage - 1
     const stageAsString = prevStage + ''
     const query = { ...this.$route.query, stage: stageAsString }
@@ -238,70 +231,66 @@ export default class EventDetails extends Vue {
   }
 
   async createEvent() {
-
-    
     // make api call to publish event
-    const { currentUser } = this.$store.state as AppState;
+    const { currentUser } = this.$store.state as AppState
 
-    const author = currentUser?.id || '';
-   
-    const details: Partial<EventDetailsFull> = { ...this.event, author };
+    const author = currentUser?.id || ''
 
-    this.isLoading = true;
-    
-    // send details to backend for processing
-
-    
-    const { image, ...rest } = details; // seperate object data and files
-    const { landscape, portrait }:any = image; // get the landscape and portrait image files
-    
-    const restSyrialized = JSON.stringify(rest) // serialize the rest of the data
-    // prepare formdata
-    const formData = new FormData();
-    formData.append('rest', restSyrialized ); // set the rest of the data here
-    formData.append('landscape', new Blob([landscape], {type: 'image/jpeg'}), 'landscape'); // set the landscape image
-    formData.append('portrait', new Blob([portrait], {type: 'image/jpeg'}), 'portrait'); // set the portrait image
-
-    formData.forEach( d => console.log(d))
-    const { error } = await EventsApi.createEvent(formData);
-    this.isLoading = false
-
-    if (error) {
-      return message.error(error as string)
-    }
-
-    message.success('Event published');
-    // this.$router.push('/dashboard/events'); // Redirect user to events page in the dashbaord
-  }
-
-  async updateEvent(){
-    const details: Partial<EventDetailsFull> = { ...this.event };
+    const details: Partial<EventDetailsFull> = { ...this.event, author }
 
     this.isLoading = true
-    const { error } = await EventsApi.update(this.eventDetails.id, {...details});
+
+    // send details to backend for processing
+
+    const { image, ...rest } = details // seperate object data and files
+    const { landscape, portrait }: any = image // get the landscape and portrait image files
+
+    const restSyrialized = JSON.stringify(rest) // serialize the rest of the data
+    // prepare formdata
+    const formData = new FormData()
+    formData.append('rest', restSyrialized) // set the rest of the data here
+    formData.append('landscape', new Blob([landscape], { type: 'image/jpeg' }), 'landscape') // set the landscape image
+    formData.append('portrait', new Blob([portrait], { type: 'image/jpeg' }), 'portrait') // set the portrait image
+
+    // formData.forEach((d) => console.log(d))
+    const { error } = await EventsApi.createEvent(formData)
     this.isLoading = false
 
     if (error) {
       return message.error(error as string)
     }
 
-    message.success('Event Updated Successfully');
-
-    this.$router.push('/dashboard/events');
+    message.success('Event Created 🚀')
+    this.$router.push('/dashboard/events') // Redirect user to events page in the dashbaord
   }
 
-  async updateStatus(status: string){
-    this.isLoading = true;
-    const { error } = await EventsApi.changeStatus(this.eventDetails?.id, status);
+  async updateEvent() {
+    const details: Partial<EventDetailsFull> = { ...this.event }
+
+    this.isLoading = true
+    const { error } = await EventsApi.update(this.eventDetails.id, { ...details })
     this.isLoading = false
 
     if (error) {
       return message.error(error as string)
     }
 
-    message.success('Event Status Updated');
+    message.success('Event Updated Successfully 🚀')
+    this.$router.push('/dashboard/events')
+  }
 
-    this.$router.push('/dashboard/events');
+  async updateStatus(status: string) {
+    this.isLoading = true
+    const { error } = await EventsApi.changeStatus(this.eventDetails?.id, status)
+    this.isLoading = false
+
+    if (error) {
+      return message.error(error as string)
+    }
+
+    message.success('Event Status Updated 🚀')
+
+    this.$router.push('/dashboard/events')
   }
 }
 </script>

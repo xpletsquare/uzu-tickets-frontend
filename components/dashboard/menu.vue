@@ -1,4 +1,3 @@
-
 <template>
   <section class="wrapper">
     <div class="px-8 py-10 base">
@@ -16,7 +15,6 @@
             <span>Events</span>
           </nuxt-link>
 
-         
           <!-- <nuxt-link exact active-class="active" to="/dashboard/sales">
             <span class="icon"><i class="fas fa-pie-chart"></i></span>
             <span>Sales</span>
@@ -27,45 +25,48 @@
             <span>Ticket Sales</span>
           </nuxt-link>
 
-          <nuxt-link exact active-class="active" to="/dashboard/promoter">
+          <!-- <nuxt-link exact active-class="active" to="/dashboard/promoter">
             <span class="icon"><i class="fas fa-check-circle"></i></span>
             <span>Broadcast</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <!-- <nuxt-link exact active-class="active" to="/dashboard/promoter">
             <span class="icon"><i class="fas fa-check-circle"></i></span>
             <span>Promoter</span>
           </nuxt-link> -->
 
-          <nuxt-link exact active-class="active" to="/dashboard/wallet">
+          <!-- <nuxt-link exact active-class="active" to="/dashboard/wallet">
             <span class="icon"><i class="fas fa-wallet"></i></span>
             <span>Wallet</span>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <nuxt-link active-class="active" to="/dashboard/profile">
             <span class="icon"><i class="fas fa-user-alt"></i></span>
             <span>Profile</span>
           </nuxt-link>
 
-
           <nuxt-link exact active-class="active" to="/dashboard/developer">
             <span class="icon"><i class="fas fa-code"></i></span>
             <span>Web integration</span>
-          </nuxt-link> 
- 
+          </nuxt-link>
 
-           <!-- activate event creation -->
+          <!-- activate event creation -->
           <div class="activate-account-section">
             <div>
               <div class="activate-icon"><i class="fas fa-solid fa-paper-plane"></i></div>
-              <p>If you are having any troubles using uzu tickets, contact our support and be sure to get feedback within 3 hours. <br> <br> <br>Version 1.1.0 </p>
+              <p>
+                If you are having any troubles using uzu tickets, contact our support and be sure to get feedback within
+                3 hours. <br />
+                <br />
+                <br />Version 1.1.0
+              </p>
 
               <div class="activate-button">Support</div>
             </div>
           </div>
 
-            <!-- activate event creation -->
-            <!-- <div class="activate-account-section">
+          <!-- activate event creation -->
+          <!-- <div class="activate-account-section">
             <div>
               <div class="activate-icon"><i class="fas fa-check-double"></i></div>
               <p>Are you an event owner? activate our event managemnet feature to enable you create and manage events.</p>
@@ -73,18 +74,12 @@
               <div class="activate-button">Activate</div>
             </div>
           </div> -->
-
         </div>
-
-       
-
       </template>
 
       <template v-if="showEventsMenu">
         <dashboard-events-menu></dashboard-events-menu>
       </template>
-
-     
 
       <div class="logout px-2">
         <button @click="logout">
@@ -151,7 +146,7 @@ export default class DashboardMenu extends Vue {
 a {
   padding: 0.6em 1em;
   font-size: 12pt;
-  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   /* color: var(--light-green); */
   color: #f5fff5;
   /* background: rgba(255, 255, 255, 0.277); */
@@ -165,7 +160,7 @@ a {
     display: inline-block;
     font-size: 14px;
     width: max-content;
-    padding-right: 15px
+    padding-right: 15px;
   }
 
   &:hover,
@@ -177,23 +172,23 @@ a {
   }
 }
 
-.activate-account-section{
+.activate-account-section {
   width: 100%;
   color: white;
   text-align: center;
   font-size: 9pt;
   margin: 20px auto;
 
-  .activate-icon{
+  .activate-icon {
     color: var(--light-green);
     font-size: 30px;
   }
-  p{
+  p {
     color: rgba(229, 255, 223, 0.815);
     padding: 10px 20px;
   }
 
-  .activate-button{
+  .activate-button {
     border: 1px solid var(--light-green);
     width: max-content;
     color: rgba(229, 255, 223, 0.815);
@@ -202,7 +197,7 @@ a {
     border-radius: 30px;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       background-color: var(--light-green);
       color: var(--dark-green);
     }

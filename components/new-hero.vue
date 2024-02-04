@@ -10,11 +10,13 @@
       <div class="top-slider-title" :style="{ transform: `translateY(${translate}%)` }">
         <section class="flex top items-center justify-between mx-auto">
           <div class="top-left">
-            <h1 class="event-title md:text-[58px] text-[30px] w-[100%] leading-tight font-bold">Energy Fest 2023</h1>
-            <p class="md:text-[18px] text-[14px] w-[80%]">It's time to showcase your musical talents once again.</p>
+            <h1 class="event-title md:text-[58px] text-[30px] w-[100%] leading-tight font-bold">Picnic in Bayelsa</h1>
+            <p class="md:text-[18px] text-[14px] w-[80%]">Come have fun with games, drinks, music and more...</p>
             <div class="links flex gap-5 items-center">
-              <primary-button label="Buy tickets"></primary-button>
-              <h3 class="text-3xl">N3,500</h3>
+              <NuxtLink to="/events/1694b928-5acc-4691-b444-2f784e0b4639">
+                <primary-button label="Buy tickets"></primary-button
+              ></NuxtLink>
+              <h3 class="text-3xl">N20,000</h3>
             </div>
           </div>
           <div class="top-right md:flex hidden">
@@ -34,7 +36,7 @@
             <p class="md:text-[18px] text-[14px] w-[80%]">It's time to showcase your musical talents once again.</p>
             <div class="links flex gap-5 items-center">
               <primary-button label="Buy tickets"></primary-button>
-              <h3 class="text-3xl">N20,000</h3>
+              <h3 class="text-3xl">FREE</h3>
             </div>
           </div>
           <div class="top-right md:flex hidden">
@@ -50,11 +52,11 @@
 
         <section class="flex top items-center justify-between mx-auto">
           <div class="top-left">
-            <h1 class="event-title md:text-[58px] text-[30px] w-[100%] leading-tight font-bold">Who's next 2025</h1>
+            <h1 class="event-title md:text-[58px] text-[30px] w-[100%] leading-tight font-bold">Who's next 2024</h1>
             <p class="md:text-[18px] text-[14px] w-[80%]">It's time to showcase your musical talents once again.</p>
             <div class="links flex gap-5 items-center">
               <primary-button label="Buy tickets"></primary-button>
-              <h3 class="text-3xl">N20,000</h3>
+              <h3 class="text-3xl">N10,000</h3>
             </div>
           </div>
           <div class="top-right md:flex hidden">
@@ -98,7 +100,7 @@ export default class NewHero extends Vue {
   images = [
     {
       id: 0,
-      url: 'https://media.istockphoto.com/id/974238866/photo/audience-listens-to-the-lecturer-at-the-conference.jpg?s=612x612&w=0&k=20&c=p_BQCJWRQQtZYnQlOtZMzTjeB_csic8OofTCAKLwT0M=',
+      url: 'https://res.cloudinary.com/drof5sggk/image/upload/v1707030055/posters/rhoiimrtm7rahutaecye.jpg',
       zIndex: 1,
       width: 80,
       translate: 20,

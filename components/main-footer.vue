@@ -61,7 +61,7 @@
         </div>
       </div>
 
-      <p class="text-[#3fd246] my-10">Copyright © Uzu Ticket 2023</p>
+      <p class="text-[#3fd246] my-10">Copyright © Uzu Ticket {{ year }}</p>
     </div>
   </div>
 </template>
@@ -70,7 +70,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Footer extends Vue {}
+export default class Footer extends Vue {
+  d = new Date()
+  year = this.d.getUTCFullYear()
+  mounted() {}
+}
 </script>
 
 <style lang="scss" scoped>

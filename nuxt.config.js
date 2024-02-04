@@ -14,8 +14,12 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
+      {
+        name: 'description',
+        content:
+          'Uzu Tickets is an events management company dedicated to creating a seamless ticketing experience across Africa.🚀🚀🚀 Dedicated to improving ticket sales 🚀🚀 #events 🎭 #tickets 🎫 #african"',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },

@@ -101,6 +101,7 @@ export interface EventDetailsFull {
   author: string
   venue: string
   status: 'DRAFT' | 'ACTIVE' | 'CANCELED'
+  type?: 'PUBLIC' | 'PRIVATE'
 }
 
 export interface Promoter {

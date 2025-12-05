@@ -1,8 +1,10 @@
 import { AnyObject } from '../models/types'
 import { catchAsync } from '../utilities'
-import { createAxiosInstance } from '.'
+import { createAxiosInstance, getAuthHeaders } from '.'
 
 const pay = createAxiosInstance('/purchase-tickets')
+
+const purchases = createAxiosInstance('/purchase-tickets')
 
 export const payApi = {
   pay(details: AnyObject) {
@@ -11,6 +13,10 @@ export const payApi = {
 
   verify( txref: AnyObject ) {
     return catchAsync(() => pay.get('/webhook', { params: { txref }}))
+  },
+
+  listEventPurchases(eventId: string) {
+    return catchAsync(() => purchases.get(`/event/${eventId}`, getAuthHeaders() as any))
   }
 }
 //

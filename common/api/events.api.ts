@@ -33,4 +33,20 @@ export const EventsApi = {
   changeStatus(id: string, status: string) {
     return catchAsync(() => events.put(`${id}/status`, { status }, getAuthHeaders()))
   },
+
+  sendTicketsToAll(eventId: string) {
+    return catchAsync(() =>
+      events.post(`/${eventId}/send-tickets/all`, {}, getAuthHeaders())
+    )
+  },
+
+  sendTicketsToSelected(eventId: string, purchaseIds: string[]) {
+    return catchAsync(() =>
+      events.post(
+        `/${eventId}/send-tickets/selected`,
+        { purchaseIds },
+        getAuthHeaders()
+      )
+    )
+  },
 }

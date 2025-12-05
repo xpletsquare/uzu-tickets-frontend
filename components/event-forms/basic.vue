@@ -24,6 +24,15 @@
         ></multiselect>
       </div>
 
+      <div class="md:w-2/4 mt-4 border rounded border-gray-500">
+        <multiselect
+          v-model="formFields.type"
+          :options="eventTypes"
+          :show-labels="false"
+          placeholder="Event Type"
+        ></multiselect>
+      </div>
+
       <div class="basic-info mt-10 sub">
         <h4 class="mt-5 font-semibold">Add Tags (Optional)</h4>
         <p>Improve discoverability of your event by adding tags relevant to the subject matter.</p>
@@ -114,16 +123,22 @@ export default class BasicForm extends Vue {
 
   selectValue: string = ''
   categories: string[] = ['Fashion', 'Art', 'Business']
+  eventTypes: string[] = ['Public', 'Private']
   tag: string = ''
 
-  formFields: Partial<EventDetailsFull> | null = null
+  formFields: (Partial<EventDetailsFull> & { type?: string }) | null = null
 
   mounted() {
     // this.checkGoogle();
 
+    // Convert backend format to display format
+    const eventType = this.eventDetails?.type || 'PUBLIC'
+    const displayType = eventType === 'PUBLIC' ? 'Public' : eventType === 'PRIVATE' ? 'Private' : 'Public'
+
     this.formFields = {
       title: this.eventDetails?.title || '',
       category: this.eventDetails?.category || '',
+      type: displayType as any,
       tags: this.eventDetails?.tags || [],
       address: this.eventDetails?.address || '',
       venue: this.eventDetails.venue || '',
@@ -204,8 +219,16 @@ export default class BasicForm extends Vue {
       return 'Invalid location'
     }
 
+    // Convert display label to backend format
+    const formDataToSave = { ...this.formFields } as any
+    if (formDataToSave.type === 'Public') {
+      formDataToSave.type = 'PUBLIC'
+    } else if (formDataToSave.type === 'Private') {
+      formDataToSave.type = 'PRIVATE'
+    }
+
     // emit event to save data in parent
-    this.$emit('save', this.formFields)
+    this.$emit('save', formDataToSave)
 
     return ''
   }

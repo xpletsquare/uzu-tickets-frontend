@@ -31,10 +31,11 @@ export const createAxiosInstance = (base: string) => {
   // const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`
   const baseURL = base.startsWith('http') ? base : `${API_BASE}${base}`
 
+  const authHeaders = getAuthHeaders()
   return axios.create({
     baseURL,
     headers: {
-      ...getAuthHeaders(),
+      ...authHeaders.headers,
     },
   })
 }
